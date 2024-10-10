@@ -21,7 +21,7 @@ public class ApplicationSettings
         public string GroupName { get; set; }
         public List<char> GroupDelimiters { get; set; }
         public List<GroupingDefinitionOption> GroupingDefinition { get; set; }
-    
+
         public class GroupingDefinitionOption
         {
             public string Value { get; set; }
@@ -50,11 +50,8 @@ public class ApplicationSettings
                 public bool IsMultiThreaded { get; set; }
                 public bool IsInteracting { get; set; }
                 public int TurnLength { get; set; }
-
                 public int MaximumSteps { get; set; }
-
                 public double ChanceOfKnowledgeTransfer { get; set; }
-
                 public DecaySettings Decay { get; set; }
 
                 public class DecaySettings
@@ -85,6 +82,7 @@ public class ApplicationSettings
                 public Dictionary<string, int> PostProbabilities { get; set; }
                 public string PostUrl { get; set; }
                 public ContentEngineSettings ContentEngine { get; set; }
+                public ChatJobConfiguration ChatJobConfiguration { get; set; }
             }
 
             public class SocialSharingSettings

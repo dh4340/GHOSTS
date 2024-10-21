@@ -288,7 +288,7 @@ public class NPCToInsiderThreatCsv
             };
 
             foreach (var account in n.NpcProfile.Accounts.Where(x =>
-                         x.Url != null && x.Url.ToLower().Contains("openvpn")))
+                         x.Url != null && x.Url.Contains("openvpn", StringComparison.CurrentCultureIgnoreCase)))
             {
                 o.OpenVPNUsername = account.Username;
                 o.OpenVPNPassword = account.Password;
@@ -300,14 +300,14 @@ public class NPCToInsiderThreatCsv
             // o.ExampleCase
 
             foreach (var account in
-                     n.NpcProfile.Accounts.Where(x => x.Url != null && x.Url.ToLower().Contains("gmail")))
+                     n.NpcProfile.Accounts.Where(x => x.Url != null && x.Url.Contains("gmail", StringComparison.CurrentCultureIgnoreCase)))
             {
                 o.GmailUsername = account.Username;
                 o.GmailPassword = account.Password;
             }
 
             foreach (var account in
-                     n.NpcProfile.Accounts.Where(x => x.Url != null && x.Url.ToLower().Contains("nmail")))
+                     n.NpcProfile.Accounts.Where(x => x.Url != null && x.Url.Contains("nmail", StringComparison.CurrentCultureIgnoreCase)))
             {
                 o.NmailUser = account.Username;
                 o.NmailPassword = account.Password;
@@ -355,7 +355,7 @@ public class NPCToInsiderThreatCsv
             o.Zip = n.NpcProfile.Address.FirstOrDefault()?.PostalCode;
             o.Country = "US";
             var relatedEvents = events as RelatedEvent[] ?? events.ToArray();
-            if (!relatedEvents.Any()) continue;
+            if (relatedEvents.Length == 0) continue;
             try
             {
                 o.Demoted = relatedEvents.Any(x =>
@@ -388,7 +388,7 @@ public class NPCToInsiderThreatCsv
                         StringComparison.CurrentCultureIgnoreCase));
                 o.IPPolicyViolations = relatedEvents.Any(x =>
                     x.Description.Contains("Compliance Violation", StringComparison.CurrentCultureIgnoreCase));
-                o.DrugAlcoholAbuse = n.NpcProfile.InsiderThreat.SubstanceAbuseAndAddictiveBehaviors.RelatedEvents.Any();
+                o.DrugAlcoholAbuse = n.NpcProfile.InsiderThreat.SubstanceAbuseAndAddictiveBehaviors.RelatedEvents.Count != 0;
                 o.CoworkerConflict = relatedEvents.Any(x =>
                     x.Description.Contains("coworker", StringComparison.CurrentCultureIgnoreCase));
                 o.EAPReferral = relatedEvents.Any(x =>
@@ -404,7 +404,7 @@ public class NPCToInsiderThreatCsv
                 o.FinancialProblems = relatedEvents.Any(x =>
                                           x.Description.Contains("Financial Problems",
                                               StringComparison.CurrentCultureIgnoreCase)) ||
-                                      n.NpcProfile.InsiderThreat.FinancialConsiderations.RelatedEvents.Any();
+                                      n.NpcProfile.InsiderThreat.FinancialConsiderations.RelatedEvents.Count != 0;
                 o.ArrestRecord = relatedEvents.Any(x =>
                     x.Description.Contains("arrest", StringComparison.CurrentCultureIgnoreCase));
                 o.GamblingHistory = relatedEvents.Any(x =>

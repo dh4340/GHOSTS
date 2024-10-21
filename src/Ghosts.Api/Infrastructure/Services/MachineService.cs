@@ -30,16 +30,11 @@ namespace ghosts.api.Infrastructure.Services
         Task<List<HistoryTimeline>> GetActivity(Guid id, int skip, int take, CancellationToken ct);
     }
 
-    public class MachineService : IMachineService
+    public class MachineService(ApplicationDbContext context) : IMachineService
     {
         private static readonly Logger _log = LogManager.GetCurrentClassLogger();
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context = context;
         private readonly int _lookBack = Program.ApplicationSettings.LookbackRecords;
-
-        public MachineService(ApplicationDbContext context)
-        {
-            _context = context;
-        }
 
         public async Task<List<Machine>> GetAsync(string q, CancellationToken ct)
         {
@@ -96,20 +91,20 @@ namespace ghosts.api.Infrastructure.Services
         {
             if (string.IsNullOrEmpty(Program.ApplicationSettings.MatchMachinesBy))
             {
-                return await _context.Machines.FirstOrDefaultAsync(o => o.Name.ToLower().Contains(machine.Name)
-                                                                        || o.FQDN.ToLower().Contains(machine.FQDN.ToLower())
-                                                                        || o.Host.ToLower().Contains(machine.Host.ToLower())
-                                                                        || o.ResolvedHost.ToLower().Contains(machine.ResolvedHost.ToLower()), ct);
+                return await _context.Machines.FirstOrDefaultAsync(o => o.Name.Contains(machine.Name, StringComparison.CurrentCultureIgnoreCase)
+                                                                        || o.FQDN.Contains(machine.FQDN, StringComparison.CurrentCultureIgnoreCase)
+                                                                        || o.Host.Contains(machine.Host, StringComparison.CurrentCultureIgnoreCase)
+                                                                        || o.ResolvedHost.Contains(machine.ResolvedHost, StringComparison.CurrentCultureIgnoreCase), ct);
             }
             else
             {
                 return Program.ApplicationSettings.MatchMachinesBy.ToLower() switch
                 {
-                    "name" => await _context.Machines.FirstOrDefaultAsync(o => o.Name.ToLower().Contains(machine.Name.ToLower()), ct),
-                    "fqdn" => await _context.Machines.FirstOrDefaultAsync(o => o.FQDN.ToLower().Contains(machine.FQDN.ToLower()), ct),
-                    "host" => await _context.Machines.FirstOrDefaultAsync(o => o.Host.ToLower().Contains(machine.Host.ToLower()), ct),
-                    "resolvedhost" => await _context.Machines.FirstOrDefaultAsync(o => o.ResolvedHost.ToLower().Contains(machine.ResolvedHost.ToLower()), ct),
-                    _ => await _context.Machines.FirstOrDefaultAsync(o => o.Name.ToLower().Contains(machine.Name.ToLower()), ct)
+                    "name" => await _context.Machines.FirstOrDefaultAsync(o => o.Name.Contains(machine.Name, StringComparison.CurrentCultureIgnoreCase), ct),
+                    "fqdn" => await _context.Machines.FirstOrDefaultAsync(o => o.FQDN.Contains(machine.FQDN, StringComparison.CurrentCultureIgnoreCase), ct),
+                    "host" => await _context.Machines.FirstOrDefaultAsync(o => o.Host.Contains(machine.Host, StringComparison.CurrentCultureIgnoreCase), ct),
+                    "resolvedhost" => await _context.Machines.FirstOrDefaultAsync(o => o.ResolvedHost.Contains(machine.ResolvedHost, StringComparison.CurrentCultureIgnoreCase), ct),
+                    _ => await _context.Machines.FirstOrDefaultAsync(o => o.Name.Contains(machine.Name, StringComparison.CurrentCultureIgnoreCase), ct)
                 };
             }
         }
@@ -262,7 +257,7 @@ namespace ghosts.api.Infrastructure.Services
 
             try
             {
-                return _context.HistoryTimeline.Where(o => o.MachineId == id).OrderByDescending(o => o.CreatedUtc).Skip(skip).Take(take).ToList();
+                return [.. _context.HistoryTimeline.Where(o => o.MachineId == id).OrderByDescending(o => o.CreatedUtc).Skip(skip).Take(take)];
             }
             catch (Exception e)
             {

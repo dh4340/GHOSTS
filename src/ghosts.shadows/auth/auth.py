@@ -10,6 +10,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
+import ui.app_logging as app_logging
+
+# Set up the logger
+logger = app_logging.setup_logger(__name__)
 
 # Secret key to encode the JWT token
 SECRET_KEY = "Tartans1"
@@ -171,34 +175,6 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-# Endpoint for user signup
-@app.post("/signup", response_model=Token)
-async def signup(
-    form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)
-):
-    user = await get_user(db, form_data.username)
-    if user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="User already exists!",
-        )
-    hashed_password = get_password_hash(form_data.password)
-    new_user = User(
-        username=form_data.username,
-        hashed_password=hashed_password,
-        full_name="",
-        disabled=False,
-    )
-    async with db as session:
-        session.add(new_user)
-        await session.commit()
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": form_data.username}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
-
-
 # Endpoint to get the current user's information
 @app.get("/users/me/", response_model=UserInDB)
 async def read_users_me(current_user: User = Depends(get_current_active_user)):
@@ -208,5 +184,4 @@ async def read_users_me(current_user: User = Depends(get_current_active_user)):
 # Run the app with Uvicorn
 if __name__ == "__main__":
     import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.dev(app, host="0.0.0.0", port=8000)

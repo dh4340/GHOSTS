@@ -1,9 +1,10 @@
+from datetime import datetime, timedelta
+from typing import Optional
+
+from config import ALGORITHM, SECRET_KEY
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from passlib.context import CryptContext
-from datetime import datetime, timedelta
-from typing import Optional
-from config import SECRET_KEY, ALGORITHM
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 

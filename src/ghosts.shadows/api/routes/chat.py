@@ -1,19 +1,17 @@
+from typing import Any
+
+from app_logging import setup_logger
+from config.config import CHAT_MODEL
 from fastapi import APIRouter, Depends, HTTPException
-from utils.dependencies import decode_jwt, Request
-from langchain_ollama import ChatOllama
-import app_logging
+from handlers.llm_utils import generate_response
+from utils.dependencies import Request, decode_jwt
 
-# Create an APIRouter instance
 router = APIRouter()
-logger = app_logging.setup_logger(__name__)
-
-# Global lists to store chat documents
-chat_docs: list = []
-chat_documents: list = []
+logger = setup_logger(__name__, level=10)
 
 
 @router.post("/chat")
-async def chat(request: Request, username: str = Depends(decode_jwt)) -> dict:
+async def chat(request: Request, username: str = Depends(decode_jwt)) -> dict[str, Any]:
     """
     Process a chat request from the user.
 
@@ -27,19 +25,19 @@ async def chat(request: Request, username: str = Depends(decode_jwt)) -> dict:
     query = request.query
     logger.info(f"Processing chat request for user: {username} with query: {query}")
 
-    # Initialize the ChatOllama model for chat
-    llm = ChatOllama(model="chat", temperature=0.9)
+    if not query:
+        logger.warning(f"Empty query received from user: {username}")
+        raise HTTPException(status_code=400, detail="Query cannot be empty.")
 
     try:
-        # Generate a response using the LLM
-        llm_response = llm.invoke(query).content
+        logger.debug(f"Sending request to Ollama API with model: {CHAT_MODEL}")
+        filtered_llm_response = generate_response(query, CHAT_MODEL)
 
-        # Log the generated LLM response
-        logger.debug(f"Chat response for {username}: {llm_response}")
-
-        # Return the response in a JSON format
-        return {"response": llm_response}
+        return {"message": filtered_llm_response}
 
     except Exception as e:
-        logger.error(f"Error processing chat for {username}: {str(e)}")
+        logger.error(
+            f"Unexpected error occurred while processing chat for {username}: {str(e)}",
+            exc_info=True,
+        )
         raise HTTPException(status_code=500, detail="Internal Server Error")

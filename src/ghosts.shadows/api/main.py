@@ -1,12 +1,21 @@
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-import app_logging
-from routes import activity, chat, content, lessons, social
-from typing import Any
 import os
+from typing import Any
+
+import app_logging
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from routes import (
+    activity,
+    chat,
+    excel_content,
+    image_content,
+    lessons,
+    social,
+    web_content,
+)
 
 # Initialize logging
-logger = app_logging.setup_logger(__name__, level="DEBUG")  # Set logging level to DEBUG
+logger = app_logging.setup_logger(__name__)
 
 # FastAPI app
 app = FastAPI()
@@ -15,6 +24,8 @@ app = FastAPI()
 origins = [
     "http://localhost:7860",
     "http://0.0.0.0:7860",
+    "http://*",
+    "*",
     # Add other origins here if needed
 ]
 
@@ -29,7 +40,9 @@ app.add_middleware(
 # Include routes from different modules
 app.include_router(activity.router)
 app.include_router(chat.router)
-app.include_router(content.router)
+app.include_router(web_content.router)
+app.include_router(image_content.router)
+app.include_router(excel_content.router)
 app.include_router(lessons.router)
 app.include_router(social.router)
 
@@ -77,6 +90,6 @@ if __name__ == "__main__":
 
     logger.info("GHOSTS SHADOWS coming online...")
 
-    ollama_host = os.getenv("GHOSTS_OLLAMA_URL", "http://localhost:11434")
+    ollama_host = os.getenv("OLLAMA_HOST", "http://ollama:11434")
     logger.debug(f"Ollama host set to: {ollama_host}")
     uvicorn.run("main:app", host="0.0.0.0", port=5900, reload=True)

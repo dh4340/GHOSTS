@@ -1,7 +1,8 @@
-from jose import jwt, JWTError
-from fastapi import Header, HTTPException
-from config.config import SECRET_KEY, ALGORITHM
 import logging
+
+from config.config import ALGORITHM, SECRET_KEY
+from fastapi import Header, HTTPException
+from jose import JWTError, jwt
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)

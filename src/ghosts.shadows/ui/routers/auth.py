@@ -1,8 +1,8 @@
 # routers/auth.py
-from fastapi import APIRouter, HTTPException, status
-from database import SessionLocal
-from models import UserSignupRequest, UserLoginRequest
 from crud import create_user, get_user
+from database import SessionLocal
+from fastapi import APIRouter, HTTPException, status
+from models import UserLoginRequest, UserSignupRequest
 from security import create_access_token, verify_password
 
 router = APIRouter()

@@ -1,11 +1,11 @@
 # routers/users.py
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from jose import JWTError, jwt
-from database import get_db
-from security import oauth2_scheme
+from config import ALGORITHM, SECRET_KEY
 from crud import get_user
-from config import SECRET_KEY, ALGORITHM
+from database import get_db
+from fastapi import APIRouter, Depends, HTTPException, status
+from jose import JWTError, jwt
+from security import oauth2_scheme
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 

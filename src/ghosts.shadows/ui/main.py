@@ -1,10 +1,11 @@
+from typing import Any
+
+import app_logging
+from database import init_db
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from database import init_db
 from routers import auth, users
-import app_logging
-from typing import Any
 
 # Set up the logger
 logger = app_logging.setup_logger(__name__)
@@ -13,8 +14,8 @@ logger = app_logging.setup_logger(__name__)
 app = FastAPI()
 
 # Jinja2 templates for rendering HTML
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="ui/static"), name="static")
+templates = Jinja2Templates(directory="ui/templates")
 
 # Initialize the database
 init_db()

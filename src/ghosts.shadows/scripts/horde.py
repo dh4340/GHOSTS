@@ -1,8 +1,10 @@
-import requests
-import random
 import json
 import os
+import random
 import time
+from typing import NoReturn
+
+import requests
 from faker import Faker
 from typing import NoReturn
 

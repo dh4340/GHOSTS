@@ -1,6 +1,14 @@
+import logging
 import os
+
 import PyPDF2
 import logging
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 # Set up logging
 logging.basicConfig(

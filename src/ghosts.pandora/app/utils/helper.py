@@ -1,4 +1,3 @@
-# app/utils/helpers.py
 from faker import Faker
 import cv2
 import numpy as np
@@ -16,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 fake = Faker()
 
-logger = setup_logger("app_logger")
+logger = setup_logger(__name__)
 
 
 def generate_random_name(extension: str = "") -> str:

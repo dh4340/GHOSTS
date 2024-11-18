@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install required system packages and Python dependencies
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y gcc libffi-dev libgl1-mesa-glx libglib2.0-0 && \
+    apt-get install --no-install-recommends -y gcc libffi-dev libgl1-mesa-glx libglib2.0-0 ffmpeg espeak-ng && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

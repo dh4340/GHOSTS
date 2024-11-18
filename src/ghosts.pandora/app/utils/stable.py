@@ -1,11 +1,11 @@
 import torch
 from diffusers import StableDiffusionPipeline
-import app_logging
+from app_logging import setup_logger
 import io
 from config.config import STABLE_MODEL_FILE_PATH, STABLE_LOCAL_FILES_ONLY
 
 # Setup logging
-logger = app_logging.setup_logger(__name__)
+logger = setup_logger(__name__)
 
 
 def generate_image_with_diffusers(prompt: str):

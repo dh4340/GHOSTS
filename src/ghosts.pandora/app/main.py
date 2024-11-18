@@ -22,6 +22,7 @@ from routes import (
     payload_routes,
     pdf_routes,
     unknown_routes,
+    voice_routes,
 )
 import configparser
 import os
@@ -69,6 +70,7 @@ app.include_router(payload_routes.router)
 app.include_router(html_routes.router)
 app.include_router(executable_routes.router)
 app.include_router(iso_routes.router)
+app.include_router(voice_routes.router)
 
 
 @app.get("/about", tags=["Information"])
@@ -102,7 +104,7 @@ def file_type_handler(path: str) -> Response:
         "gif": image_routes.return_image,
         "jpg": image_routes.return_image,
         "jpeg": image_routes.return_image,
-        "ico": image_routes.return_image,
+        # "ico": image_routes.return_image,
         # Documents
         "doc": doc_routes.return_doc_file,
         "docx": doc_routes.return_doc_file,
@@ -114,6 +116,8 @@ def file_type_handler(path: str) -> Response:
         "one": onenote_routes.return_onenote,
         # Video files
         "mp4": mp4_routes.return_mp4,
+        # Sound files
+        # "mp3": voice_routes.generate_synthesised_conversation,
         # Spreadsheets
         "xls": xlsx_routes.return_xlsx,
         "xlsx": xlsx_routes.return_xlsx,

@@ -132,7 +132,7 @@ def return_html(file_name: str = None) -> HTMLResponse:
     content = ""
     if OLLAMA_ENABLED:
         try:
-            prompt = f"Generate an HTML document titled '{file_name}' with several sections of rich content, your response should only contain the html and any inline css or javascript. Not commentary is required."
+            prompt = f"Generate an HTML document based using the following prompt '{file_name}' with several sections of rich content, your response should only contain the html and any inline css or javascript. No commentary is required."
             content = generate_document_with_ollama(prompt, model)
 
             if content:

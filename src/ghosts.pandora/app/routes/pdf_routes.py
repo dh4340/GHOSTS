@@ -15,6 +15,9 @@ router = APIRouter()
 
 model = "llama3.2"  # Specify the model you want to use with Ollama
 
+def sanitize_text(text: str) -> str:
+    """Sanitize text to ensure it can be encoded in 'latin1'."""
+    return text.encode("latin1", "replace").decode("latin1")
 
 @router.get("/pdf", tags=["Documents"])
 @router.post("/pdf", tags=["Documents"])
@@ -51,7 +54,8 @@ def return_pdf() -> Response:
 
     # Step 3: Set default font and add title
     pdf.set_font("Arial", "B", size=16)
-    pdf.cell(200, 10, txt=title, ln=True, align="C")
+    sanitized_title = sanitize_text(title)
+    pdf.cell(200, 10, txt=sanitized_title, ln=True, align="C")
     pdf.ln(10)
 
     # Step 4: Add random text content
@@ -76,7 +80,8 @@ def return_pdf() -> Response:
         else:
             content = fake.sentence()  # Default to Faker content
 
-        pdf.multi_cell(0, 10, txt=content)
+        sanitized_content = sanitize_text(content)
+        pdf.multi_cell(0, 10, txt=sanitized_content)
 
     # Step 5: Save the PDF
     pdf_output = BytesIO()

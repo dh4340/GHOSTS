@@ -6,6 +6,10 @@ logger = app_logging.setup_logger("app_logger")
 OLLAMA_ENABLED = True
 OLLAMA_API_URL = "http://ollama:11434/api/generate"
 OLLAMA_TIMEOUT = 60
+STABLE_LOCAL_FILES_ONLY = True
+STABLE_MODEL_FILE_PATH = (
+    "stable-diffusion-2-1/snapshots/5cae40e6a2745ae2b01ad92ae5043f95f23644d6"
+)
 
 # List of available endpoints
 endpoints = [

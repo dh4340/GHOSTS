@@ -32,9 +32,7 @@ def generate_document_with_ollama(prompt: str, model: str):
                 elapsed_time,
                 response_data,
             )
-            return response_data.get(
-                "response", ""
-            )
+            return response_data.get("response", "")
         else:
             logger.error(
                 "Invalid response from Ollama: %s - %s",

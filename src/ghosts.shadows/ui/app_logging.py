@@ -13,7 +13,7 @@ if not os.path.exists(LOG_DIR):
 
 # Set up logging
 def setup_logger(
-    logger_name: str, log_file: str = LOG_FILE, level: int = logging.DEBUG
+    logger_name: str, log_file: str = LOG_FILE, level: int = logging.INFO
 ) -> logging.Logger:
     """
     Set up a logger that logs messages to both console and file.

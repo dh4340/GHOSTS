@@ -6,7 +6,7 @@ from io import BytesIO
 import zipstream
 import random
 from typing import Generator
-import app_logging
+from app_logging import setup_logger
 from fastapi.responses import StreamingResponse
 import pyzipper
 import tarfile
@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 fake = Faker()
 
-logger = app_logging.setup_logger("app_logger")
+logger = setup_logger("app_logger")
 
 
 def generate_random_name(extension: str = "") -> str:

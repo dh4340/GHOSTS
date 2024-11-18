@@ -1,0 +1,16 @@
+imaginairy
+langchain
+numpy
+Requests
+torch
+transformers
+docx2txt
+pypdf
+chromadb
+tqdm
+pipdeptree
+watchdog
+python-jose
+passlib
+aiosqlite
+langchain-ollama

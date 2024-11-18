@@ -19,6 +19,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY app ./
 
+# Copy cached models for offline use
+COPY ./models--stabilityai--stable-diffusion-2-1/ stable-diffusion-2-1/
+
 # Set environment variables (proxy can be omitted if not needed)
 ENV HTTP_PROXY=""
 ENV HTTPS_PROXY=""

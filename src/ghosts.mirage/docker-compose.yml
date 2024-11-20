@@ -1,0 +1,53 @@
+# Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
+
+services:
+  mirage:
+    restart: always
+    container_name: ghosts-mirage
+    image: ghosts-mirage
+    deploy:
+      reservations:
+        devices:
+          - driver:
+            count: 1
+            capabilities: [gpu]
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - GHOSTS_OLLAMA_URL=http://ollama:11434
+    ports:
+      - "80:80"
+      - "8081:8081"
+      - "1935:1935"
+      - "443:443"
+      - "7860:7860"
+    volumes:
+      - "./app/config:/usr/src/app/config"
+      - "./app/payloads:/usr/src/app/payloads"
+    networks:
+      - ghosts-network
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama:ollama
+    container_name: ollama
+    environment:
+      - OLLAMA_PORT=11434
+    runtime: nvidia
+    deploy:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+    networks:
+      - ghosts-network
+    restart: always
+
+networks:
+  ghosts-network:
+    driver: bridge
+
+

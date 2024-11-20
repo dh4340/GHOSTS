@@ -3,7 +3,8 @@ from typing import List
 from app_logging import setup_logger
 from config import config
 
-from .doc_loader import load_documents_from_directories, split_documents_into_chunks
+from .doc_loader import (load_documents_from_directories,
+                         split_documents_into_chunks)
 from .embeddings import BertEmbeddings
 from .llm_utils import generate_response
 

@@ -18,6 +18,10 @@ def filter_llm_response(content: str) -> str:
     logger.debug("Starting to filter LLM response.")
     logger.debug(f"Original content: {content}")
 
+    # Remove """ before or after any content
+    content = re.sub(r'"""', "", content)
+    logger.debug(f"Removed triple quotes: {content}")
+
     # Split the content into sentences
     content_sentences = re.split(r"([\:|\.|!|\?])", content)
     logger.debug(f"Split content into sentences: {content_sentences}")

@@ -6,7 +6,6 @@ from typing import NoReturn
 
 import requests
 from faker import Faker
-from typing import NoReturn
 
 # Initialize the Faker instance for generating fake names
 fake = Faker()

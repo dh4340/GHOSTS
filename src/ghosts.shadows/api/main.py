@@ -4,8 +4,15 @@ from typing import Any
 import app_logging
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from routes import (activity, chat, excel_content, image_content, lessons,
-                    social, web_content)
+from routes import (
+    activity,
+    chat,
+    excel_content,
+    image_content,
+    lessons,
+    social,
+    web_content,
+)
 
 # Initialize logging
 logger = app_logging.setup_logger(__name__)

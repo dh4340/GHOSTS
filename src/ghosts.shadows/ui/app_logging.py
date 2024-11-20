@@ -52,10 +52,3 @@ def setup_logger(
         logger.addHandler(file_handler)
 
     return logger
-<<<<<<< HEAD
-
-
-# Usage example
-# app_logger = setup_logger('app_logger')
-=======
->>>>>>> 90e80d6a (Shadows moved to new structure)

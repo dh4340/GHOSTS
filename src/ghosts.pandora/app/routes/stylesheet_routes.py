@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Response
 import configparser
-import random
 import os
+import random
+
 import app_logging
-from utils.ollama import generate_document_with_ollama
 from config.config import OLLAMA_ENABLED
+from fastapi import APIRouter, Response
+from utils.ollama import generate_document_with_ollama
 
 logger = app_logging.setup_logger("app_logger")
 

@@ -1,6 +1,6 @@
+import app_logging
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
-import app_logging
 from utils.helper import generate_frames
 
 router = APIRouter()

@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Response
-from faker import Faker
-from fpdf import FPDF
 import random
-import app_logging
 from io import BytesIO
-from utils.ollama import generate_document_with_ollama
-from utils.helper import generate_random_name
+
+import app_logging
 from config.config import OLLAMA_ENABLED
+from faker import Faker
+from fastapi import APIRouter, Response
+from fpdf import FPDF
+from utils.helper import generate_random_name
+from utils.ollama import generate_document_with_ollama
 
 logger = app_logging.setup_logger("app_logger")
 fake = Faker()
@@ -15,9 +16,11 @@ router = APIRouter()
 
 model = "llama3.2"  # Specify the model you want to use with Ollama
 
+
 def sanitize_text(text: str) -> str:
     """Sanitize text to ensure it can be encoded in 'latin1'."""
     return text.encode("latin1", "replace").decode("latin1")
+
 
 @router.get("/pdf", tags=["Documents"])
 @router.post("/pdf", tags=["Documents"])

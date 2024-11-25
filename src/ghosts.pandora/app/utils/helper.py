@@ -1,22 +1,21 @@
-# app/utils/helpers.py
-from faker import Faker
+import random
+import tarfile
+from io import BytesIO
+from typing import Generator
+
 import cv2
 import numpy as np
-from io import BytesIO
-import zipstream
-import random
-from typing import Generator
-from app_logging import setup_logger
-from fastapi.responses import StreamingResponse
 import pyzipper
-import tarfile
-
+import zipstream
+from app_logging import setup_logger
+from faker import Faker
 from fastapi import Response
+from fastapi.responses import StreamingResponse
 from PIL import Image, ImageDraw, ImageFont
 
 fake = Faker()
 
-logger = setup_logger("app_logger")
+logger = setup_logger(__name__)
 
 
 def generate_random_name(extension: str = "") -> str:

@@ -1,13 +1,13 @@
+import app_logging
+from faker import Faker
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
-from faker import Faker
-import app_logging
 from utils.helper import (
-    generate_random_name,
-    generate_zip,
-    generate_tar,
-    generate_gz,
     create_response,
+    generate_gz,
+    generate_random_name,
+    generate_tar,
+    generate_zip,
 )
 
 router = APIRouter()

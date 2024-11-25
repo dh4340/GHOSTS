@@ -10,6 +10,7 @@ STABLE_LOCAL_FILES_ONLY = True
 STABLE_MODEL_FILE_PATH = (
     "stable-diffusion-2-1/snapshots/5cae40e6a2745ae2b01ad92ae5043f95f23644d6"
 )
+SYNTHESIS_ENABLED = True
 
 # List of available endpoints
 endpoints = [

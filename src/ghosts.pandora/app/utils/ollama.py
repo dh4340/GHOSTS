@@ -1,9 +1,10 @@
-import requests
-import app_logging
 import time
+
+import requests
+from app_logging import setup_logger
 from config.config import OLLAMA_API_URL, OLLAMA_TIMEOUT
 
-logger = app_logging.setup_logger("app_logger")
+logger = setup_logger(__name__)
 
 
 def generate_document_with_ollama(prompt: str, model: str):

@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Response
-from io import BytesIO
-from openpyxl import Workbook
-from faker import Faker
-import random
 import os
+import random
+from io import BytesIO
+
 import app_logging
+from faker import Faker
+from fastapi import APIRouter, Response
+from openpyxl import Workbook
 from utils.helper import generate_random_name
 
 router = APIRouter()

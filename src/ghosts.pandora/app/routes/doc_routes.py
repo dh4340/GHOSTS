@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Response, HTTPException
 from io import BytesIO
-from docx import Document
-from faker import Faker
-from utils.helper import generate_random_name
+
 import app_logging
 from config.config import allowed_extensions
-
+from docx import Document
+from faker import Faker
+from fastapi import APIRouter, HTTPException, Response
+from utils.helper import generate_random_name
 
 logger = app_logging.setup_logger("app_logger")
 

@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Response
-from faker import Faker
-import random
-import app_logging
-from utils.helper import generate_random_name
 import os
+import random
+
+import app_logging
+from faker import Faker
+from fastapi import APIRouter, Response
+from utils.helper import generate_random_name
 
 router = APIRouter()
 fake = Faker()

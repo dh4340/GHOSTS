@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Response
 import random
-from faker import Faker
-from utils.helper import generate_image_response
+
 import app_logging
 from config.config import OLLAMA_ENABLED
+from faker import Faker
+from fastapi import APIRouter, Response
+from utils.helper import generate_image_response
 from utils.stable import generate_image_with_diffusers
 
 MODEL_NAME = "imagegen-v1"

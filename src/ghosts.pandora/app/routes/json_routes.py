@@ -1,17 +1,19 @@
-from fastapi import APIRouter, Response
-import random
-import logging
 import json
-from faker import Faker
-from utils.ollama import generate_document_with_ollama
-from utils.helper import generate_random_name
+import logging
+import random
+
 from config.config import OLLAMA_ENABLED
+from faker import Faker
+from fastapi import APIRouter, Response
+from utils.helper import generate_random_name
+from utils.ollama import generate_document_with_ollama
 
 router = APIRouter()
 fake = Faker()
 logger = logging.getLogger("app_logger")
 
 model = "llama3.2"
+
 
 @router.get("/api", tags=["Data Structures"])
 @router.post("/api", tags=["Data Structures"])

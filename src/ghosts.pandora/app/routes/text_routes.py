@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Response
-import app_logging
 import random
+
+import app_logging
+from config.config import OLLAMA_ENABLED
 from faker import Faker
+from fastapi import APIRouter, Response
 from utils.helper import generate_random_name
 from utils.ollama import generate_document_with_ollama
-from config.config import OLLAMA_ENABLED
 
 router = APIRouter()
 logger = app_logging.setup_logger("app_logger")

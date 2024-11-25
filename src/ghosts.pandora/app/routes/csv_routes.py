@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Response
-from faker import Faker
 import random
+
 import app_logging
+from faker import Faker
+from fastapi import APIRouter, Response
 
 router = APIRouter()
 fake = Faker()

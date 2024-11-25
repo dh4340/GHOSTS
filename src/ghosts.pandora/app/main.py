@@ -1,33 +1,34 @@
-import uvicorn
-from fastapi import FastAPI, Response, HTTPException
+import configparser
+import inspect
+import os
 
+import app_logging
+import uvicorn
+from config.config import OPENAPI_METADATA
+from fastapi import FastAPI, HTTPException, Response
 from routes import (
-    zip_routes,
     binary_routes,
-    json_routes,
     csv_routes,
-    text_routes,
-    stylesheet_routes,
-    script_routes,
-    image_routes,
-    html_routes,
-    onenote_routes,
     doc_routes,
     executable_routes,
+    html_routes,
+    image_routes,
     iso_routes,
-    ppt_routes,
-    xlsx_routes,
+    json_routes,
     mp4_routes,
-    video_routes,
+    onenote_routes,
     payload_routes,
     pdf_routes,
+    ppt_routes,
+    script_routes,
+    stylesheet_routes,
+    text_routes,
     unknown_routes,
+    video_routes,
+    voice_routes,
+    xlsx_routes,
+    zip_routes,
 )
-import configparser
-import os
-import app_logging
-import inspect
-from config.config import OPENAPI_METADATA
 
 # Unset proxy environment variables
 os.environ.pop("http_proxy", None)
@@ -69,6 +70,7 @@ app.include_router(payload_routes.router)
 app.include_router(html_routes.router)
 app.include_router(executable_routes.router)
 app.include_router(iso_routes.router)
+app.include_router(voice_routes.router)
 
 
 @app.get("/about", tags=["Information"])
@@ -102,7 +104,7 @@ def file_type_handler(path: str) -> Response:
         "gif": image_routes.return_image,
         "jpg": image_routes.return_image,
         "jpeg": image_routes.return_image,
-        "ico": image_routes.return_image,
+        # "ico": image_routes.return_image,
         # Documents
         "doc": doc_routes.return_doc_file,
         "docx": doc_routes.return_doc_file,
@@ -114,6 +116,8 @@ def file_type_handler(path: str) -> Response:
         "one": onenote_routes.return_onenote,
         # Video files
         "mp4": mp4_routes.return_mp4,
+        # Sound files
+        # "mp3": voice_routes.generate_synthesised_conversation,
         # Spreadsheets
         "xls": xlsx_routes.return_xlsx,
         "xlsx": xlsx_routes.return_xlsx,

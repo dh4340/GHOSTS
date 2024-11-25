@@ -1,27 +1,27 @@
-from fastapi import APIRouter, HTTPException, Request
-from utils.helper import generate_random_name
-import random
 import inspect
-from config.config import endpoints
+import random
 from typing import Any
-import app_logging
-from routes import (
-    zip_routes,
-    binary_routes,
-    json_routes,
-    csv_routes,
-    text_routes,
-    stylesheet_routes,
-    script_routes,
-    image_routes,
-    onenote_routes,
-    doc_routes,
-    ppt_routes,
-    pdf_routes,
-    xlsx_routes,
-    mp4_routes,
-)
 
+import app_logging
+from config.config import endpoints
+from fastapi import APIRouter, HTTPException, Request
+from routes import (
+    binary_routes,
+    csv_routes,
+    doc_routes,
+    image_routes,
+    json_routes,
+    mp4_routes,
+    onenote_routes,
+    pdf_routes,
+    ppt_routes,
+    script_routes,
+    stylesheet_routes,
+    text_routes,
+    xlsx_routes,
+    zip_routes,
+)
+from utils.helper import generate_random_name
 
 logger = app_logging.setup_logger("app_logger")
 

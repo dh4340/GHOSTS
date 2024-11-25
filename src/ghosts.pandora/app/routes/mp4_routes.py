@@ -1,8 +1,9 @@
 import os
+
 import app_logging
+from faker import Faker
 from fastapi import APIRouter, Response
 from utils.helper import generate_video_from_frames
-from faker import Faker
 
 router = APIRouter()
 fake = Faker()

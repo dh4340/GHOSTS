@@ -3,13 +3,14 @@ import random
 import tempfile
 import zipfile
 from io import BytesIO
+
+import app_logging
+from config.config import OLLAMA_ENABLED
+from faker import Faker
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse, StreamingResponse
-import app_logging
-from faker import Faker
 from utils.helper import generate_random_name
 from utils.ollama import generate_document_with_ollama
-from config.config import OLLAMA_ENABLED
 
 # Setup logging
 logger = app_logging.setup_logger("app_logger")
@@ -18,10 +19,18 @@ logger = app_logging.setup_logger("app_logger")
 fake = Faker()
 
 # Define the model name for Ollama
-model = "llama3.2"
+model = "web_content"
 
 # Initialize FastAPI router
 router = APIRouter()
+
+
+def clean_content(content: str) -> str:
+    """Remove backticks and the word 'html' from the start or end of the content."""
+    content = content.replace("```html", "").strip()
+    content = content.replace("```", "").strip()
+
+    return content
 
 
 @router.get("/chm", tags=["Web"])
@@ -132,8 +141,9 @@ def return_html(file_name: str = None) -> HTMLResponse:
     content = ""
     if OLLAMA_ENABLED:
         try:
-            prompt = f"Generate an HTML document titled '{file_name}' with several sections of rich content, your response should only contain the html and any inline css or javascript. Not commentary is required."
-            content = generate_document_with_ollama(prompt, model)
+            stripped_file_name = file_name.replace("_"," ").strip(".html")
+            prompt = f"Create a one-page website based on the given prompt '{stripped_file_name}'. The website should be visually appealing. Create a color scheme thats exciting for the website or theme. The website should feature realistic fake text, including articles, headlines, and paragraphs related to the theme. Add interactive design features such as drop-down menus, dynamic text and content, clickable buttons, and more. The layout should be clean, responsive, and user-friendly. The HTML, CSS, and JavaScript code should be well-structured and maintainable. Include inline CSS for styling and JavaScript for interactivity (any games should be functional). Only provide output, with no commentary."
+            content = clean_content(generate_document_with_ollama(prompt, model))
 
             if content:
                 logger.info("HTML content generated successfully using Ollama.")

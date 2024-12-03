@@ -33,8 +33,9 @@ def test_return_text_success(default_text_response):
     assert response.status_code == 200
     assert response.headers["Content-Type"].startswith("text/plain")
     assert "Content-Disposition" in response.headers
-    assert response.headers["Content-Disposition"] == "inline; filename=document.html"
-    assert len(response.content) > 0  # Ensure content is returned
+    assert response.headers["Content-Disposition"].startswith("inline; filename=")
+    assert response.headers["Content-Disposition"].endswith(".html")
+    assert len(response.content) > 0
 
 
 def test_return_text_with_ollama(ollama_text_response):

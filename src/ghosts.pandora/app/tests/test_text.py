@@ -21,10 +21,9 @@ def ollama_text_response():
 
 
 @pytest.fixture
-def fallback_text_response():
-    """Fixture to mock the fallback text response when Ollama is disabled."""
-    with patch("config.config.OLLAMA_ENABLED", False):
-        return client.get("/text")
+@patch("app.config.config.OLLAMA_ENABLED", False)  # Force fallback
+def fallback_text_response(client):
+    return client.get("/text")
 
 
 def test_return_text_success(default_text_response):

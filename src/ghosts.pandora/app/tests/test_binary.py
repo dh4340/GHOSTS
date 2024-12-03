@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 from unittest.mock import patch
 from faker import Faker
 from app.main import app
-import random
 
 client = TestClient(app)
 
@@ -49,7 +48,7 @@ def test_return_binary_without_file_name(
     assert response.content == mock_binary_data
     assert (
         response.headers["Content-Disposition"]
-        == f'attachment; filename={mock_file_name}'
+        == f"attachment; filename={mock_file_name}"
     )
     assert response.headers["Content-Type"] == "application/octet-stream"
     assert len(response.content) == 2000
@@ -59,9 +58,7 @@ def test_return_binary_without_file_name(
 
 
 @pytest.mark.parametrize("method", ["get", "post"])
-def test_return_binary_with_file_name(
-    method, mock_binary, mock_random_binary_length
-):
+def test_return_binary_with_file_name(method, mock_binary, mock_random_binary_length):
     """Test binary file generation with a file name (GET and POST)."""
     mock_random_binary_length.return_value = 1500
     mock_binary.return_value = mock_binary_data
@@ -71,7 +68,7 @@ def test_return_binary_with_file_name(
     assert response.content == mock_binary_data
     assert (
         response.headers["Content-Disposition"]
-        == f'attachment; filename={mock_file_name}'
+        == f"attachment; filename={mock_file_name}"
     )
     assert response.headers["Content-Type"] == "application/octet-stream"
     assert len(response.content) == 1500

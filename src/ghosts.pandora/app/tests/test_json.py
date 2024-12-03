@@ -36,6 +36,7 @@ def test_json_with_path(json_with_path_response):
     )
     assert response.headers["Content-Type"] == "application/json"
 
+
 def test_json_invalid_ollama(default_json_response):
     """Simulate Ollama failure and ensure Faker fallback."""
     response = default_json_response

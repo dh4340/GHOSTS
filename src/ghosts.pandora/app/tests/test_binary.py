@@ -26,7 +26,7 @@ def mock_random_binary_length():
 
 @pytest.fixture
 def mock_fake_binary():
-    with patch.object(Faker, "binary") as mock:
+    with patch.object(Faker(), "binary") as mock:
         yield mock
 
 

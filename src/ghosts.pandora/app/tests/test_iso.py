@@ -27,7 +27,7 @@ def missing_extension_filename():
 
 def test_return_iso_with_random_filename():
     """Test ISO generation with a random file name."""
-    with patch("routes.executable_routes.generate_random_name") as mock_random_name:
+    with patch("routes.iso_routes.generate_random_name") as mock_random_name:
         mock_random_name.return_value = "random_name.iso"
 
         response = client.get("/iso")

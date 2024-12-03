@@ -56,6 +56,9 @@ def test_return_text_with_ollama(mock_generate_document_with_ollama):
 @patch("app.config.config.OLLAMA_TIMEOUT", 1)
 def test_return_text_fallback(fallback_text_response):
     """Test document generation when Ollama is disabled or fails."""
+    from app.config.config import OLLAMA_TIMEOUT
+    assert OLLAMA_TIMEOUT == 1  # Should match the patched value
+
     response = fallback_text_response
     assert response.status_code == 200
     assert response.headers["Content-Type"].startswith("text/html")

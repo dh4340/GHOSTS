@@ -51,8 +51,8 @@ def test_return_iso_custom_name(custom_iso_filename):
     assert response.status_code == 200
     assert (
         response.headers["Content-Disposition"]
-        == f"attachment; filename={custom_iso_filename}"
-    )
+        == f'attachment; filename="{custom_iso_filename}"'
+    ), f"Unexpected Content-Disposition header: {response.headers['Content-Disposition']}"
     assert response.headers["Content-Type"] == "application/octet-stream"
     assert response.content.startswith(b"This is a random ISO file")
 
@@ -63,7 +63,7 @@ def test_return_iso_missing_extension(missing_extension_filename):
     assert response.status_code == 200
     assert (
         response.headers["Content-Disposition"]
-        == f"attachment; filename={missing_extension_filename}.iso"
-    )
+        == f'attachment; filename="{missing_extension_filename}.iso"'
+    ), f"Unexpected Content-Disposition header: {response.headers['Content-Disposition']}"
     assert response.headers["Content-Type"] == "application/octet-stream"
     assert response.content.startswith(b"This is a random ISO file")

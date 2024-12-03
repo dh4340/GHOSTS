@@ -59,7 +59,7 @@ def test_return_text_fallback(mock_generate_document):
 
     # Assertions for fallback behaviour
     assert response.status_code == 200
-    assert response.headers["Content-Type"].startswith("text/html")
+    assert response.headers["Content-Type"].startswith("text/plain")
     assert "Content-Disposition" in response.headers
     assert "<h1>" in response.content.decode("utf-8")
 

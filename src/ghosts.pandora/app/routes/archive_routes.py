@@ -1,8 +1,7 @@
 import app_logging
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
-from utils.helper import (create_response, generate_archive,
-                          generate_random_name)
+from utils.helper import create_response, generate_archive, generate_random_name
 
 router = APIRouter()
 

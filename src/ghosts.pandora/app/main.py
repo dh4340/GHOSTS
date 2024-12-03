@@ -6,11 +6,28 @@ import uvicorn
 from app_logging import configure_uvicorn_logging, setup_logger
 from config.config import LOG_LEVEL, OPENAPI_METADATA
 from fastapi import FastAPI, HTTPException, Response
-from routes import (archive_routes, binary_routes, csv_routes, doc_routes,
-                    executable_routes, html_routes, image_routes, iso_routes,
-                    json_routes, onenote_routes, payload_routes, pdf_routes,
-                    ppt_routes, script_routes, stylesheet_routes, text_routes,
-                    unknown_routes, video_routes, voice_routes, xlsx_routes)
+from routes import (
+    archive_routes,
+    binary_routes,
+    csv_routes,
+    doc_routes,
+    executable_routes,
+    html_routes,
+    image_routes,
+    iso_routes,
+    json_routes,
+    onenote_routes,
+    payload_routes,
+    pdf_routes,
+    ppt_routes,
+    script_routes,
+    stylesheet_routes,
+    text_routes,
+    unknown_routes,
+    video_routes,
+    voice_routes,
+    xlsx_routes,
+)
 
 # Unset proxy environment variables
 os.environ.pop("http_proxy", None)

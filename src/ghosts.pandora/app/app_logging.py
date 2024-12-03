@@ -2,8 +2,13 @@ import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
 
-from config.config import (FILE_LOGGING, LOG_DIR, LOG_FILE,
-                           LOG_JSON_FORMATTING, LOG_LEVEL)
+from config.config import (
+    FILE_LOGGING,
+    LOG_DIR,
+    LOG_FILE,
+    LOG_JSON_FORMATTING,
+    LOG_LEVEL,
+)
 from pythonjsonlogger import jsonlogger
 
 # Create log directory dynamically if needed

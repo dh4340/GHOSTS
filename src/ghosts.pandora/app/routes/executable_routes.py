@@ -14,17 +14,17 @@ logger = setup_logger(__name__)
 
 @router.get("/msi", tags=["Files"])
 @router.post("/msi", tags=["Files"])
-@router.get("/msi/{file_name}", tags=["Files"])
-@router.post("/msi/{file_name}", tags=["Files"])
-def return_msi(file_name: str = None) -> StreamingResponse:
+@router.get("/msi/{path:path}", tags=["Files"])
+@router.post("/msi/{path:path}", tags=["Files"])
+def return_msi(path: str = None) -> StreamingResponse:
     """Return a MSI file containing random data."""
 
-    if file_name is None:
-        file_name = generate_random_name(".msi")
-    elif not file_name.endswith(".msi"):
-        file_name += ".msi"  # Add .msi extension if not present
+    if path is None:
+        path = generate_random_name(".msi")
+    elif not path.endswith(".msi"):
+        path += ".msi"  # Add .msi extension if not present
 
-    logger.info(f"Generating MSI file: {file_name}")
+    logger.info(f"Generating MSI file: {path}")
 
     # Create a simple MSI file structure in memory
     msi_content = (
@@ -43,7 +43,7 @@ def return_msi(file_name: str = None) -> StreamingResponse:
     response = StreamingResponse(
         msi_buffer,
         media_type="application/x-msdownload",
-        headers={"Content-Disposition": f"attachment; filename={file_name}"},
+        headers={"Content-Disposition": f"attachment; filename={path}"},
     )
 
     logger.info("MSI file generated successfully.")
@@ -53,17 +53,17 @@ def return_msi(file_name: str = None) -> StreamingResponse:
 
 @router.get("/exe", tags=["Files"])
 @router.post("/exe", tags=["Files"])
-@router.get("/exe/{file_name}", tags=["Files"])
-@router.post("/exe/{file_name}", tags=["Files"])
-def return_exe(file_name: str = None) -> StreamingResponse:
+@router.get("/exe/{path:path}", tags=["Files"])
+@router.post("/exe/{path:path}", tags=["Files"])
+def return_exe(path: str = None) -> StreamingResponse:
     """Return an EXE file containing random data."""
 
-    if file_name is None:
-        file_name = generate_random_name(".exe")
-    elif not file_name.endswith(".exe"):
-        file_name += ".exe"  # Add .exe extension if not present
+    if path is None:
+        path = generate_random_name(".exe")
+    elif not path.endswith(".exe"):
+        path += ".exe"  # Add .exe extension if not present
 
-    logger.info(f"Generating EXE file: {file_name}")
+    logger.info(f"Generating EXE file: {path}")
 
     # Create a simple EXE file structure in memory
     exe_content = (
@@ -82,7 +82,7 @@ def return_exe(file_name: str = None) -> StreamingResponse:
     response = StreamingResponse(
         exe_buffer,
         media_type="application/octet-stream",
-        headers={"Content-Disposition": f"attachment; filename={file_name}"},
+        headers={"Content-Disposition": f"attachment; filename={path}"},
     )
 
     logger.info("EXE file generated successfully.")

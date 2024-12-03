@@ -25,9 +25,11 @@ def mock_random_binary_length():
 
 
 @pytest.fixture
-def mock_fake_binary():
-    with patch.object(Faker(), "binary", return_value=mock_binary_data) as mock:
-        yield mock
+def mock_paragraph():
+    """Fixture to mock Faker's paragraph generation."""
+    with patch.object(Faker(), "binary") as mock_binary_data:
+        mock_binary_data.return_value = "Mocked binary."
+        yield mock_binary_data
 
 
 @pytest.mark.parametrize("method", ["get", "post"])

@@ -31,7 +31,7 @@ def test_return_text_success(default_text_response):
     """Test successful document generation with random content."""
     response = default_text_response
     assert response.status_code == 200
-    assert response.headers["Content-Type"] == "text/html"
+    assert response.headers["Content-Type"] == "text/plain"
     assert "Content-Disposition" in response.headers
     assert response.headers["Content-Disposition"] == "inline; filename=document.html"
     assert len(response.content) > 0  # Ensure content is returned

@@ -34,7 +34,7 @@ def test_return_text_success(default_text_response):
     assert response.headers["Content-Type"].startswith("text/plain")
     assert "Content-Disposition" in response.headers
     assert response.headers["Content-Disposition"].startswith("inline; filename=")
-    assert response.headers["Content-Disposition"].endswith(".html")
+    assert response.headers["Content-Disposition"].endswith(".txt")
     assert len(response.content) > 0
 
 

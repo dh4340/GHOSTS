@@ -25,7 +25,7 @@ def mock_random_binary_length():
 
 
 @pytest.fixture
-def mock_paragraph():
+def mock_binary():
     """Fixture to mock Faker's paragraph generation."""
     with patch.object(Faker(), "binary") as mock_binary_data:
         mock_binary_data.return_value = "Mocked binary."
@@ -34,12 +34,12 @@ def mock_paragraph():
 
 @pytest.mark.parametrize("method", ["get", "post"])
 def test_return_binary_without_file_name(
-    method, mock_generate_random_name, mock_fake_binary, mock_random_binary_length
+    method, mock_generate_random_name, mock_binary, mock_random_binary_length
 ):
     """Test binary file generation without a file name (GET and POST)."""
     mock_generate_random_name.return_value = mock_file_name
     mock_random_binary_length.return_value = 2000
-    mock_fake_binary.return_value = mock_binary_data
+    mock_binary.return_value = mock_binary_data
 
     response = getattr(client, method)("/binary")
     assert response.status_code == 200
@@ -57,11 +57,11 @@ def test_return_binary_without_file_name(
 
 @pytest.mark.parametrize("method", ["get", "post"])
 def test_return_binary_with_file_name(
-    method, mock_fake_binary, mock_random_binary_length
+    method, mock_binary, mock_random_binary_length
 ):
     """Test binary file generation with a file name (GET and POST)."""
     mock_random_binary_length.return_value = 1500
-    mock_fake_binary.return_value = mock_binary_data
+    mock_binary.return_value = mock_binary_data
 
     response = getattr(client, method)(f"/binary/{mock_file_name}")
     assert response.status_code == 200

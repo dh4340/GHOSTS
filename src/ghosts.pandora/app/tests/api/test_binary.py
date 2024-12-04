@@ -4,26 +4,21 @@ from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
-# Mock data for testing
-mock_binary_data = b"Random binary data"
-mock_file_name = "test_file.bin"
 
-
-@pytest.mark.parametrize("method", ["get", "post"])
-def test_return_binary_without_file_name(
-    method,
-    mock_random_name,
-):
+@pytest.mark.parametrize("method, endpoint", [
+    ("get", "/binary"),
+    ("post", "/binary"),
+])
+def test_return_binary_without_file_name(method, endpoint):
     """Test binary file generation without a file name (GET and POST)."""
-    mock_random_name.return_value = mock_file_name
-
-    response = getattr(client, method)("/binary")
+    response = getattr(client, method)(endpoint)
     assert response.status_code == 200
 
-
-@pytest.mark.parametrize("method", ["get", "post"])
-def test_return_binary_with_file_name(method):
+@pytest.mark.parametrize("method, endpoint", [
+    ("get", "/binary/{mock_file_name}"),
+    ("post", "/binary/{mock_file_name}"),
+])
+def test_return_binary_with_file_name(method, endpoint, mock_file_name):
     """Test binary file generation with a file name (GET and POST)."""
-
-    response = getattr(client, method)(f"/binary/{mock_file_name}")
+    response = getattr(client, method)(endpoint.format(mock_file_name=mock_file_name))
     assert response.status_code == 200

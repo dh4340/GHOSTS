@@ -6,6 +6,7 @@ import time
 from app.main import app
 import config.config
 from faker import Faker
+import uuid
 
 
 @pytest.fixture(scope="session")
@@ -230,3 +231,9 @@ def missing_extension_filename():
 def mock_random_binary_length():
     with patch("utils.helper.generate_random_length") as mock:
         yield mock
+
+
+@pytest.fixture
+def mock_file_name():
+    """Fixture to generate a unique mock file name."""
+    return f"test_file_{uuid.uuid4().hex}.csv"

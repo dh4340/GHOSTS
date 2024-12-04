@@ -12,23 +12,6 @@ app.include_router(router)
 client = TestClient(main)
 
 
-@pytest.fixture
-def mock_config():
-    """Fixture for mocking the configuration."""
-    config = MagicMock()
-    config["payloads"] = {
-        "example": "/api/example,example1.json,application/json",
-        "missing": "/api/missing,missing_file.json,application/json",
-    }
-    return config
-
-
-@pytest.fixture
-def mock_base_dir():
-    """Fixture for mocking the base directory."""
-    return "/mock/base/dir"
-
-
 @patch("app.routes.payload_routes.get_config")
 @patch("app.routes.payload_routes.get_payload_path")
 @patch("builtins.open", new_callable=mock_open, read_data=b'{"key": "value"}')

@@ -1,28 +1,8 @@
-import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 from unittest.mock import patch
 
-
 client = TestClient(app)
-
-
-@pytest.fixture
-def default_iso_filename():
-    """Fixture to mock default ISO filename."""
-    return "random_file.iso"
-
-
-@pytest.fixture
-def custom_iso_filename():
-    """Fixture to mock custom ISO filename."""
-    return "test_file.iso"
-
-
-@pytest.fixture
-def missing_extension_filename():
-    """Fixture to mock ISO filename without extension."""
-    return "test_file"
 
 
 def test_return_iso_with_random_filename():

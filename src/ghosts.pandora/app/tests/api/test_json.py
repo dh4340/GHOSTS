@@ -1,21 +1,8 @@
-import pytest
 import json
 from fastapi.testclient import TestClient
 from app.main import app
 
 client = TestClient(app)
-
-
-@pytest.fixture
-def default_json_response():
-    """Fixture to mock the default JSON response."""
-    return client.get("/json")
-
-
-@pytest.fixture
-def json_with_path_response():
-    """Fixture to mock the JSON response with a path."""
-    return client.get("/json/test-path")
 
 
 def test_json_default(default_json_response):

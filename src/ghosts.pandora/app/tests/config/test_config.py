@@ -1,5 +1,3 @@
-import pytest
-
 def test_log_config(app_config):
     """
     Test logging configuration values.

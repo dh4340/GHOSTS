@@ -1,5 +1,3 @@
-import pytest
-from unittest.mock import patch
 from fastapi.testclient import TestClient
 from app.main import app
 
@@ -10,36 +8,6 @@ mock_doc_content = b"Mocked Word document content."
 mock_ai_generated_content = "AI-generated content for the document."
 mock_faker_content = "Faker-generated content for the document."
 mock_file_name = "test_file.docx"
-
-
-@pytest.fixture
-def mock_generate_document_with_ollama():
-    with patch("utils.ollama.generate_document_with_ollama") as mock:
-        yield mock
-
-
-@pytest.fixture
-def mock_faker_paragraph():
-    with patch("faker.Faker.paragraph") as mock:
-        yield mock
-
-
-@pytest.fixture
-def mock_ollama_enabled():
-    with patch("config.config.OLLAMA_ENABLED", True):
-        yield
-
-
-@pytest.fixture
-def mock_ollama_disabled():
-    with patch("config.config.OLLAMA_ENABLED", False):
-        yield
-
-
-@pytest.fixture
-def mock_allowed_extensions():
-    with patch("config.config.allowed_extensions", [".docx", ".doc", ".dot"]):
-        yield
 
 
 def test_return_doc_with_valid_filename_ollama_enabled(

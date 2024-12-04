@@ -1,33 +1,7 @@
-import pytest
-from unittest.mock import patch
 from fastapi.testclient import TestClient
 from app.main import app
 
 client = TestClient(app)
-
-
-@pytest.fixture
-def mock_random_name():
-    """Fixture to mock random name generation."""
-    with patch("utils.helper.generate_random_name") as mock_generate_random_name:
-        mock_generate_random_name.return_value = "mock_file"
-        yield mock_generate_random_name
-
-
-@pytest.fixture
-def mock_paragraph():
-    """Fixture to mock Faker's paragraph generation."""
-    with patch("faker.Faker.paragraph") as mock_paragraph:
-        mock_paragraph.side_effect = [f"Mocked content {i}" for i in range(10)]
-        yield mock_paragraph
-
-
-@pytest.fixture
-def mock_sentence():
-    """Fixture to mock Faker's sentence generation."""
-    with patch("faker.Faker.sentence") as mock_sentence:
-        mock_sentence.side_effect = [f"Mock title {i}" for i in range(10)]
-        yield mock_sentence
 
 
 def test_return_chm_with_default_filename(mock_random_name, mock_paragraph):

@@ -42,7 +42,9 @@ def test_file_type_handler_invalid(client):
 
 def test_file_type_handler_error(client, mocker):
     """Test file type handler when an exception is raised."""
-    mock_return_pdf = mocker.patch("routes.pdf_routes.return_pdf", side_effect=Exception("Mocked error"))
+    mock_return_pdf = mocker.patch(
+        "routes.pdf_routes.return_pdf", side_effect=Exception("Mocked error")
+    )
     response = client.get("/file.pdf")
 
     assert response.status_code == 500

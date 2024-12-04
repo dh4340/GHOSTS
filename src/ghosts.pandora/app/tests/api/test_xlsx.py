@@ -1,41 +1,8 @@
-import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch
 from app.main import app
 
 client = TestClient(app)
-
-
-@pytest.fixture
-def mock_generate_document_with_ollama():
-    """Fixture to mock the generate_document_with_ollama function."""
-    with patch("utils.ollama.generate_document_with_ollama") as mock_func:
-        mock_func.return_value = (
-            "word1, word2, word3"  # Mock AI-generated content for each row
-        )
-        yield mock_func
-
-
-@pytest.fixture
-def mock_generate_random_name():
-    """Fixture to mock generate_random_name to avoid random file generation."""
-    with patch("utils.helper.generate_random_name") as mock_func:
-        mock_func.return_value = "test_file.xlsx"  # Mocked file name
-        yield mock_func
-
-
-@pytest.fixture
-def mock_ollama_enabled():
-    """Fixture to simulate that Ollama is enabled."""
-    with patch("config.config.OLLAMA_ENABLED", True):
-        yield
-
-
-@pytest.fixture
-def mock_ollama_disabled():
-    """Fixture to simulate that Ollama is disabled."""
-    with patch("config.config.OLLAMA_ENABLED", False):
-        yield
 
 
 def test_return_xlsx(

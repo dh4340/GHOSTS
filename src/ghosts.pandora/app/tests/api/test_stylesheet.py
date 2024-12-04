@@ -1,32 +1,7 @@
-import pytest
 from fastapi.testclient import TestClient
 from app import main
-from unittest.mock import patch
 
 client = TestClient(main)
-
-
-@pytest.fixture
-def default_stylesheet_response():
-    """Fixture to mock the default stylesheet response."""
-    return client.get("/stylesheet")
-
-
-@pytest.fixture
-def ollama_stylesheet_response():
-    """Fixture to mock the response when Ollama is enabled."""
-    with patch("utils.ollama.generate_document_with_ollama") as mock_ollama:
-        mock_ollama.return_value = (
-            "body {font-family: Arial;} h1 {font-family: 'Times New Roman';}"
-        )
-        yield client.get("/stylesheet")
-
-
-@pytest.fixture
-def fallback_stylesheet_response():
-    """Fixture to mock the fallback stylesheet response when Ollama is disabled."""
-    with patch("config.config.OLLAMA_ENABLED", False):
-        return client.get("/stylesheet")
 
 
 def test_return_stylesheet_success(default_stylesheet_response):

@@ -1,28 +1,8 @@
-import pytest
 from fastapi.testclient import TestClient
 from app import main
 from unittest.mock import patch
 
 client = TestClient(main)
-
-
-@pytest.fixture
-def default_script_response():
-    """Fixture to mock the default script response."""
-    return client.get("/script")
-
-
-@pytest.fixture
-def custom_filename_script_response():
-    """Fixture to mock the script response with a custom filename."""
-    file_name = "custom_script.py"
-    return client.get(f"/script/{file_name}")
-
-
-@pytest.fixture
-def script_with_content_response():
-    """Fixture to mock script response with specific content."""
-    return client.get("/script")
 
 
 def test_return_script_success(default_script_response):

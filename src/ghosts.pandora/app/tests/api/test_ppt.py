@@ -1,4 +1,3 @@
-import pytest
 from fastapi.testclient import TestClient
 from app import main
 from unittest.mock import patch
@@ -6,25 +5,6 @@ from io import BytesIO
 from pptx import Presentation
 
 client = TestClient(main)
-
-
-@pytest.fixture
-def default_ppt_response():
-    """Fixture to mock the default PowerPoint response."""
-    return client.get("/ppt")
-
-
-@pytest.fixture
-def custom_filename_ppt_response():
-    """Fixture to mock the PowerPoint response with a custom filename."""
-    file_name = "custom_presentation.pptx"
-    return client.get(f"/ppt/{file_name}")
-
-
-@pytest.fixture
-def ppt_with_content_response():
-    """Fixture to mock PowerPoint response with specific content."""
-    return client.get("/ppt")
 
 
 def test_return_ppt_success(default_ppt_response):

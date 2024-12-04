@@ -1,32 +1,8 @@
-import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch
 from app.main import app
 
 client = TestClient(app)
-
-
-@pytest.fixture
-def mock_random_name():
-    """Fixture to mock the random name generation function."""
-    with patch("utils.helper.generate_random_name") as mock_name:
-        mock_name.return_value = "random_file.txt"
-        yield mock_name
-
-
-@pytest.fixture
-def mock_endpoint_mapping():
-    """Fixture to mock the endpoint mapping and the endpoint function."""
-    with patch("routes.archive_routes.return_zip") as mock_func:
-        mock_func.return_value = {"message": "Success"}
-        yield mock_func
-
-
-@pytest.fixture
-def mock_valid_endpoints():
-    """Fixture to mock valid endpoints."""
-    with patch("config.config.endpoints", ["return_zip", "return_text", "return_json"]):
-        yield
 
 
 def test_unknown_path_get(

@@ -1,8 +1,6 @@
-import pytest
 from unittest.mock import patch
 from fastapi.testclient import TestClient
 from app.main import app
-from faker import Faker
 import re
 
 client = TestClient(app)
@@ -10,22 +8,6 @@ client = TestClient(app)
 # Mock values
 mock_msi_content = b"This is a random MSI file with random content: "
 mock_exe_content = b"This is a random EXE file with random content: "
-
-
-@pytest.fixture
-def mock_paragraph():
-    """Fixture to mock Faker's paragraph generation."""
-    with patch.object(Faker(), "paragraph") as mock_paragraph:
-        mock_paragraph.return_value = "Mocked content."
-        yield mock_paragraph
-
-
-@pytest.fixture
-def mock_random_name():
-    """Fixture to mock random name generation."""
-    with patch("utils.helper.generate_random_name") as mock_generate_random_name:
-        mock_generate_random_name.return_value = "mock_file"
-        yield mock_generate_random_name
 
 
 def test_return_msi_with_random_filename(mock_paragraph):

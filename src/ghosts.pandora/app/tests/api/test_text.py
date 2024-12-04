@@ -1,21 +1,8 @@
-import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch
 from app.main import app
 
 client = TestClient(app)
-
-
-@pytest.fixture
-def default_text_response():
-    """Fixture to mock the default text response."""
-    return client.get("/text")
-
-
-@pytest.fixture
-@patch("app.config.config.OLLAMA_ENABLED", False)
-def fallback_text_response(client):
-    return client.get("/text")
 
 
 def test_return_text_success(default_text_response):

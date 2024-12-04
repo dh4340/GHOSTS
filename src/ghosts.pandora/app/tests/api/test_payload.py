@@ -1,10 +1,10 @@
+from unittest.mock import MagicMock, mock_open, patch
+
 import pytest
-from fastapi.testclient import TestClient
-from unittest.mock import patch, MagicMock, mock_open
+from app import main
 from app.routes.payload_routes import router
 from fastapi import FastAPI
-
-from app import main
+from fastapi.testclient import TestClient
 
 # Create a test FastAPI app and include the router
 app = FastAPI()

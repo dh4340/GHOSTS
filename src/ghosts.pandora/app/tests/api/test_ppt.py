@@ -1,7 +1,8 @@
-from fastapi.testclient import TestClient
-from app import main
-from unittest.mock import patch
 from io import BytesIO
+from unittest.mock import patch
+
+from app import main
+from fastapi.testclient import TestClient
 from pptx import Presentation
 
 client = TestClient(main)

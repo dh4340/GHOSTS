@@ -1,12 +1,13 @@
 import os
-import pytest
-from fastapi.testclient import TestClient
-from unittest.mock import patch
 import time
-from app.main import app
-import config.config
-from faker import Faker
 import uuid
+from unittest.mock import patch
+
+import config.config
+import pytest
+from app.main import app
+from faker import Faker
+from fastapi.testclient import TestClient
 
 
 @pytest.fixture(scope="session")

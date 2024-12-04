@@ -1,7 +1,8 @@
 import configparser
 import os
-from fastapi import APIRouter, HTTPException, Request, Response, Depends
+
 from app_logging import setup_logger
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
 router = APIRouter()
 logger = setup_logger(__name__)

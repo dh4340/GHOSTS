@@ -1,7 +1,8 @@
-from fastapi.testclient import TestClient
 from io import BytesIO
-from fastapi import Response
+
 from app.main import app
+from fastapi import Response
+from fastapi.testclient import TestClient
 
 client = TestClient(app)
 

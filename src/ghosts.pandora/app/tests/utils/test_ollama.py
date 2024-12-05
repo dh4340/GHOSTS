@@ -1,82 +1,60 @@
 import pytest
-import requests
-from requests.exceptions import Timeout, RequestException
-from unittest.mock import patch
-
 from utils.ollama import generate_document_with_ollama
 
-@pytest.fixture
-def mock_ollama_url():
-    return "http://mock-ollama-api.com"
+def test_generate_document_with_ollama_success(mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout):
+    """Test successful document generation using pytest-mock."""
+    # Mock the requests.post response
+    mock_response = mocker.Mock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {"response": "This is a generated document."}
+    mock_post = mocker.patch("utils.ollama.requests.post", return_value=mock_response)
 
-@pytest.fixture
-def mock_ollama_timeout():
-    return 5
+    # Run the function
+    result = generate_document_with_ollama(example_prompt, example_model, timeout=mock_ollama_timeout)
 
-@pytest.fixture
-def example_prompt():
-    return "Generate a sample document."
-
-@pytest.fixture
-def example_model():
-    return "example-model"
-
-def test_generate_document_with_ollama_success(
-    requests_mock, mock_ollama_url, example_prompt, example_model, mock_ollama_timeout
-):
-    """Test successful generation with a valid response."""
-    response_data = {"response": "This is a generated document."}
-    requests_mock.post(mock_ollama_url, json=response_data, status_code=200)
-
-    with patch("utils.ollama.OLLAMA_API_URL", mock_ollama_url):
-        result = generate_document_with_ollama(example_prompt, example_model, mock_ollama_timeout)
-
-    assert result == response_data["response"]
+    # Assertions
+    mock_post.assert_called_once_with(
+        mock_ollama_url,
+        json={"model": example_model, "prompt": example_prompt, "stream": False},
+        timeout=mock_ollama_timeout,
+    )
+    assert result == "This is a generated document"
 
 
-def test_generate_document_with_ollama_timeout(
-    requests_mock, mock_ollama_url, example_prompt, example_model, mock_ollama_timeout
-):
+def test_generate_document_with_ollama_timeout(mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout):
     """Test timeout handling."""
-    requests_mock.post(mock_ollama_url, exc=Timeout)
+    # Mock the requests.post to raise a timeout
+    mocker.patch("utils.ollama.requests.post", side_effect=pytest.TimeoutError)
 
-    with patch("utils.ollama.OLLAMA_API_URL", mock_ollama_url):
-        result = generate_document_with_ollama(example_prompt, example_model, mock_ollama_timeout)
+    # Run the function
+    result = generate_document_with_ollama(example_prompt, example_model, timeout=mock_ollama_timeout)
 
+    # Assertions
     assert result is None
 
 
-def test_generate_document_with_ollama_non_200_response(
-    requests_mock, mock_ollama_url, example_prompt, example_model, mock_ollama_timeout
-):
-    """Test handling of non-200 HTTP responses."""
-    requests_mock.post(mock_ollama_url, text="Internal Server Error", status_code=500)
+def test_generate_document_with_ollama_non_200_response(mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout):
+    """Test handling of non-200 responses."""
+    # Mock the requests.post response with a non-200 status code
+    mock_response = mocker.Mock()
+    mock_response.status_code = 500
+    mock_response.text = "Internal Server Error"
+    mocker.patch("utils.ollama.requests.post", return_value=mock_response)
 
-    with patch("utils.ollama.OLLAMA_API_URL", mock_ollama_url):
-        result = generate_document_with_ollama(example_prompt, example_model, mock_ollama_timeout)
+    # Run the function
+    result = generate_document_with_ollama(example_prompt, example_model, timeout=mock_ollama_timeout)
 
+    # Assertions
     assert result is None
 
 
-def test_generate_document_with_ollama_request_exception(
-    requests_mock, mock_ollama_url, example_prompt, example_model, mock_ollama_timeout
-):
+def test_generate_document_with_ollama_request_exception(mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout):
     """Test handling of generic request exceptions."""
-    requests_mock.post(mock_ollama_url, exc=RequestException("Connection Error"))
+    # Mock the requests.post to raise a generic request exception
+    mocker.patch("utils.ollama.requests.post", side_effect=pytest.RequestException("Network error"))
 
-    with patch("utils.ollama.OLLAMA_API_URL", mock_ollama_url):
-        result = generate_document_with_ollama(example_prompt, example_model, mock_ollama_timeout)
+    # Run the function
+    result = generate_document_with_ollama(example_prompt, example_model, timeout=mock_ollama_timeout)
 
-    assert result is None
-
-
-def test_generate_document_with_ollama_unexpected_exception(
-    mock_ollama_url, example_prompt, example_model, mock_ollama_timeout
-):
-    """Test handling of unexpected exceptions."""
-    with patch("utils.ollama.OLLAMA_API_URL", mock_ollama_url), patch(
-        "utils.ollama.requests.post", side_effect=Exception("Unexpected Error")
-    ):
-        result = generate_document_with_ollama(example_prompt, example_model, mock_ollama_timeout)
-
+    # Assertions
     assert result is None

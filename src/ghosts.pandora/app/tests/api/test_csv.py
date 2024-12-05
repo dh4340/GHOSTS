@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
+
 @pytest.mark.parametrize(
     "method, endpoint",
     [

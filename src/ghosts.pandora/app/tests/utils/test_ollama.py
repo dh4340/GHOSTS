@@ -1,10 +1,9 @@
 import pytest
 from utils.ollama import generate_document_with_ollama
+from requests.exceptions import Timeout, RequestException
 
 
-def test_generate_document_with_ollama_success(
-    mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout
-):
+def test_generate_document_with_ollama_success(mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout):
     """Test successful document generation using pytest-mock."""
     # Mock the requests.post response
     mock_response = mocker.Mock()
@@ -26,20 +25,15 @@ def test_generate_document_with_ollama_success(
     assert result == "This is a generated document"
 
 
-def test_generate_document_with_ollama_timeout(
-    mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout
-):
+def test_generate_document_with_ollama_timeout(mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout):
     """Test timeout handling."""
     # Mock the requests.post to raise a timeout
-    mocker.patch("utils.ollama.requests.post", side_effect=pytest.TimeoutError)
+    mocker.patch("utils.ollama.requests.post", side_effect=Timeout)
 
-    # Run the function
-    result = generate_document_with_ollama(
-        example_prompt, example_model, timeout=mock_ollama_timeout
-    )
+    # Run the function and assert the exception
+    with pytest.raises(Timeout):
+        generate_document_with_ollama(example_prompt, example_model, timeout=mock_ollama_timeout)
 
-    # Assertions
-    assert result is None
 
 
 def test_generate_document_with_ollama_non_200_response(
@@ -61,20 +55,14 @@ def test_generate_document_with_ollama_non_200_response(
     assert result is None
 
 
-def test_generate_document_with_ollama_request_exception(
-    mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout
-):
+def test_generate_document_with_ollama_request_exception(mocker, example_prompt, example_model, mock_ollama_url, mock_ollama_timeout):
     """Test handling of generic request exceptions."""
     # Mock the requests.post to raise a generic request exception
     mocker.patch(
         "utils.ollama.requests.post",
-        side_effect=pytest.RequestException("Network error"),
+        side_effect=RequestException("Network error"),
     )
 
-    # Run the function
-    result = generate_document_with_ollama(
-        example_prompt, example_model, timeout=mock_ollama_timeout
-    )
-
-    # Assertions
-    assert result is None
+    # Run the function and assert the exception
+    with pytest.raises(RequestException):
+        generate_document_with_ollama(example_prompt, example_model, timeout=mock_ollama_timeout)

@@ -19,13 +19,13 @@ def test_return_binary_without_file_name(method, endpoint):
 
 
 @pytest.mark.parametrize(
-    "method, endpoint",
+    "method, endpoint, file_extension",
     [
         ("get", "/binary/{mock_file_name}", "bin"),
         ("post", "/binary/{mock_file_name}", "bin"),
     ],
 )
-def test_return_binary_with_file_name(method, endpoint, mock_file_name):
+def test_return_binary_with_file_name(method, endpoint, file_extension, mock_file_name):
     """Test binary file generation with a file name (GET and POST)."""
-    response = getattr(client, method)(endpoint + mock_file_name)
+    response = getattr(client, method)(endpoint + mock_file_name(file_extension))
     assert response.status_code == 200

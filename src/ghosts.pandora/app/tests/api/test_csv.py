@@ -4,7 +4,6 @@ from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
-
 @pytest.mark.parametrize(
     "method, endpoint",
     [
@@ -32,14 +31,15 @@ def test_return_csv_with_ollama_disabled(method, endpoint):
 
 
 @pytest.mark.parametrize(
-    "method, endpoint",
+    "method, endpoint, file_extension",
     [
-        ("get", "/csv/"),
-        ("post", "/csv/"),
+        ("get", "/csv/", "csv"),
+        ("post", "/csv/", "csv"),
     ],
 )
-def test_return_csv_with_random_name(method, endpoint):
-    response = getattr(client, method)(endpoint)
+def test_return_csv_with_random_name(method, endpoint, file_extension, mock_file_name):
+    """Test return CSV file with a random name based on file extension."""
+    response = getattr(client, method)(endpoint + mock_file_name(file_extension))
     assert response.status_code == 200
     assert "Content-Disposition" in response.headers
-    assert response.headers["Content-Disposition"].endswith('.csv"')
+    assert response.headers["Content-Disposition"].endswith(f'.{file_extension}"')

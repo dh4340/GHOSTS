@@ -18,14 +18,15 @@ def test_zip_default(method, endpoint):
 
 
 @pytest.mark.parametrize(
-    "method, endpoint",
+    "method, endpoint, file_extension",
     [
-        ("get", "/zip/{mock_file_name}"),
-        ("post", "/zip/{mock_file_name}"),
+        ("get", "/zip/{mock_file_name}", "zip"),
+        ("post", "/zip/{mock_file_name}", "zip"),
     ],
 )
-def test_zip_with_filename(method, endpoint, mock_file_name):
-    response = getattr(client, method)(endpoint.format(mock_file_name=mock_file_name))
+def test_zip_with_filename(method, endpoint, file_extension, mock_file_name):
+    """Test return ZIP file with filename."""
+    response = getattr(client, method)(endpoint + mock_file_name(file_extension))
     assert response.status_code == 200
 
 
@@ -42,12 +43,13 @@ def test_tar_default(method, endpoint):
 
 
 @pytest.mark.parametrize(
-    "method, endpoint",
+    "method, endpoint, file_extension",
     [
-        ("get", "/tar/{mock_file_name}"),
-        ("post", "/tar/{mock_file_name}"),
+        ("get", "/tar/{mock_file_name}", "tar"),
+        ("post", "/tar/{mock_file_name}", "tar"),
     ],
 )
-def test_tar_with_filename(method, endpoint, mock_file_name):
-    response = getattr(client, method)(endpoint.format(mock_file_name=mock_file_name))
+def test_tar_with_filename(method, endpoint, file_extension, mock_file_name):
+    """Test return TAR file with filename."""
+    response = getattr(client, method)(endpoint + mock_file_name(file_extension))
     assert response.status_code == 200

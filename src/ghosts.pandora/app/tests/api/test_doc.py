@@ -42,7 +42,6 @@ def test_return_doc_with_invalid_filename(method):
     }
 
 
-
 @pytest.mark.parametrize("method", ["get", "post"])
 def test_return_doc_without_filename_ollama_enabled(method):
     """Test request without filename with Ollama enabled."""

@@ -16,9 +16,13 @@ def test_about_endpoint(client):
     [
         ("/file.txt", 200, "text/plain"),
         ("/file.pdf", 200, "application/pdf"),
-        ("/file.doc", 200, "application/msword"),
-        ("/file.jpeg", 200, "image/jpeg"),
-        ("/file.mp3", 200, "audio/mpeg"),
+        (
+            "/file.doc",
+            200,
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ),
+        ("/file.jpeg", 200, "image/JPEG"),
+        ("/file.mp3", 200, "audio/wav"),
         ("/file.zip", 200, "application/zip"),
     ],
 )

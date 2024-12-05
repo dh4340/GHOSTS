@@ -8,6 +8,9 @@ import pytest
 from app.main import app
 from faker import Faker
 from fastapi.testclient import TestClient
+import pytest
+from app import app_logging
+
 
 
 @pytest.fixture(scope="session")
@@ -251,5 +254,6 @@ def mock_config():
         "LOG_DIR": "./logs",
         "LOG_FILE": "app.log",
         "LOG_JSON_FORMATTING": "%(asctime)s %(name)s %(levelname)s %(message)s",
-        "LOG_LEVEL": logging.INFO,
+        "LOG_LEVEL": app_logging.logging.INFO,
     }
+

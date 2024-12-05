@@ -3,7 +3,7 @@ import os
 from unittest.mock import patch, MagicMock
 
 import pytest
-from app_logging import setup_logger, configure_uvicorn_logging
+import app_logging
 
 
 

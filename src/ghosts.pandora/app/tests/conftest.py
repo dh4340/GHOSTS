@@ -242,3 +242,14 @@ def mock_file_name(request):
         return f"test_file_{uuid.uuid4().hex}.{file_extension}"
 
     return generate_mock_file_name
+
+@pytest.fixture
+def mock_config():
+    """Fixture to mock configuration values."""
+    return {
+        "FILE_LOGGING": True,
+        "LOG_DIR": "./logs",
+        "LOG_FILE": "app.log",
+        "LOG_JSON_FORMATTING": "%(asctime)s %(name)s %(levelname)s %(message)s",
+        "LOG_LEVEL": logging.INFO,
+    }

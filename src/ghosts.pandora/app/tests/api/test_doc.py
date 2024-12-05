@@ -38,8 +38,9 @@ def test_return_doc_with_invalid_filename(method):
     response = getattr(client, method)(f"/doc/{invalid_file_name}")
     assert response.status_code == 400
     assert response.json() == {
-        "detail': 'Invalid file extension. Allowed extensions are: .doc, .docx, .dot, .dotx, .docm, .dotm, .odt"
+        "detail": "Invalid file extension. Allowed extensions are: .doc, .docx, .dot, .dotx, .docm, .dotm, .odt"
     }
+
 
 
 @pytest.mark.parametrize("method", ["get", "post"])

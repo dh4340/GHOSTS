@@ -8,9 +8,6 @@ import pytest
 from app.main import app
 from faker import Faker
 from fastapi.testclient import TestClient
-import pytest
-from app import app_logging
-
 
 
 @pytest.fixture(scope="session")
@@ -245,3 +242,23 @@ def mock_file_name(request):
         return f"test_file_{uuid.uuid4().hex}.{file_extension}"
 
     return generate_mock_file_name
+
+
+@pytest.fixture
+def example_prompt():
+    return "Write a detailed report about renewable energy."
+
+
+@pytest.fixture
+def example_model():
+    return "gpt-3.5-turbo"
+
+
+@pytest.fixture
+def mock_ollama_url():
+    return "https://api.example.com/ollama"
+
+
+@pytest.fixture
+def mock_ollama_timeout():
+    return 10  # seconds

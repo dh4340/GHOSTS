@@ -79,13 +79,14 @@ def test_create_random_files():
 #     assert size > 0  # Ensure the buffer is not empty
 
 
-
 def test_create_response():
     buffer = BytesIO(b"test content")
     file_name = "test_file.txt"
     response = create_response(buffer, file_name, "text/plain")
     assert response.media_type == "text/plain"
-    assert f"attachment; filename={file_name}" in response.headers["Content-Disposition"]
+    assert (
+        f"attachment; filename={file_name}" in response.headers["Content-Disposition"]
+    )
 
 
 @pytest.mark.parametrize(

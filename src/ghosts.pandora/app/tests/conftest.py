@@ -237,6 +237,8 @@ def mock_random_binary_length():
 @pytest.fixture
 def mock_file_name(request):
     """Fixture to generate a unique mock file name based on file type."""
-    file_extension = request.param if hasattr(request, 'param') else 'txt'  # Default to 'txt' if not specified
-    return f"test_file_{uuid.uuid4().hex}.{file_extension}"
+    def generate_mock_file_name(file_extension="txt"):
+        return f"test_file_{uuid.uuid4().hex}.{file_extension}"
+    return generate_mock_file_name
+
 

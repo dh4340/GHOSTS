@@ -45,7 +45,7 @@ def test_xlsx_endpoints(
     monkeypatch.setattr("config.config.OLLAMA_ENABLED", ollama_enabled)
 
     # Set up mock return values
-    mock_generate_random_name.return_value = "random_file.xlsx"
+    mock_random_name.return_value = "random_file.xlsx"
     mock_generate_document_with_ollama.return_value = "word1, word2, word3"
 
     # Simulate an exception for Ollama if needed
@@ -66,5 +66,5 @@ def test_xlsx_endpoints(
     assert response.headers["Content-Disposition"].endswith(expected_file_name)
 
     # Verify the number of calls to mocks
-    assert mock_generate_random_name.call_count == expected_random_name_calls
+    assert mock_random_name.call_count == expected_random_name_calls
     assert mock_generate_document_with_ollama.call_count == expected_ollama_calls

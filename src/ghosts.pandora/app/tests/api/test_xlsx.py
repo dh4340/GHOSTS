@@ -1,3 +1,4 @@
+import pytest
 from unittest.mock import patch
 
 from app.main import app
@@ -6,125 +7,64 @@ from fastapi.testclient import TestClient
 client = TestClient(app)
 
 
-def test_return_xlsx(
-    mock_generate_document_with_ollama, mock_random_name, mock_ollama_enabled
+@pytest.mark.parametrize(
+    "method, endpoint, custom_file_name, ollama_enabled, side_effect, expected_file_name, expected_random_name_calls, expected_ollama_calls",
+    [
+        # Test /sheets with Ollama enabled
+        ("get", "/sheets", None, True, None, "random_file.xlsx", 1, 1),
+        # Test /sheets/{file_name} with custom file name
+        ("get", "/sheets/custom_file.xlsx", "custom_file.xlsx", True, None, "custom_file.xlsx", 0, 1),
+        # Test /sheets with Ollama disabled
+        ("get", "/sheets", None, False, None, "random_file.xlsx", 1, 0),
+        # Test fallback to Faker when Ollama fails
+        ("get", "/sheets", None, True, Exception("AI Error"), "random_file.xlsx", 1, 1),
+        # Test invalid file extension correction
+        ("get", "/sheets/custom_file.txt", "custom_file.txt", True, None, "custom_file.xlsx", 0, 1),
+        # Test random data generation
+        ("get", "/sheets", None, True, None, "random_file.xlsx", 1, 1),
+    ],
+)
+@patch("app.main.generate_document_with_ollama")
+@patch("app.main.generate_random_name")
+def test_xlsx_endpoints(
+    mock_generate_random_name,
+    mock_generate_document_with_ollama,
+    monkeypatch,
+    method,
+    endpoint,
+    custom_file_name,
+    ollama_enabled,
+    side_effect,
+    expected_file_name,
+    expected_random_name_calls,
+    expected_ollama_calls,
 ):
-    """Test the /sheets route with Ollama enabled and content generated using AI."""
-    response = client.get("/sheets")
+    """Refactored test cases for all endpoints and configurations."""
 
+    # Mock OLLAMA_ENABLED config
+    monkeypatch.setattr("config.config.OLLAMA_ENABLED", ollama_enabled)
+
+    # Set up mock return values
+    mock_generate_random_name.return_value = "random_file.xlsx"
+    mock_generate_document_with_ollama.return_value = "word1, word2, word3"
+
+    # Simulate an exception for Ollama if needed
+    if side_effect:
+        mock_generate_document_with_ollama.side_effect = side_effect
+
+    # Call the endpoint using the specified HTTP method
+    response = getattr(client, method)(endpoint)
+
+    # Common assertions for all cases
     assert response.status_code == 200
     assert (
         response.headers["Content-Type"]
         == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-    assert (
-        "Content-Disposition" in response.headers
-    )  # Ensure the filename is in the response header
-    assert response.content  # Ensure that content is returned
+    assert "Content-Disposition" in response.headers
+    assert response.content  # Ensure non-empty response content
+    assert response.headers["Content-Disposition"].endswith(expected_file_name)
 
-    mock_generate_document_with_ollama.assert_called()  # Ensure Ollama was called
-    mock_random_name.assert_called_once()  # Ensure random file name was generated
-
-
-def test_return_xlsx_with_custom_file_name(
-    mock_generate_document_with_ollama, mock_random_name, mock_ollama_enabled
-):
-    """Test the /sheets/{file_name} route with a custom file name."""
-    response = client.get("/sheets/custom_file.xlsx")
-
-    assert response.status_code == 200
-    assert (
-        response.headers["Content-Type"]
-        == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    assert (
-        response.headers["Content-Disposition"]
-        == "attachment; filename=custom_file.xlsx"
-    )
-    assert response.content  # Ensure that content is returned
-
-    mock_generate_document_with_ollama.assert_called()  # Ensure Ollama was called
-    mock_random_name.assert_not_called()  # Ensure random name wasn't generated
-
-
-def test_return_xlsx_with_ollama_disabled(
-    mock_generate_document_with_ollama, mock_random_name, mock_ollama_disabled
-):
-    """Test the /sheets route when Ollama is disabled."""
-    response = client.get("/sheets")
-
-    assert response.status_code == 200
-    assert (
-        response.headers["Content-Type"]
-        == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    assert (
-        "Content-Disposition" in response.headers
-    )  # Ensure the filename is in the response header
-    assert response.content  # Ensure that content is returned
-
-    mock_generate_document_with_ollama.assert_not_called()  # Ensure Ollama was not called
-    mock_random_name.assert_called_once()  # Ensure random file name was generated
-
-
-def test_fallback_to_faker(
-    mock_generate_document_with_ollama, mock_random_name, mock_ollama_enabled
-):
-    """Test that Faker is used when Ollama fails to generate content."""
-    with patch(
-        "utils.ollama.generate_document_with_ollama", side_effect=Exception("AI Error")
-    ):
-        response = client.get("/sheets")
-
-    assert response.status_code == 200
-    assert (
-        response.headers["Content-Type"]
-        == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    assert (
-        "Content-Disposition" in response.headers
-    )  # Ensure the filename is in the response header
-    assert response.content  # Ensure that content is returned
-
-    mock_generate_document_with_ollama.assert_called()  # Ensure Ollama was called
-    mock_random_name.assert_called_once()  # Ensure random file name was generated
-
-
-def test_invalid_file_extension(
-    mock_generate_document_with_ollama, mock_random_name, mock_ollama_enabled
-):
-    """Test that invalid file extensions are corrected to .xlsx."""
-    response = client.get("/sheets/custom_file.txt")
-
-    assert response.status_code == 200
-    assert (
-        response.headers["Content-Type"]
-        == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    assert (
-        response.headers["Content-Disposition"]
-        == "attachment; filename=custom_file.xlsx"
-    )
-    assert response.content  # Ensure that content is returned
-
-    mock_generate_document_with_ollama.assert_called()  # Ensure Ollama was called
-    mock_random_name.assert_not_called()  # Ensure random name wasn't generated
-
-
-def test_generate_xlsx_with_random_data(
-    mock_generate_document_with_ollama, mock_random_name, mock_ollama_enabled
-):
-    """Test the random data generation logic (rows of data)."""
-    response = client.get("/sheets")
-
-    assert response.status_code == 200
-    assert (
-        response.headers["Content-Type"]
-        == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    assert (
-        len(response.content) > 0
-    )  # Check if content is not empty (i.e., a valid Excel file is generated)
-
-    # Additional checks could involve checking if rows are generated in the file, but here we just ensure non-emptiness
-    mock_generate_document_with_ollama.assert_called()  # Ensure Ollama was called for row generation
+    # Verify the number of calls to mocks
+    assert mock_generate_random_name.call_count == expected_random_name_calls
+    assert mock_generate_document_with_ollama.call_count == expected_ollama_calls

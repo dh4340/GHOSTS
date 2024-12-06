@@ -24,10 +24,10 @@ client = TestClient(app)
         ("get", "/sheets", None, True, None, "random_file.xlsx", 1, 1),
     ],
 )
-@patch("app.main.generate_document_with_ollama")
-@patch("app.main.generate_random_name")
+@patch("app.helpers.generate_document_with_ollama")
+@patch("app.helpers.generate_random_name")
 def test_xlsx_endpoints(
-    mock_generate_random_name,
+    mock_random_name,
     mock_generate_document_with_ollama,
     monkeypatch,
     method,

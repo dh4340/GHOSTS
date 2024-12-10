@@ -26,7 +26,7 @@ VOICE_GENERATION_ENABLED = False
 
 # Image Configuration
 IMAGE_GENERATION_MODEL = "stabilityai/sdxl-turbo"
-DIFFUSERS_LOCAL_FILES_ONLY = False
+DIFFUSERS_LOCAL_FILES_ONLY = True
 
 # Video Configuration
 VIDEO_GENERATION_ENABLED = False

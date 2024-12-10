@@ -134,45 +134,46 @@ def return_html(file_name: str = None) -> HTMLResponse:
                 logger.info("HTML content generated successfully using Ollama.")
         except Exception as e:
             logger.error(f"Error using Ollama: {str(e)}")
-
-    body = ""
-    for _ in range(random.randint(1, 20)):
-        if random.randint(2, 100) > 55:
-            body = body + f"<h3>{fake.sentence().replace('.','')}</h3>"
-            body = (
-                body + f"<p>{fake.paragraph(nb_sentences=random.randint(1, 100))}</p>"
-            )
-            if random.randint(1, 100) > 85:
+    else:
+        body = ""
+        for _ in range(random.randint(1, 20)):
+            if random.randint(2, 100) > 55:
+                body = body + f"<h3>{fake.sentence().replace('.','')}</h3>"
                 body = (
-                    body
-                    + f"<img src='images/{fake.word()}.png?h={random.randint(80, 200)}&w={random.randint(200, 400)}'/>"
+                    body + f"<p>{fake.paragraph(nb_sentences=random.randint(1, 100))}</p>"
                 )
+                if random.randint(1, 100) > 85:
+                    body = (
+                        body
+                        + f"<img src='images/{fake.word()}.png?h={random.randint(80, 200)}&w={random.randint(200, 400)}'/>"
+                    )
 
-        title = fake.text()
-        body = "".join(
-            [
-                f"<h3>{fake.sentence().replace('.', '')}</h3>"
-                + f"<p>{fake.paragraph(nb_sentences=random.randint(1, 100))}</p>"
-                for _ in range(random.randint(1, 20))
-            ]
-        )
-        header = f'<script type="text/javascript" src="/scripts/{fake.uuid4()}.js"></script><link rel="stylesheet" href="/css/{fake.uuid4()}/{fake.word()}.css" type="text/css" />'
-        content = f"""
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            {header}
-            <title>{title}</title>
-        </head>
-        <body>
-            {body}
-        </body>
-        </html>
-        """
+            title = fake.text()
+            body = "".join(
+                [
+                    f"<h3>{fake.sentence().replace('.', '')}</h3>"
+                    + f"<p>{fake.paragraph(nb_sentences=random.randint(1, 100))}</p>"
+                    for _ in range(random.randint(1, 20))
+                ]
+            )
+            header = f'<script type="text/javascript" src="/scripts/{fake.uuid4()}.js"></script><link rel="stylesheet" href="/css/{fake.uuid4()}/{fake.word()}.css" type="text/css" />'
+            content = f"""
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                {header}
+                <title>{title}</title>
+            </head>
+            <body>
+                {body}
+            </body>
+            </html>
+            """
 
     # Create and return the HTML response
     response = HTMLResponse(content=content)
     logger.info("HTML file generated successfully.")
+
     return response

@@ -5,8 +5,11 @@ import os
 import numpy as np
 import torch
 from app_logging import setup_logger
-from diffusers import (AutoencoderKLCogVideoX, CogVideoXPipeline,
-                       CogVideoXTransformer3DModel)
+from diffusers import (
+    AutoencoderKLCogVideoX,
+    CogVideoXPipeline,
+    CogVideoXTransformer3DModel,
+)
 from diffusers.utils import export_to_video
 from torch.amp import autocast
 from torchao.quantization import int8_weight_only, quantize_

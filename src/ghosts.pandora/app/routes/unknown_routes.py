@@ -5,10 +5,22 @@ from typing import Any
 from app_logging import setup_logger
 from config.config import endpoints
 from fastapi import APIRouter, HTTPException, Request
-from routes import (archive_routes, binary_routes, csv_routes, doc_routes,
-                    image_routes, json_routes, onenote_routes, pdf_routes,
-                    ppt_routes, script_routes, stylesheet_routes, text_routes,
-                    video_routes, xlsx_routes)
+from routes import (
+    archive_routes,
+    binary_routes,
+    csv_routes,
+    doc_routes,
+    image_routes,
+    json_routes,
+    onenote_routes,
+    pdf_routes,
+    ppt_routes,
+    script_routes,
+    stylesheet_routes,
+    text_routes,
+    video_routes,
+    xlsx_routes,
+)
 from utils.helper import generate_random_name
 
 logger = setup_logger(__name__)

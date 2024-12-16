@@ -2,24 +2,48 @@ import configparser
 import os
 
 from app_logging import setup_logger
-from fastapi import APIRouter, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
 router = APIRouter()
-
 logger = setup_logger(__name__)
 
-# Load the configuration
+# Constants
 CONFIG_SECTION = "payloads"
-config = configparser.ConfigParser()
-config_path = os.path.join("config", "app.config")
-logger.info(f"Loading configuration from {config_path}")
-if not config.read(config_path):
-    logger.error(f"Configuration file not found or unreadable: {config_path}")
-    raise RuntimeError(f"Configuration file not found: {config_path}")
+DEFAULT_BASE_DIR = os.getenv("BASE_DIR", "")
+
+
+def get_config(base_dir: str = DEFAULT_BASE_DIR) -> configparser.ConfigParser:
+    """
+    Load the application configuration.
+    :param base_dir: Base directory for the configuration file.
+    :return: Loaded configuration object.
+    """
+    config = configparser.ConfigParser()
+    config_path = os.path.join(base_dir, "config", "app.config")
+    logger.info(f"Loading configuration from {config_path}")
+    if not config.read(config_path):
+        logger.error(f"Configuration file not found or unreadable: {config_path}")
+        raise RuntimeError(f"Configuration file not found: {config_path}")
+    return config
+
+
+def get_payload_path(base_dir: str = DEFAULT_BASE_DIR, filename: str = "") -> str:
+    """
+    Construct the full path for payload files.
+    :param base_dir: Base directory for the payloads folder.
+    :param filename: Name of the payload file.
+    :return: Full path to the payload file.
+    """
+    return os.path.join(base_dir, "app", "payloads", filename)
 
 
 @router.get("/payloads/{path_name:path}", tags=["Payloads"])
-async def return_payloads(path_name: str, request: Request) -> Response:
+async def return_payloads(
+    path_name: str,
+    request: Request,
+    config: configparser.ConfigParser = Depends(get_config),
+    base_dir: str = DEFAULT_BASE_DIR,
+) -> Response:
     """
     Serve predefined payloads based on the requested path.
     Payload configurations are read from the app.config file.
@@ -55,7 +79,7 @@ async def return_payloads(path_name: str, request: Request) -> Response:
         raise HTTPException(status_code=404, detail="Payload not found.")
 
     payload_file, payload_header = matched_payload
-    file_path = os.path.join("app", "payloads", payload_file)
+    file_path = get_payload_path(base_dir, payload_file)
 
     logger.info(f"Match found: Serving {payload_file} with header {payload_header}")
 

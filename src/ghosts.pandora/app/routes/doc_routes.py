@@ -29,6 +29,14 @@ def return_doc_file(file_name: str = None) -> Response:
         file_name = generate_random_name(".docx")  # Use random name generation
         logger.info(f"No file name provided. Generated file name: {file_name}")
     else:
+        # If file_name does not have an extension, default to .docx
+        if "." not in file_name:
+            file_name += ".docx"
+            logger.info(
+                f"File name without extension provided. Defaulting to: {file_name}"
+            )
+
+        # Only validate file extension if a file name is provided
         if not any(file_name.endswith(ext) for ext in allowed_extensions):
             logger.error(f"Invalid file extension for file name: {file_name}")
             raise HTTPException(

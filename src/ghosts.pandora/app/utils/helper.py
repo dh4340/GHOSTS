@@ -262,7 +262,8 @@ def create_response(
 
 def clean_content(content: str) -> str:
     """
-    Remove backticks and the word 'html' from the start or end of the content.
+    Remove backticks, the word 'html', and any text before the start of <!DOCTYPE html>
+    and after the final </html> tag.
 
     Args:
         content (str): The raw content to clean.
@@ -270,7 +271,22 @@ def clean_content(content: str) -> str:
     Returns:
         str: Cleaned content with unnecessary characters removed.
     """
+    # Remove backticks and unnecessary "html" tags
     content = content.replace("```html", "").strip()
     content = content.replace("```", "").strip()
 
+    # Find the first <!DOCTYPE html> and everything after it
+    start_idx = content.find("<!DOCTYPE html>")
+    if start_idx != -1:
+        content = content[start_idx:]
+    else:
+        # Return an empty string if <!DOCTYPE html> is not found
+        return ""
+
+    # Find the last </html> tag and everything before it
+    end_idx = content.rfind("</html>")
+    if end_idx != -1:
+        content = content[:end_idx + len("</html>")]
+
     return content
+

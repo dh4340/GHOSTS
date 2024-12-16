@@ -39,11 +39,10 @@ def return_iso(file_name: str = None) -> StreamingResponse:
     # Seek to the beginning of the BytesIO buffer
     iso_buffer.seek(0)
 
-    # Create the StreamingResponse
     response = StreamingResponse(
         iso_buffer,
         media_type="application/octet-stream",
-        headers={"Content-Disposition": f"attachment; filename={file_name}"},
+        headers={"Content-Disposition": f'attachment; filename="{file_name}"'},
     )
 
     logger.info("ISO file generated successfully.")

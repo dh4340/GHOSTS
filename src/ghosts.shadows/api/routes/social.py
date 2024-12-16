@@ -1,13 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException
-from utils.dependencies import decode_jwt, Request
-from langchain_community.chat_models import ChatOllama
-from handlers.filters import filter_llm_response
-import app_logging
 from typing import Any
 
-# Create an APIRouter instance
+from app_logging import setup_logger
+from config.config import SOCIAL_MODEL
+from fastapi import APIRouter, Depends, HTTPException
+from handlers.llm_utils import generate_response
+from utils.dependencies import Request, decode_jwt
+
 router = APIRouter()
-logger = app_logging.setup_logger(__name__)
+logger = setup_logger(__name__)
 
 
 @router.post("/social")
@@ -25,27 +25,21 @@ async def social(
         dict[str, Any]: A JSON response containing the filtered social interaction response.
     """
     query = request.query
-    logger.info(f"Processing social request for user: {username} with query: {query}")
+    logger.info(f"Processing chat request for user: {username} with query: {query}")
 
-    # Initialize the ChatOllama model for social interaction
-    llm = ChatOllama(model="social", temperature=0.9)
+    if not query:
+        logger.warning(f"Empty query received from user: {username}")
+        raise HTTPException(status_code=400, detail="Query cannot be empty.")
 
     try:
-        # Log the query being sent to the LLM
-        logger.debug(f"Social query: {query}")
+        logger.debug(f"Sending request to Ollama API with model: {SOCIAL_MODEL}")
+        filtered_llm_response = generate_response(query, SOCIAL_MODEL)
 
-        # Generate a response using the LLM
-        llm_response = llm.invoke(query).content
-
-        # Filter the response using the imported filter function
-        filtered_response = filter_llm_response(llm_response)
-
-        # Log the generated LLM response
-        logger.debug(f"Social response for {username}: {filtered_response}")
-
-        # Return the response in a JSON format
-        return {"response": filtered_response}
+        return {"message": filtered_llm_response}
 
     except Exception as e:
-        logger.error(f"Error processing social for {username}: {str(e)}")
+        logger.error(
+            f"Unexpected error occurred while processing chat for {username}: {str(e)}",
+            exc_info=True,
+        )
         raise HTTPException(status_code=500, detail="Internal Server Error")

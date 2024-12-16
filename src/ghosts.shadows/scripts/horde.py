@@ -1,10 +1,11 @@
-import requests
-import random
 import json
 import os
+import random
 import time
-from faker import Faker
 from typing import NoReturn
+
+import requests
+from faker import Faker
 
 # Initialize the Faker instance for generating fake names
 fake = Faker()

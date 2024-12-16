@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Session
+from typing import Optional
+
+from database import User
 from models import UserSignupRequest
 from security import get_password_hash
-from database import User
-from typing import Optional
+from sqlalchemy.orm import Session
 
 
 def get_user(db: Session, username: str) -> Optional[User]:

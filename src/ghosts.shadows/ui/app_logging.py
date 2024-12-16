@@ -8,7 +8,7 @@ LOG_FILE = "app.log"
 
 # Create log directory if it doesn't exist
 if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
+    os.makedirs(LOG_DIR, exist_ok=True)
 
 
 # Set up logging
@@ -52,7 +52,3 @@ def setup_logger(
         logger.addHandler(file_handler)
 
     return logger
-
-
-# Usage example
-# app_logger = setup_logger('app_logger')

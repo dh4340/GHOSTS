@@ -1,7 +1,8 @@
-import os
 import argparse
-import ollama
+import os
 from typing import List
+
+import ollama
 
 # Default base directory for the models
 DEFAULT_BASE_DIR = "content-models"

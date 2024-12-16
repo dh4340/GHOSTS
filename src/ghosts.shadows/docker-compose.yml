@@ -1,0 +1,40 @@
+services:
+  ollama:
+    image: ollama:ollama
+    container_name: ollama
+    environment:
+      - OLLAMA_PORT=11434
+    runtime: nvidia
+    deploy:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]  # Specify GPU usage
+    networks:
+      - ghosts-network
+    restart: always
+  shadows:
+    image: shadows   # Replace with your actual Shadows image name
+    container_name: shadows
+    environment:
+      - GHOSTS_OLLAMA_URL=http://ollama:11434  # Ensure this matches Ollama's internal URL
+    runtime: nvidia
+    deploy:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+    networks:
+      - ghosts-network
+    depends_on:
+      - ollama
+    restart: always
+    volumes:
+      - /path/to/shadows/data:/data
+networks:
+  ghosts-network:
+    driver: bridge  # Use the default bridge network or customize it if needed
+
+

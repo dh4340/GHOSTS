@@ -11,7 +11,8 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
@@ -19,32 +20,39 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
+
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
 .header {
     display: flex;
-    justify-content: center; 
-    margin-bottom: 20px; 
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .logo {
-    max-width: 225px; 
+    max-width: 225px;
 }
 
 .flex-container {
-    display: flex; 
-    flex-wrap: wrap; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
 .form-column {
-    flex: 1; 
+    flex: 1 1 45%;
     display: flex;
-    flex-direction: column; 
-    min-width: 250px; 
+    flex-direction: column;
+    min-width: 250px;
 }
 
 .response-column {
-    flex: 1; 
-    margin-left: 20px; 
-    min-width: 300px; 
+    flex: 1 1 45%;
+    min-width: 300px;
 }
 
 .form-section {
@@ -56,7 +64,7 @@ body {
 
 input {
     display: block;
-    width: 100%; 
+    width: 100%;
     margin: 10px 0;
     padding: 10px;
     border: 1px solid #555555;
@@ -94,14 +102,26 @@ pre {
     overflow-y: auto;
 }
 
-/* Media query for smaller screens */
 @media (max-width: 768px) {
     .flex-container {
         flex-direction: column;
+        gap: 10px;
     }
 
     .response-column {
-        margin-left: 0; 
-        margin-top: 20px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .form-section {
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px;
     }
 }

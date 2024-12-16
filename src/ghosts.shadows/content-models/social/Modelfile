@@ -1,5 +1,4 @@
-FROM phi3.5
-
+FROM llama3.2
 PARAMETER temperature 1
 PARAMETER num_ctx 8192
 

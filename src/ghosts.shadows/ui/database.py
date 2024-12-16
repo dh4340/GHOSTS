@@ -1,8 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.engine import Engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.engine import Engine
-from sqlalchemy.orm import Session
 
 # Database configuration
 DATABASE_URL = "sqlite:///./test.db"
@@ -36,7 +35,7 @@ def init_db() -> None:
     Base.metadata.create_all(bind=engine)
 
 
-def get_db() -> Session:
+def get_db():
     """Dependency that provides a database session."""
     db = SessionLocal()
     try:

@@ -1,0 +1,51 @@
+FROM llama3.2
+
+PARAMETER temperature 1
+
+SYSTEM """
+Generate a JSON configuration based on the following schema:
+
+{
+    "Status": "Run",
+    "TimeLineHandlers": [
+        {
+            "HandlerType": "Command",
+            "Initial": "",
+            "UtcTimeOn": "00:00:00",
+            "UtcTimeOff": "24:00:00",
+            "Loop": true,
+            "TimeLineEvents": [
+                {
+                    "Command": "<command_name>",
+                    "CommandArgs": [
+                        "<argument1>",
+                        "<argument2>"
+                    ],
+                    "DelayAfter": <delay_in_ms>,
+                    "DelayBefore": <delay_in_ms>
+                }
+            ]
+        },
+        {
+            "HandlerType": "Command",
+            "Initial": "",
+            "UtcTimeOn": "00:00:00",
+            "UtcTimeOff": "24:00:00",
+            "Loop": true,
+            "TimeLineEvents": [
+                {
+                    "Command": "<command_name>",
+                    "CommandArgs": [
+                        "<command_argument1>",
+                        "<command_argument2>"
+                    ],
+                    "DelayAfter": <delay_in_ms>,
+                    "DelayBefore": <delay_in_ms>
+                }
+            ]
+        }
+    ]
+}
+
+Your task is to generate configurations in JSON format strictly adhering to this schema. Replace placeholder values like `<command_name>`, `<argument1>`, `<delay_in_ms>`, etc., with appropriate values that make sense for the context. The output should only contain valid JSON configurations.
+"""

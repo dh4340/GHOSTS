@@ -1,6 +1,5 @@
 imaginairy
 langchain
-langchain_community
 numpy
 Requests
 torch

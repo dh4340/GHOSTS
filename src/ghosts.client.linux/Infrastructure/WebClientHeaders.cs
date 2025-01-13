@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Net;
 using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Newtonsoft.Json;
+using NLog;
+using NLog.Fluent;
 
 namespace ghosts.client.linux.Infrastructure
 {
@@ -12,6 +15,8 @@ namespace ghosts.client.linux.Infrastructure
     /// </summary>
     public static class WebClientBuilder
     {
+        public static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public static WebClient Build(ResultMachine machine, bool useId = true)
         {
             var client = new WebClient();
@@ -28,7 +33,7 @@ namespace ghosts.client.linux.Infrastructure
             var dict = new Dictionary<string, string>();
 
             dict.Add(HttpRequestHeader.UserAgent.ToString(), "Ghosts Client");
-            if (Program.CheckId != null && !string.IsNullOrEmpty(Program.CheckId.Id) && useId)
+            if (useId && Program.CheckId != null && !string.IsNullOrEmpty(Program.CheckId.Id))
             {
                 dict.Add("ghosts-id", Program.CheckId.Id);
             }
@@ -46,6 +51,8 @@ namespace ghosts.client.linux.Infrastructure
 
             dict.Add("ghosts-user", username);
             dict.Add("ghosts-version", ApplicationDetails.Version);
+
+            _log.Trace($"Webrequest headers generated: {JsonConvert.SerializeObject(dict)}");
 
             return dict;
         }

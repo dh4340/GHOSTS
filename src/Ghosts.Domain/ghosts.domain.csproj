@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Ghosts.Domain</RootNamespace>
     <AssemblyVersion>8.2.0.0</AssemblyVersion>
     <FileVersion>8.2.1.0</FileVersion>
@@ -11,8 +11,6 @@
     <PackageReference Include="HtmlAgilityPack" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NLog" />
-    <PackageReference Include="System.ComponentModel" />
-    <PackageReference Include="System.ComponentModel.Annotations" />
   </ItemGroup>
   <ItemGroup>
     <None Update="config\denylist.txt">

@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="AutoMapper" Version="13.0.1" />
-    <PackageVersion Include="Azure.Identity" Version="1.13.0" />
+    <PackageVersion Include="Azure.Identity" Version="1.13.2" />
     <PackageVersion Include="Betalgo.OpenAI" Version="8.7.2" />
     <PackageVersion Include="DotNetCore.NPOI" Version="1.2.3" />
     <PackageVersion Include="Faker.Net" Version="2.0.163" />

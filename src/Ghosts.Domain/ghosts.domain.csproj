@@ -11,6 +11,7 @@
     <PackageReference Include="HtmlAgilityPack" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NLog" />
+    <PackageReference Include="System.Management.Automation" />
   </ItemGroup>
   <ItemGroup>
     <None Update="config\denylist.txt">

@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using Renci.SshNet;
-using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-using Ghosts.Domain.Code;
+﻿using Ghosts.Client.Infrastructure;
 
 namespace Ghosts.Client.Handlers
 {

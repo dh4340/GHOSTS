@@ -1,20 +1,6 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Management;
-using System.Management.Automation;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 using Ghosts.Client.Comms;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using Newtonsoft.Json;
-using NLog;
 
 namespace Ghosts.Client.Survey;
 
@@ -436,7 +422,7 @@ public class SurveyResult
 
                         foreach (var managementBaseObject in searcher.Get())
                         {
-                            var oReturn = (ManagementObject) managementBaseObject;
+                            var oReturn = (ManagementObject)managementBaseObject;
                             string[] o = new string[2];
                             //Invoke the method and populate the o var with the user name and domain
                             oReturn.InvokeMethod("GetOwner", o);

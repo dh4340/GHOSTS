@@ -1,12 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Ghosts.Client.TimelineManager;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-using NLog;
-using Quartz;
+﻿using Ghosts.Client.TimelineManager;
 
 namespace Ghosts.Client.Infrastructure
 {

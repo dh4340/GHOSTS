@@ -1,18 +1,12 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Diagnostics;
-using System.Threading;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-
 namespace Ghosts.Client.Handlers
 {
     public class Azure : BaseHandler
     {
         private string Result { get; set; }
         private readonly TimelineHandler _handler;
-        
+
         public Azure(TimelineHandler handler)
         {
             _handler = handler;
@@ -26,7 +20,7 @@ namespace Ghosts.Client.Handlers
                         Ex();
                     }
                 }
-                
+
                 Ex();
             }
             catch (Exception e)
@@ -34,7 +28,7 @@ namespace Ghosts.Client.Handlers
                 Log.Error(e);
             }
         }
-        
+
         private void Ex()
         {
             var handlerArgs = BuildHandlerArgVariables.BuildHandlerArgs(_handler);
@@ -93,15 +87,15 @@ namespace Ghosts.Client.Handlers
 
                 var err = string.Empty;
                 while (!p.StandardError.EndOfStream)
-                { 
+                {
                     err += p.StandardError.ReadToEnd();
                 }
                 if (err.Length > 0)
                 {
                     Log.Error($"{err} on {command}");
                 }
-                
-                Report(new ReportItem {Handler = HandlerType.Azure.ToString(), Command = command, Result = this.Result});
+
+                Report(new ReportItem { Handler = HandlerType.Azure.ToString(), Command = command, Result = this.Result });
             }
             catch (Exception exc)
             {

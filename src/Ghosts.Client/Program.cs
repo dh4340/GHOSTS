@@ -1,24 +1,9 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using Client.ClientSocket;
-using CommandLine;
 using Ghosts.Client.Comms;
 using Ghosts.Client.Infrastructure;
 using Ghosts.Client.TimelineManager;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Models;
-using NLog;
-using Quartz;
-using Quartz.Impl;
 
 namespace Ghosts.Client;
 
@@ -89,7 +74,7 @@ class Program
     {
         MinimizeFootprint();
         MinimizeMemory();
-            
+
         try
         {
             await Run(args);
@@ -115,7 +100,7 @@ class Program
         // parse program flags
         if (!CommandLineFlagManager.Parse(args))
             return;
-            
+
         //attach handler for shutdown tasks
         AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
 
@@ -161,7 +146,7 @@ class Program
         StartupTasks.CheckConfigs();
 
         Thread.Sleep(500);
-            
+
         //show window if debugging or if --debug flag passed in
         var handle = GetConsoleWindow();
         if (!IsDebug)
@@ -186,18 +171,18 @@ class Program
 
         // add this app to windows startup?
         StartupTasks.ConfigureStartup(Configuration.DisableStartup);
-        
+
         // Setup Quartz Scheduler
         var factory = new StdSchedulerFactory();
         Scheduler = factory.GetScheduler().Result;
         await Scheduler.Start();
-        
+
         //add file watch to handle ad hoc commands
         ListenerManager.Run();
 
         //do we have client id? or is this first run?
         _log.Trace($"CheckID: {Program.CheckId.Id}");
-        
+
         //connect to command server for 1) client id 2) get updates and 3) sending logs/surveys
         Updates.Run();
 
@@ -249,7 +234,7 @@ class Program
     private static void CurrentDomain_ProcessExit(object sender, EventArgs e)
     {
         _log.Debug($"Initiating {ApplicationDetails.Name} shutdown - Local time: {DateTime.Now.TimeOfDay} UTC: {DateTime.UtcNow.TimeOfDay}");
-        if(Configuration.ResourceControl.ManageProcesses)
+        if (Configuration.ResourceControl.ManageProcesses)
             StartupTasks.CleanupProcesses();
         Scheduler.Shutdown();
     }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using Renci.SshNet;
-using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-using Ghosts.Domain.Code;
+﻿using Ghosts.Client.Infrastructure;
 
 /*
  * Used Package Renci.sshNet
@@ -158,9 +151,9 @@ namespace Ghosts.Client.Handlers
 
         public void Command(TimelineHandler handler, TimelineEvent timelineEvent, string command)
         {
-            
+
             char[] charSeparators = new char[] { '|' };
-            var cmdArgs = command.Split(charSeparators, 3,StringSplitOptions.None);
+            var cmdArgs = command.Split(charSeparators, 3, StringSplitOptions.None);
             var hostIp = cmdArgs[0];
             var credKey = cmdArgs[1];
             var sshCmds = cmdArgs[2].Split(';');
@@ -170,7 +163,7 @@ namespace Ghosts.Client.Handlers
 
             if (username != null && password != null)
             {
-                
+
                 //have IP, user/pass, try connecting 
                 using (var client = new SshClient(hostIp, username, password))
                 {

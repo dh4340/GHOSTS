@@ -1,14 +1,6 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading;
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using System.Text;
 
 
 namespace Ghosts.Client.Handlers
@@ -128,7 +120,7 @@ namespace Ghosts.Client.Handlers
                                             outfile = Path.Combine(OutputDirectory, SshSftpSupport.RandomString(5, 15) + ".txt");
                                             if (!File.Exists(outfile)) break;
                                         }
-                                        
+
                                         DoCreateAction(outfile);
                                         if (!StartNotePad(outfile)) return;
                                         break;
@@ -173,12 +165,12 @@ namespace Ghosts.Client.Handlers
                         allText += s;
                     }
                 }
-                
+
                 allText += GetRandomText(); // add text
                 //now write all text to file
                 using (FileStream fs = File.Create(outfile))
                 {
-                    
+
                     byte[] info = new UTF8Encoding(true).GetBytes(allText);
                     // Add some information to the file.
                     fs.Write(info, 0, info.Length);
@@ -241,7 +233,7 @@ namespace Ghosts.Client.Handlers
             }
         }
 
-       
+
         private void DoDeleteAction(string target)
         {
 

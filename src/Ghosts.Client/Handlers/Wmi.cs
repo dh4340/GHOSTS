@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-using Ghosts.Domain.Code;
+﻿using Ghosts.Client.Infrastructure;
 
 namespace Ghosts.Client.Handlers
 {
@@ -106,7 +100,7 @@ namespace Ghosts.Client.Handlers
                             this.Command(handler, timelineEvent, cmd.ToString());
                         }
                         Thread.Sleep(Jitter.JitterFactorDelay(timelineEvent.DelayAfterActual, jitterfactor));
-                        break;   
+                        break;
                 }
 
                 if (timelineEvent.DelayAfterActual > 0)
@@ -176,7 +170,7 @@ namespace Ghosts.Client.Handlers
                         }
                     }
                     client.Close();
-                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = hostIp, Arg= cmdArgs[2], Trackable = timelineEvent.TrackableId });
+                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = hostIp, Arg = cmdArgs[2], Trackable = timelineEvent.TrackableId });
                 }
             }
         }

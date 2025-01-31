@@ -1,17 +1,6 @@
 // Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using NetOffice.OfficeApi.Enums;
-using NetOffice.PowerPointApi.Enums;
-using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using Newtonsoft.Json;
 using PowerPoint = NetOffice.PowerPointApi;
 
 namespace Ghosts.Client.Handlers;
@@ -112,10 +101,10 @@ public class PowerPointHandler : BaseHandler
                     }
 
                     using (var powerApplication = new PowerPoint.Application
-                           {
-                               DisplayAlerts = PpAlertLevel.ppAlertsNone,
-                               Visible = MsoTriState.msoTrue
-                           })
+                    {
+                        DisplayAlerts = PpAlertLevel.ppAlertsNone,
+                        Visible = MsoTriState.msoTrue
+                    })
                     {
 
                         try
@@ -273,7 +262,7 @@ public class PowerPointHandler : BaseHandler
                         {
                             // ignore
                         }
-                            
+
 
                         try
                         {

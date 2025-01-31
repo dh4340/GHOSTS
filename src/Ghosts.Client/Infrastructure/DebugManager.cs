@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.Principal;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using NLog;
-
-namespace Ghosts.Client.Infrastructure;
+﻿namespace Ghosts.Client.Infrastructure;
 
 internal static class DebugManager
 {
@@ -51,14 +44,14 @@ internal static class DebugManager
         Write("------------------");
         //if (Program.IsDebug)
         //{
-            Write($"Configured API Base = {Program.Configuration.ApiRootUrl}");
-            Write($"Configured API Id = {Program.ConfigurationUrls.Id}");
-            Write($"Configured API Survey = {Program.ConfigurationUrls.Survey}");
-            Write($"Configured API Socket = {Program.ConfigurationUrls.Socket}");
-            Write($"Configured API Timeline = {Program.ConfigurationUrls.Timeline}");
-            Write($"Configured API Results = {Program.ConfigurationUrls.Results}");
-            Write($"Configured API Updates = {Program.ConfigurationUrls.Updates}");
-            Write("------------------");
+        Write($"Configured API Base = {Program.Configuration.ApiRootUrl}");
+        Write($"Configured API Id = {Program.ConfigurationUrls.Id}");
+        Write($"Configured API Survey = {Program.ConfigurationUrls.Survey}");
+        Write($"Configured API Socket = {Program.ConfigurationUrls.Socket}");
+        Write($"Configured API Timeline = {Program.ConfigurationUrls.Timeline}");
+        Write($"Configured API Results = {Program.ConfigurationUrls.Results}");
+        Write($"Configured API Updates = {Program.ConfigurationUrls.Updates}");
+        Write("------------------");
         //}
     }
 

@@ -1,13 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using NLog;
-
 namespace Ghosts.Client.Health;
 
 public static class MachineHealth

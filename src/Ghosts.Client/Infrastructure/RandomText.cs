@@ -1,12 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Ghosts.Domain.Code.Helpers;
-using Newtonsoft.Json;
-
 namespace Ghosts.Client.Infrastructure
 {
     /// <summary>

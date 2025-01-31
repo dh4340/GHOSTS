@@ -1,10 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System.Collections.Generic;
-using System.Net;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-
 namespace Ghosts.Client.Infrastructure;
 
 /// <summary>
@@ -44,7 +39,7 @@ public static class WebClientBuilder
 
         dict.Add("ghosts-user", username);
         dict.Add("ghosts-version", ApplicationDetails.Version);
-        
+
         return dict;
     }
 }

@@ -1,13 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using OpenQA.Selenium;
-
 namespace Ghosts.Client.Handlers;
 
 class BrowserCrawl : BaseHandler
@@ -181,7 +173,7 @@ class BrowserCrawl : BaseHandler
             }
 
             Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId });
-            
+
             // if this is the last step down, there is no reason to keep digging,
             // but we don't increase the current depth count so as to allow peer
             // pages at this level to still be scraped

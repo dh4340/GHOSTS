@@ -1,12 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using FileHelpers;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Ghosts.Client.Infrastructure.Browser;
 
 public class BlogContentManager
@@ -49,7 +42,7 @@ public class BlogContentManager
         var total = this.Replies.Count;
 
         if (total <= 0) return null;
-           
+
         BlogReply o = this.Replies[_random.Next(0, total)];
         return o.Reply.Replace("\\n", "\n");
     }
@@ -68,9 +61,9 @@ public class BlogContentManager
 
 
         var o = this.Content[_random.Next(0, total)];
-            
 
-        this.Subject = o.Subject.Replace("\\n","\n");
+
+        this.Subject = o.Subject.Replace("\\n", "\n");
         this.Body = o.Body.Replace("\\n", "\n");
     }
 
@@ -97,7 +90,7 @@ public class BlogContentManager
             engine.Encoding = Encoding.UTF8;
             this.Replies = engine.ReadFile(ClientConfigurationResolver.BlogReply).ToList();
         }
-                
+
         catch (Exception e)
         {
             _log.Error($"Blog reply file could not be loaded: {e}");

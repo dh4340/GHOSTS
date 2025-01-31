@@ -1,21 +1,8 @@
 ﻿using Ghosts.Client.Infrastructure;
 using Ghosts.Client.Infrastructure.Email;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Newtonsoft.Json;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using System.Diagnostics;
-using System;
-using System.IO;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Threading;
 using Actions = OpenQA.Selenium.Interactions.Actions;
 
 using Exception = System.Exception;
-using NLog;
 
 namespace Ghosts.Client.Handlers
 {
@@ -1725,7 +1712,7 @@ namespace Ghosts.Client.Handlers
                             errorCount = errorCount + 1;
                         }
 
-                        this.baseHandler.Report(new ReportItem { Handler = $"WebOutlook: {handler.HandlerType.ToString()}", Command = action, Arg = "" , Trackable = timelineEvent.TrackableId });
+                        this.baseHandler.Report(new ReportItem { Handler = $"WebOutlook: {handler.HandlerType.ToString()}", Command = action, Arg = "", Trackable = timelineEvent.TrackableId });
 
                         break;
 

@@ -1,12 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Forms;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-
 namespace Ghosts.Client.Handlers;
 
 public class Clicks : BaseHandler

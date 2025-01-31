@@ -1,12 +1,6 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using NLog;
-using System;
-using System.IO;
-using System.Net;
 
 namespace Ghosts.Client.Comms;
 

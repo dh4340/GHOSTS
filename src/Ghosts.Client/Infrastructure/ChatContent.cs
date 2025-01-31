@@ -1,13 +1,4 @@
-﻿using FileHelpers;
-using Ghosts.Client.Infrastructure.Browser;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ghosts.Client.Infrastructure
+﻿namespace Ghosts.Client.Infrastructure
 {
     public class ChatContent
     {
@@ -51,7 +42,7 @@ namespace Ghosts.Client.Infrastructure
         internal class ChatMessage
         {
             public string value { get; set; }
-           
+
         }
     }
 }

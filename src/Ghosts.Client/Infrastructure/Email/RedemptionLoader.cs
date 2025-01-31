@@ -1,13 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using NLog;
-using Redemption;
-
 namespace Ghosts.Client.Infrastructure.Email;
 
 public static class RedemptionLoader

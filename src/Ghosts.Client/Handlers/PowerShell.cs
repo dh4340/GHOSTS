@@ -1,13 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Threading;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using Newtonsoft.Json.Linq;
-
-namespace Ghosts.Client.Handlers
+﻿namespace Ghosts.Client.Handlers
 {
     public class PowerShell : BaseHandler
     {

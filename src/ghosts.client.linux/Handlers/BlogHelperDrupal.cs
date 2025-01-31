@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 using System.Threading;
 using Ghosts.Domain.Code;
 using Ghosts.Domain.Messages;
-using OpenQA.Selenium;
 using Actions = OpenQA.Selenium.Interactions.Actions;
 
 namespace ghosts.client.linux.handlers

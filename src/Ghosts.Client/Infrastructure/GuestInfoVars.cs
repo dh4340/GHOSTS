@@ -1,10 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Diagnostics;
-using Ghosts.Domain;
-using NLog;
-
 namespace Ghosts.Client.Infrastructure;
 
 public static class GuestInfoVars
@@ -28,7 +23,7 @@ public static class GuestInfoVars
                         Arguments = $"--cmd \"info-get {Program.Configuration.Id.FormatKey}\""
                     }
                 };
-                    
+
                 p.Start();
 
                 var output = p.StandardOutput.ReadToEnd().Trim();

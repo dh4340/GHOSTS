@@ -1,16 +1,6 @@
 // Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using NetOffice.ExcelApi.Enums;
-using Newtonsoft.Json;
 using Excel = NetOffice.ExcelApi;
 namespace Ghosts.Client.Handlers;
 
@@ -112,10 +102,10 @@ public class ExcelHandler : BaseHandler
                     }
 
                     using (var excelApplication = new Excel.Application
-                           {
-                               DisplayAlerts = false,
-                               Visible = true
-                           })
+                    {
+                        DisplayAlerts = false,
+                        Visible = true
+                    })
                     {
                         Excel.Workbook document = null;
                         if (OfficeHelpers.ShouldOpenExisting(handler))
@@ -130,7 +120,7 @@ public class ExcelHandler : BaseHandler
 
                         }
 
-                        for(var i = 0; i < _random.Next(1,8); i++)
+                        for (var i = 0; i < _random.Next(1, 8); i++)
                             document.Worksheets.Add(Type.Missing, document.Worksheets[document.Worksheets.Count]);
 
                         var workSheet = (Excel.Worksheet)document.Worksheets[1];

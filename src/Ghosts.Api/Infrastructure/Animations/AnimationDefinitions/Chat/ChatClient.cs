@@ -1,4 +1,5 @@
-﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,6 @@ using ghosts.api.Infrastructure.Animations.AnimationDefinitions.Chat.Mattermost;
 using ghosts.api.Infrastructure.ContentServices;
 using ghosts.api.Infrastructure.Extensions;
 using ghosts.api.Infrastructure.Models;
-using Ghosts.Animator.Extensions;
 using Ghosts.Api.Infrastructure;
 using Ghosts.Api.Infrastructure.Extensions;
 using Ghosts.Domain.Code.Helpers;

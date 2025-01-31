@@ -1,28 +1,13 @@
-﻿using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Newtonsoft.Json;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
+﻿using Ghosts.Client.Infrastructure;
 using Actions = OpenQA.Selenium.Interactions.Actions;
 using Exception = System.Exception;
-using NLog;
-using System.Web;
-using System.Diagnostics;
-using System.Linq;
-using System.Collections.Generic;
-using Ghosts.Client.Infrastructure;
-using System.Web.UI.WebControls;
 
 
 
 namespace Ghosts.Client.Handlers
 {
 
-   
+
     /// <summary>
     /// Supports upload, download, deletion of documents
     /// download, deletion only done from the first page
@@ -32,7 +17,7 @@ namespace Ghosts.Client.Handlers
     public class SocialHelperV1 : SocialHelper
     {
 
-        public SocialHelperV1 (BaseBrowserHandler callingHandler, IWebDriver callingDriver, string aversion)
+        public SocialHelperV1(BaseBrowserHandler callingHandler, IWebDriver callingDriver, string aversion)
         {
             base.Init(callingHandler, callingDriver, aversion);
 
@@ -44,15 +29,16 @@ namespace Ghosts.Client.Handlers
 
             postCount = 0;   //reset post count
 
-            if (!GotoHomeSite(handler)) {
+            if (!GotoHomeSite(handler))
+            {
                 return false;
             }
-            
+
             // try to find an element on the page
             bool foundSocializer = false;
             try
             {
-                var targetElement =  Driver.FindElement(By.XPath("//img[@title='SOCIALIZER']"));
+                var targetElement = Driver.FindElement(By.XPath("//img[@title='SOCIALIZER']"));
                 foundSocializer = true;
             }
             catch (ThreadAbortException)
@@ -63,14 +49,15 @@ namespace Ghosts.Client.Handlers
         }
 
 
-        
+
         public override bool DoBrowse(TimelineHandler handler)
         {
             // browse to the first friend suggestion in the friend feed
             // var targetElement =  Driver.FindElement(By.XPath("//ul[contains(@class,'w-friend-pages-added notification-list')]//child::div[contains(@class,'notification-event')]//child::a[contains(@class,'notification-friend')]"));
             // browse to the first person of first post in feed
-            var targetElement =  Driver.FindElement(By.XPath("//div[contains(@class,'author-date')]//child::a[contains(@class,'post__author-name')]"));
-            if (targetElement != null){
+            var targetElement = Driver.FindElement(By.XPath("//div[contains(@class,'author-date')]//child::a[contains(@class,'post__author-name')]"));
+            if (targetElement != null)
+            {
                 BrowserHelperSupport.ElementClick(Driver, targetElement);
                 Thread.Sleep(500);
                 Log.Trace($"Social:: Successfully browsed post on site {site}.");
@@ -81,8 +68,9 @@ namespace Ghosts.Client.Handlers
         public override bool DoLike(TimelineHandler handler)
         {
             // just like the first post in the feed
-            var targetElement =  Driver.FindElement(By.XPath("//a[contains(@class,'btn btn-control like-it')]"));
-            if (targetElement != null){
+            var targetElement = Driver.FindElement(By.XPath("//a[contains(@class,'btn btn-control like-it')]"));
+            if (targetElement != null)
+            {
                 BrowserHelperSupport.ElementClick(Driver, targetElement);
                 Thread.Sleep(500);
                 Log.Trace($"Social:: Successfully liked post on site {site}.");
@@ -98,32 +86,37 @@ namespace Ghosts.Client.Handlers
             if (postDirectory == null) return false;
 
             string[] postFileList = Directory.GetFiles(postDirectory, "post.txt");
-            if (postFileList.Length > 0) {
+            if (postFileList.Length > 0)
+            {
                 // get the file content
                 string postContent = File.ReadAllText(postFileList[0]);
-                var targetElement =  Driver.FindElement(By.XPath("//label[text()='Share what you are thinking here...']//following-sibling::textarea"));
+                var targetElement = Driver.FindElement(By.XPath("//label[text()='Share what you are thinking here...']//following-sibling::textarea"));
                 targetElement.SendKeys(postContent);
                 Thread.Sleep(500);
                 string targetName = "";
-                if (userName != null)  targetName = userName;  //always use this if specified
-                else {
-                    if (lastUserName == null || useUniqueName) {
+                if (userName != null) targetName = userName;  //always use this if specified
+                else
+                {
+                    if (lastUserName == null || useUniqueName)
+                    {
                         lastUserName = findUserName();
                     }
                     targetName = lastUserName;
                 }
                 // post target Name
-                targetElement =  Driver.FindElement(By.XPath("//label[text()='Share what you are thinking here...']//following-sibling::input"));
+                targetElement = Driver.FindElement(By.XPath("//label[text()='Share what you are thinking here...']//following-sibling::input"));
                 targetElement.Clear(); //clear the name before sending another one
                 targetElement.SendKeys(targetName);
                 Thread.Sleep(500);
-                if (action == "postWimage"){
+                if (action == "postWimage")
+                {
                     // get the image file
                     string[] imageFilesPng = Directory.GetFiles(postDirectory, "image*.png");
                     string[] imageFilesJpg = Directory.GetFiles(postDirectory, "image*.jpg");
-                    
-                    if ((imageFilesPng.Length + imageFilesJpg.Length) > 0){
-                        
+
+                    if ((imageFilesPng.Length + imageFilesJpg.Length) > 0)
+                    {
+
                         string imageFile = null;
                         if (imageFilesPng.Length > 0 && imageFilesJpg.Length > 0)
                         {
@@ -132,12 +125,14 @@ namespace Ghosts.Client.Handlers
                             if (index >= imageFilesPng.Length)
                             {
                                 imageFile = imageFilesJpg[index - imageFilesPng.Length];
-                            } else
+                            }
+                            else
                             {
                                 imageFile = imageFilesPng[index];
                             }
 
-                        } else if (imageFilesJpg.Length > 0)
+                        }
+                        else if (imageFilesJpg.Length > 0)
                         {
                             imageFile = imageFilesJpg[(_random.Next(0, imageFilesJpg.Length))];
                         }
@@ -146,13 +141,13 @@ namespace Ghosts.Client.Handlers
                             imageFile = imageFilesPng[(_random.Next(0, imageFilesPng.Length))];
                         }
                         // click the browse button
-                        targetElement =  Driver.FindElement(By.XPath("//label[text()='Share what you are thinking here...']//following-sibling::input[@type='file']"));
+                        targetElement = Driver.FindElement(By.XPath("//label[text()='Share what you are thinking here...']//following-sibling::input[@type='file']"));
                         if (targetElement != null)
                         {
                             BrowserHelperSupport.ElementClick(Driver, targetElement);
                             Thread.Sleep(500);
                             //filechoice window is open
-                            AttachFile(imageFile );
+                            AttachFile(imageFile);
                             Thread.Sleep(500);
                         }
                     }
@@ -161,13 +156,13 @@ namespace Ghosts.Client.Handlers
 
 
 
-                targetElement =  Driver.FindElement(By.XPath("//button[@id='sendButton']"));
+                targetElement = Driver.FindElement(By.XPath("//button[@id='sendButton']"));
                 Actions actions = new Actions(Driver);
                 actions.MoveToElement(targetElement).Click().Perform();
                 Thread.Sleep(500);
                 Log.Trace($"Social:: Successfully added post to site {site}.");
                 postCount += 1;
-                
+
 
             }
 
@@ -176,7 +171,7 @@ namespace Ghosts.Client.Handlers
             return true;
         }
 
-       
+
 
     }
 
@@ -186,7 +181,7 @@ namespace Ghosts.Client.Handlers
     public abstract class SocialHelper : BrowserHelper
     {
 
-        
+
         private int _postProbability = -1;
         private int _likeProbability = -1;
         private int _browseProbability = -1;
@@ -199,12 +194,12 @@ namespace Ghosts.Client.Handlers
         public System.Exception LastException;
 
         public List<string> topicDirs = null;
-        
+
         private string _state = "initial";
         public int errorCount = 0;
         public int errorThreshold = 3;  //after three strikes, restart the browser
         public string site { get; set; } = null;
-        
+
         public string header { get; set; } = null;
 
         public string version { get; set; } = null;
@@ -228,11 +223,13 @@ namespace Ghosts.Client.Handlers
             return;
         }
 
-        public string findUserName() {
+        public string findUserName()
+        {
 
-            var targetElement =  Driver.FindElement(By.XPath("//ul[contains(@class,'w-friend-pages-added notification-list')]//child::div[contains(@class,'notification-event')]//child::a[contains(@class,'notification-friend')]"));
-            
-            if (targetElement != null) {
+            var targetElement = Driver.FindElement(By.XPath("//ul[contains(@class,'w-friend-pages-added notification-list')]//child::div[contains(@class,'notification-event')]//child::a[contains(@class,'notification-friend')]"));
+
+            if (targetElement != null)
+            {
                 var name = targetElement.Text;
                 return name;
             }
@@ -251,7 +248,7 @@ namespace Ghosts.Client.Handlers
         {
             return errorCount > errorThreshold;
         }
-        
+
 
         public void Init(BaseBrowserHandler callingHandler, IWebDriver currentDriver, string aversion)
         {
@@ -306,14 +303,14 @@ namespace Ghosts.Client.Handlers
             Log.Trace($"Social:: Bash command output: {Result}");
         }
 
-         public bool GotoHomeSite(TimelineHandler handler)
+        public bool GotoHomeSite(TimelineHandler handler)
         {
             //go to the site and determine if this is a socializer site
             RequestConfiguration config;
 
             string portal = site;
 
-            string target = header +  portal + "/";
+            string target = header + portal + "/";
             config = RequestConfiguration.Load(handler, target);
             try
             {
@@ -419,20 +416,24 @@ namespace Ghosts.Client.Handlers
         {
             try
             {
-                
-                if (topicDirs != null && topicDirs.Count > 0) {
+
+                if (topicDirs != null && topicDirs.Count > 0)
+                {
                     //ensure these topic dirs still exists
                     List<string> dirlist = new List<string>();
-                    foreach (string topicDir in topicDirs){
+                    foreach (string topicDir in topicDirs)
+                    {
                         if (Directory.Exists(topicDir)) dirlist.Add(topicDir);
                     }
-                
-                    if (dirlist.Count > 0) {
+
+                    if (dirlist.Count > 0)
+                    {
                         //this will be the topic directory
                         string topicDir = dirlist[_random.Next(0, dirlist.Count)];
                         // get the post directory
                         string[] topicContentDirList = Directory.GetDirectories(topicDir, "*", SearchOption.TopDirectoryOnly);
-                        if (topicContentDirList.Length > 0) {
+                        if (topicContentDirList.Length > 0)
+                        {
                             string topicContentDir = topicContentDirList[_random.Next(0, topicContentDirList.Length)];
                             //get the post file
                             return topicContentDir;
@@ -452,13 +453,14 @@ namespace Ghosts.Client.Handlers
 
         private string GetNextAction()
         {
-            
+
             var choice = _random.Next(0, 101);
             string action = null;
             int endRange;
             var startRange = 0;
-            
-            if (postCount == 0) {
+
+            if (postCount == 0)
+            {
                 // do at least one post so user can be set
                 if (_addImageProbability > _random.Next(0, 100)) action = "postWimage";
                 else action = "post";
@@ -481,14 +483,15 @@ namespace Ghosts.Client.Handlers
             if (action == null && _postProbability > 0)
             {
                 endRange = startRange + _postProbability;
-                if (choice >= startRange && choice <= endRange) {
+                if (choice >= startRange && choice <= endRange)
+                {
                     if (_addImageProbability > _random.Next(0, 100)) action = "postWimage";
                     else action = "post";
                 }
                 else startRange = endRange + 1;
             }
-            
-            
+
+
             return action;
 
         }
@@ -501,8 +504,9 @@ namespace Ghosts.Client.Handlers
         /// <param name="timelineEvent"></param>
         public void Execute(TimelineHandler handler, TimelineEvent timelineEvent)
         {
-            try {
-            
+            try
+            {
+
                 switch (_state)
                 {
 
@@ -538,40 +542,52 @@ namespace Ghosts.Client.Handlers
                         }
 
                         string topics = null;
-                        if (handler.HandlerArgs.ContainsKey("social-topiclist")) {
+                        if (handler.HandlerArgs.ContainsKey("social-topiclist"))
+                        {
                             // will be used to prune topic list directories
                             topics = handler.HandlerArgs["social-topiclist"].ToString();
                             topics = topics.ToLower();
                         }
-                        if (contentDirectory != null) {
+                        if (contentDirectory != null)
+                        {
                             // create list of valid topic dirs
-                            topicDirs =  new List<string>();
+                            topicDirs = new List<string>();
                             string[] dirlist = Directory.GetDirectories(contentDirectory, "*", SearchOption.TopDirectoryOnly);
-                            if (dirlist.Length > 0) {
+                            if (dirlist.Length > 0)
+                            {
                                 //get the base directory
-                                foreach (var dir in dirlist) {
-                                    if (topics == null) {
+                                foreach (var dir in dirlist)
+                                {
+                                    if (topics == null)
+                                    {
                                         topicDirs.Add(dir);
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         var f = Path.GetFileName(dir);
-                                        if (topics.ToLower().Contains(f)) {
+                                        if (topics.ToLower().Contains(f))
+                                        {
                                             topicDirs.Add(dir);
                                         }
                                     }
                                 }
-                                if (topicDirs.Count == 0 && topics != null){
+                                if (topicDirs.Count == 0 && topics != null)
+                                {
                                     // No match to specified topics, add all available
-                                    foreach (var dir in dirlist) {
+                                    foreach (var dir in dirlist)
+                                    {
                                         topicDirs.Add(dir);
                                     }
                                 }
-                            } else {
+                            }
+                            else
+                            {
                                 // no topic dirs, abort
                                 Log.Trace($"Social:: contentdirectory {contentDirectory} does not have topic subdirectories, aborting, aborting social handler.");
                                 baseHandler.SocialAbort = true;
                             }
                         }
-        
+
                         if (handler.HandlerArgs.ContainsKey("social-post-probability"))
                         {
                             int.TryParse(handler.HandlerArgs["social-post-probability"].ToString(), out _postProbability);
@@ -604,7 +620,7 @@ namespace Ghosts.Client.Handlers
                                 _addImageProbability = 0;
                             }
                         }
-                        
+
                         if (handler.HandlerArgs.ContainsKey("delay-jitter"))
                         {
                             baseHandler.JitterFactor = Jitter.JitterFactorParse(handler.HandlerArgs["delay-jitter"].ToString());
@@ -615,7 +631,7 @@ namespace Ghosts.Client.Handlers
                             userName = handler.HandlerArgs["social-username"].ToString();
                         }
 
-                        
+
 
                         //now parse the command args
                         //parse the command args
@@ -664,7 +680,8 @@ namespace Ghosts.Client.Handlers
                             header = "http://";  //default header
                         }
 
-                        if (!DoInitialLogin(handler)) {
+                        if (!DoInitialLogin(handler))
+                        {
                             Log.Trace($"Social:: Target site {site} does not appear to be a socializer site, aborting Social browsing.");
                             baseHandler.SocialAbort = true;
                             return;
@@ -683,26 +700,29 @@ namespace Ghosts.Client.Handlers
 
                         //determine what to do
                         //first go back to home site
-                        GotoHomeSite(handler);  
+                        GotoHomeSite(handler);
                         Thread.Sleep(500);
 
                         string socialAction = GetNextAction();
 
-                        if (socialAction == "post" || socialAction == "postWimage"){
-                            if (!DoPost(handler,socialAction))
+                        if (socialAction == "post" || socialAction == "postWimage")
+                        {
+                            if (!DoPost(handler, socialAction))
                             {
                                 baseHandler.SocialAbort = true;
                                 return;
                             }
                         }
-                        else if (socialAction == "like") {
+                        else if (socialAction == "like")
+                        {
                             if (!DoLike(handler))
                             {
                                 baseHandler.SocialAbort = true;
                                 return;
                             }
                         }
-                        else if (socialAction == "browse") {
+                        else if (socialAction == "browse")
+                        {
                             if (!DoBrowse(handler))
                             {
                                 baseHandler.SocialAbort = true;
@@ -711,7 +731,7 @@ namespace Ghosts.Client.Handlers
                         }
 
 
-                        this.baseHandler.Report(new ReportItem {Handler = $"Social{version}: {handler.HandlerType.ToString()}", Command = socialAction, Arg = "", Trackable = timelineEvent.TrackableId});
+                        this.baseHandler.Report(new ReportItem { Handler = $"Social{version}: {handler.HandlerType.ToString()}", Command = socialAction, Arg = "", Trackable = timelineEvent.TrackableId });
                         break;
 
 
@@ -735,7 +755,6 @@ namespace Ghosts.Client.Handlers
     }
 
 
-    }
+}
 
-    
-    
+

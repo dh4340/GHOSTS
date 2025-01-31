@@ -1,14 +1,5 @@
-﻿using System.IO;
-using System.Threading;
-using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using System.Diagnostics;
-using Ghosts.Domain.Code;
-using System;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using Ghosts.Client.Infrastructure;
 using Exception = System.Exception;
-using System.Windows.Interop;
 
 namespace Ghosts.Client.Handlers
 {
@@ -65,7 +56,7 @@ namespace Ghosts.Client.Handlers
         private List<string> MiscWindowTitles;  //list of window titles that sometime popup and must be closed
         private ChatContent messages;
         private Dictionary<string, bool> chatStatus;  //tracks if chat triggered an error message or not
-        
+
         public Pidgin(TimelineHandler handler)
         {
             try
@@ -461,12 +452,12 @@ namespace Ghosts.Client.Handlers
                 Winuser.SetForegroundWindow(pidginHandle);
                 System.Windows.Forms.SendKeys.SendWait("^m");
                 Thread.Sleep(1000);
-                
+
                 var msg = imTarget + "{TAB}" + "{TAB}" + "{ENTER}";
                 var windHandle = Winuser.FindWindow("gdkWindowToplevel", "Pidgin");
                 Winuser.SetForegroundWindow(windHandle);
                 System.Windows.Forms.SendKeys.SendWait(msg);
-                
+
                 Thread.Sleep(500);
                 return true;
             }
@@ -484,7 +475,7 @@ namespace Ghosts.Client.Handlers
             var windHandle = Winuser.FindWindow("gdkWindowToplevel", "Pidgin");
             Winuser.SetForegroundWindow(windHandle);
             System.Windows.Forms.SendKeys.SendWait("^{TAB}");
-          
+
             Thread.Sleep(500);
             //at this point the window title may have changed. Check that.
             return getImWindow(); //return the new title of the IM window

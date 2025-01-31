@@ -1,15 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using Ghosts.Client.Handlers;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-
-namespace Ghosts.Client.Infrastructure
+﻿namespace Ghosts.Client.Infrastructure
 {
     public class FtpSupport : SshSftpSupport
     {
@@ -74,7 +63,7 @@ namespace Ghosts.Client.Infrastructure
                 return;
             }
             var remoteFilePath = file;
-            
+
             //now delete the file
             try
             {
@@ -104,17 +93,17 @@ namespace Ghosts.Client.Infrastructure
 
         public void DoGet(string hostip, NetworkCredential cred)
         {
-           
-            var file = GetRemoteFile(hostip,cred);
+
+            var file = GetRemoteFile(hostip, cred);
             if (file == null)
             {
                 Log.Trace($"Ftp:: Cannot find a valid file to download from remote host {hostip}.");
                 return;
             }
-            var remoteFilePath = file ;
+            var remoteFilePath = file;
             var localFilePath = Path.Combine(downloadDirectory, file);
-            
-           
+
+
             //at this point, localFilePath, remoteFilePath are set
             if (System.IO.File.Exists(localFilePath))
             {
@@ -147,7 +136,7 @@ namespace Ghosts.Client.Infrastructure
                     {
 
                         Stream responseStream = response.GetResponseStream();
-                        
+
                         while (true)
                         {
                             int n = responseStream.Read(bytes, 0, 2048);
@@ -156,11 +145,11 @@ namespace Ghosts.Client.Infrastructure
                         }
                         responseStream.Close();
 
-                        
+
                     }
                     response.Close();
                     Log.Trace($"Ftp:: Success, Downloaded remote file {remoteFilePath},host {hostip}  to file {localFilePath},  ");
-                    
+
                 }
             }
             catch (ThreadAbortException)
@@ -173,16 +162,16 @@ namespace Ghosts.Client.Infrastructure
             }
         }
 
-       
+
 
         public void writeTask(string hostip, NetworkCredential cred, string fileName)
         {
             var components = fileName.Split(Path.DirectorySeparatorChar);
             var remoteFileName = components[components.Length - 1];
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{hostip}/{remoteFileName}");
-            request.Credentials = cred; 
-            request.Method= WebRequestMethods.Ftp.UploadFile;
-           
+            request.Credentials = cred;
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
             if (response != null)
@@ -192,7 +181,7 @@ namespace Ghosts.Client.Infrastructure
                 {
                     using (Stream requestStream = request.GetRequestStream())
                     {
-                        
+
                         int numBytesToRead = (int)fileStream.Length;
                         int numBytesRead = 0;
                         int chunkSize;
@@ -202,7 +191,7 @@ namespace Ghosts.Client.Infrastructure
                             if (chunkSize > 2048)
                             {
                                 chunkSize = 2048;
-                            } 
+                            }
                             int n = fileStream.Read(bytes, 0, chunkSize);
                             if (n == 0) break;
                             requestStream.Write(bytes, 0, n);
@@ -223,14 +212,14 @@ namespace Ghosts.Client.Infrastructure
         /// <param name="cmd"></param>
         public void DoPut(string hostip, NetworkCredential cred)
         {
-            
+
             var fileName = GetUploadFilename();
             if (fileName == null)
             {
                 Log.Trace($"Ftp:: Cannot find a valid file to upload from directory {uploadDirectory}.");
                 return;
             }
-            
+
             try
             {
                 writeTask(hostip, cred, fileName);
@@ -257,7 +246,7 @@ namespace Ghosts.Client.Infrastructure
                 DoGet(hostip, cred);
                 return;
             }
-            
+
             else if (cmd == "delete")
             {
                 DoDelete(hostip, cred);

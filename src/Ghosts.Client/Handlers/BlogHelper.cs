@@ -1,12 +1,5 @@
 ﻿using Ghosts.Client.Infrastructure;
 using Ghosts.Client.Infrastructure.Browser;
-using Ghosts.Domain.Code;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-using OpenQA.Selenium;
-using System;
-using System.Text.RegularExpressions;
-using NLog;
 
 namespace Ghosts.Client.Handlers
 {
@@ -30,7 +23,7 @@ namespace Ghosts.Client.Handlers
         string _version = null;
 
         public BlogContentManager contentManager = null;
-        
+
 
         public static BlogHelper MakeHelper(BaseBrowserHandler callingHandler, IWebDriver callingDriver, TimelineHandler handler, Logger tlog)
         {
@@ -70,8 +63,8 @@ namespace Ghosts.Client.Handlers
             return true;
         }
 
-        
-        
+
+
         public virtual bool DoInitialLogin(TimelineHandler handler, string user, string pw)
         {
             Log.Trace($"Blog:: Unsupported action 'DoInitialLogin' in Blog version {_version} ");
@@ -152,7 +145,7 @@ namespace Ghosts.Client.Handlers
         {
             string credFname;
             string credentialKey = null;
-            
+
 
             switch (_state)
             {
@@ -161,8 +154,8 @@ namespace Ghosts.Client.Handlers
                 case "initial":
                     //these are only parsed once, global for the handler as handler can only have one entry.
                     _version = handler.HandlerArgs["blog-version"].ToString();  //guaranteed to have this option, already checked in base handler
-                    
-                  
+
+
                     if (_deletionProbability < 0 && handler.HandlerArgs.ContainsKey("blog-deletion-probability"))
                     {
                         int.TryParse(handler.HandlerArgs["blog-deletion-probability"].ToString(), out _deletionProbability);
@@ -263,7 +256,7 @@ namespace Ghosts.Client.Handlers
 
                     //check if site starts with http:// or https:// 
                     site = site.ToLower();
-                    
+
                     Regex rx = new Regex("^http://.*", RegexOptions.Compiled);
                     var match = rx.Matches(site);
                     if (match.Count > 0) header = "http://";
@@ -303,7 +296,8 @@ namespace Ghosts.Client.Handlers
                     }
 
                     //have username, password - do the initial login
-                    if (!DoInitialLogin(handler,username,password)) {
+                    if (!DoInitialLogin(handler, username, password))
+                    {
                         baseHandler.BlogAbort = true;
                         return;
                     }
@@ -317,7 +311,7 @@ namespace Ghosts.Client.Handlers
                     //determine what to do
                     string blogAction = GetNextAction();
 
-                    
+
                     if (blogAction == null)
                     {
                         //nothing to do this cycle
@@ -350,7 +344,8 @@ namespace Ghosts.Client.Handlers
                         if (contentManager.Subject == null || contentManager.Body == null)
                         {
                             Log.Trace($"Blog:: Content unavailable, check Blog content file, upload skipped.");
-                        } else if (!DoUpload(handler, contentManager.Subject, contentManager.Body))
+                        }
+                        else if (!DoUpload(handler, contentManager.Subject, contentManager.Body))
                         {
                             baseHandler.BlogAbort = true;
                             return;
@@ -360,7 +355,7 @@ namespace Ghosts.Client.Handlers
                     {
                         //get new content
                         var reply = contentManager.BlogReplyNext();
-                        if (reply == null )
+                        if (reply == null)
                         {
                             Log.Trace($"Blog:: Reply content unavailable, check Blog reply file, reply action skipped.");
                         }

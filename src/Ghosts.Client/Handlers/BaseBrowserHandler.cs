@@ -1,18 +1,8 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Ghosts.Client.Infrastructure;
 using Ghosts.Client.Infrastructure.Browser;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using OpenQA.Selenium;
 using Actions = OpenQA.Selenium.Interactions.Actions;
-using System.Collections.Generic;
-using System.Linq;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace Ghosts.Client.Handlers
 {
@@ -196,7 +186,7 @@ namespace Ghosts.Client.Handlers
                             if (config.Uri.IsWellFormedOriginalString())
                             {
                                 var r = FilterWebResponse(MakeRequest(config));
-                                Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r});
+                                Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r });
                             }
                             break;
                         case "download":
@@ -328,7 +318,7 @@ namespace Ghosts.Client.Handlers
                 {
                     this.LinkManager.SetCurrent(config.Uri);
                     var r = FilterWebResponse(MakeRequest(config));
-                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r});
+                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r });
                     Thread.Sleep(timelineEvent.DelayAfterActual);
 
                     if (this.Stickiness > 0)
@@ -355,7 +345,7 @@ namespace Ghosts.Client.Handlers
 
                                     Log.Trace($"Making request #{loopNumber + 1}/{loops} to {config.Uri}");
                                     r = FilterWebResponse(MakeRequest(config));
-                                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r});
+                                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r });
                                 }
                                 catch (Exception e)
                                 {
@@ -499,7 +489,7 @@ namespace Ghosts.Client.Handlers
                 {
                     return "500";
                 }
-                
+
                 Log.Trace(e.Message);
                 HandleBrowserException(e);
 
@@ -692,7 +682,7 @@ namespace Ghosts.Client.Handlers
                     var urlDict = new Dictionary<string, int>();
                     var urlQueue = new LifoQueue<Uri>(VisitedRemember);
                     var r = FilterWebResponse(MakeRequest(config));
-                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r});
+                    Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = config.ToString(), Trackable = timelineEvent.TrackableId, Result = r });
                     Thread.Sleep(timelineEvent.DelayAfterActual);
 
                     if (this.Stickiness > 0)

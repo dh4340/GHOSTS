@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-using Ghosts.Domain.Code;
-using System.Net;
+﻿using Ghosts.Client.Infrastructure;
 
 namespace Ghosts.Client.Handlers
 {
@@ -25,7 +18,7 @@ namespace Ghosts.Client.Handlers
                 this.CurrentFtpSupport = new FtpSupport();
                 if (handler.HandlerArgs != null)
                 {
-                    
+
                     if (handler.HandlerArgs.ContainsKey("CredentialsFile"))
                     {
                         try
@@ -150,7 +143,7 @@ namespace Ghosts.Client.Handlers
                             this.Command(handler, timelineEvent, cmd.ToString(), action);
                         }
                         Thread.Sleep(Jitter.JitterFactorDelay(timelineEvent.DelayAfterActual, jitterfactor));
-                        break;    
+                        break;
                 }
 
                 if (timelineEvent.DelayAfterActual > 0)
@@ -161,7 +154,7 @@ namespace Ghosts.Client.Handlers
 
         public void Command(TimelineHandler handler, TimelineEvent timelineEvent, string command, string action)
         {
-            
+
             char[] charSeparators = new char[] { '|' };
             var cmdArgs = command.Split(charSeparators, 2, StringSplitOptions.None);
             var hostIp = cmdArgs[0];
@@ -177,7 +170,7 @@ namespace Ghosts.Client.Handlers
                 try
                 {
                     NetworkCredential netcred = new NetworkCredential(username, password);
-                   
+
                     try
                     {
                         this.CurrentFtpSupport.RunFtpCommand(hostIp, netcred, action);
@@ -203,7 +196,7 @@ namespace Ghosts.Client.Handlers
                     return;  //unable to connect
                 }
 
-            }  
+            }
 
         }
     }

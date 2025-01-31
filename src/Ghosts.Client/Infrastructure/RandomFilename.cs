@@ -1,12 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Ghosts.Domain.Code.Helpers;
-using NLog;
-
 namespace Ghosts.Client.Infrastructure;
 
 /// <summary>
@@ -24,7 +17,7 @@ public static class RandomFilename
 
         try
         {
-            if(File.Exists(ClientConfigurationResolver.FileNames))
+            if (File.Exists(ClientConfigurationResolver.FileNames))
                 list = File.ReadAllLines(ClientConfigurationResolver.FileNames).ToList();
         }
         catch (Exception exc)

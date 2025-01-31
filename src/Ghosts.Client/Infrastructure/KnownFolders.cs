@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ghosts.Client.Infrastructure;
+﻿namespace Ghosts.Client.Infrastructure;
 
 public static class KnownFolders
 {

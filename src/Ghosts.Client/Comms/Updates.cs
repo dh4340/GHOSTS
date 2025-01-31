@@ -1,18 +1,7 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading;
 using Ghosts.Client.Infrastructure;
 using Ghosts.Client.TimelineManager;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Messages.MesssagesForServer;
-using Newtonsoft.Json;
-using NLog;
 
 namespace Ghosts.Client.Comms;
 
@@ -125,15 +114,15 @@ public static class Updates
 
                             break;
                         case UpdateClientConfig.UpdateType.Health:
-                        {
-                            var newTimeline = JsonConvert.DeserializeObject<ResultHealth>(update.Update.ToString());
-                            //save to local disk
-                            using var file = File.CreateText(ApplicationDetails.ConfigurationFiles.Health);
-                            var serializer = new JsonSerializer { Formatting = Formatting.Indented };
-                            serializer.Serialize(file, newTimeline);
+                            {
+                                var newTimeline = JsonConvert.DeserializeObject<ResultHealth>(update.Update.ToString());
+                                //save to local disk
+                                using var file = File.CreateText(ApplicationDetails.ConfigurationFiles.Health);
+                                var serializer = new JsonSerializer { Formatting = Formatting.Indented };
+                                serializer.Serialize(file, newTimeline);
 
-                            break;
-                        }
+                                break;
+                            }
                         default:
                             _log.Debug($"Update {update.Type} has no handler, ignoring...");
                             break;
@@ -310,7 +299,7 @@ public static class Updates
         }
 
         Thread.Sleep(2000);
-            
+
         string rawLogContents = null;
 
         try
@@ -356,7 +345,7 @@ public static class Updates
 
             throw;
         }
-            
+
         //delete the temp file we used for reading
         File.Delete(tempFile);
         _log.Trace($"{DateTime.Now} - {fileName} posted to server successfully");
@@ -416,7 +405,7 @@ public static class Updates
         }
         catch (Exception e)
         {
-            _log.Debug($"Problem posting logs to server from { ApplicationDetails.InstanceFiles.SurveyResults } to { Program.ConfigurationUrls.Survey}");
+            _log.Debug($"Problem posting logs to server from {ApplicationDetails.InstanceFiles.SurveyResults} to {Program.ConfigurationUrls.Survey}");
             _log.Error(e);
         }
     }

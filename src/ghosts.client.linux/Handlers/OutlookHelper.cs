@@ -1,18 +1,14 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading;
 using ghosts.client.linux.Infrastructure;
 using ghosts.client.linux.Infrastructure.Email;
 using Ghosts.Domain.Code;
 using Ghosts.Domain.Messages;
-using Newtonsoft.Json;
-using NLog;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using Actions = OpenQA.Selenium.Interactions.Actions;
 using Exception = System.Exception;
 

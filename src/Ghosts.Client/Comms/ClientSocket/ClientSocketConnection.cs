@@ -1,13 +1,7 @@
 // Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Client.ClientSocket;
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Microsoft.AspNetCore.SignalR.Client;
 using Exception = System.Exception;
 
 namespace Ghosts.Client.Comms.ClientSocket;
@@ -40,10 +34,13 @@ public class Connection
         // Send a message to the server
         while (_connection.State == HubConnectionState.Connected)
         {
-            _ = new Timer(_ => {
-                Task.Run(async () => {
+            _ = new Timer(_ =>
+            {
+                Task.Run(async () =>
+                {
                     await ClientHeartbeat();
-                }, _ct).ContinueWith(task => {
+                }, _ct).ContinueWith(task =>
+                {
                     if (task.Exception != null)
                     {
                         // Log or handle the exception
@@ -65,7 +62,7 @@ public class Connection
 
                     if (item.Type == QueueEntry.Types.Message)
                         await this.ClientMessage(item.Payload.ToString());
-                    
+
                     if (item.Type == QueueEntry.Types.MessageSpecific)
                         await this.ClientMessageSpecific(item.Payload.ToString());
                 }
@@ -93,7 +90,7 @@ public class Connection
                 x.Headers = WebClientBuilder.GetHeaders(machine, true);
             }).WithAutomaticReconnect()
             .Build();
-        
+
         Console.WriteLine($"Connection state: {_connection.State}");
 
         // Define how to handle incoming messages
@@ -136,7 +133,7 @@ public class Connection
         }
         catch (Exception ex)
         {
-            if(_attempts > 1)
+            if (_attempts > 1)
                 Console.WriteLine($"An error occurred at {url} while connecting: {ex.Message}");
         }
     }
@@ -145,16 +142,16 @@ public class Connection
     {
         await _connection?.InvokeAsync("SendHeartbeat", $"Client heartbeat at {DateTime.UtcNow}", this._ct)!;
     }
-    
+
     private async Task ClientMessage(string message)
     {
-        if(!string.IsNullOrEmpty(message))
+        if (!string.IsNullOrEmpty(message))
             await _connection?.InvokeAsync("SendMessage", $"Client message: {message}", this._ct)!;
     }
-    
+
     private async Task ClientMessageSpecific(string message)
     {
-        if(!string.IsNullOrEmpty(message))
+        if (!string.IsNullOrEmpty(message))
             await _connection?.InvokeAsync("SendSpecificMessage", $"Client specific message: {message}", this._ct)!;
     }
 }

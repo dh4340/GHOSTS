@@ -1,22 +1,10 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using Ghosts.Client.Infrastructure.Email;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Microsoft.Office.Interop.Outlook;
-using Redemption;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain.Code.Helpers;
+using Ghosts.Client.Infrastructure.Email;
 using Exception = System.Exception;
 using MAPIFolder = Microsoft.Office.Interop.Outlook.MAPIFolder;
 using ReportItem = Ghosts.Domain.Code.ReportItem;
-using Newtonsoft.Json;
 
 namespace Ghosts.Client.Handlers;
 
@@ -26,7 +14,7 @@ public class Outlook : BaseHandler
     private readonly NameSpace _oMapiNamespace;
     private readonly MAPIFolder _folderOutbox;
     private readonly MAPIFolder _folderInbox;
-    
+
     public Outlook(TimelineHandler handler)
     {
         try
@@ -50,7 +38,7 @@ public class Outlook : BaseHandler
 
             Log.Trace("Redemption64 loaded from " + Path.GetFullPath(currentDir + @"\lib\redemption64.dll"));
             Log.Trace("Redemption loaded from " + Path.GetFullPath(currentDir + @"\lib\redemption.dll"));
-            
+
             //Create a Redemption object and use it
             Log.Trace("Creating new RDO session...");
             var session = RedemptionLoader.new_RDOSession();
@@ -193,7 +181,7 @@ public class Outlook : BaseHandler
 
             var filteredEmails = folderItems.Where(x => x.BodyFormat == OlBodyFormat.olFormatHTML && x.HTMLBody.Contains("<a href="));
             var mailItem = filteredEmails.PickRandom();
-                
+
             //check deny list
             var list = DenyListManager.RemoveDeniedFromList(mailItem.HTMLBody.GetHrefUrls());
             if (list.Any())
@@ -313,7 +301,7 @@ public class Outlook : BaseHandler
                 if (!folderItem.UnRead) continue;
 
                 var emailReply = new EmailReplyManager();
-                        
+
                 var replyMail = folderItem.Reply();
 
                 using (var quoted = new StringWriter())
@@ -505,7 +493,7 @@ public class Outlook : BaseHandler
 
                 Log.Trace($"RdoMail CC {a.Trim()}");
             }
-        
+
             foreach (var a in emailConfig.Bcc)
             {
                 var r = rdoMail.Recipients.AddEx(a.Trim());
@@ -517,10 +505,10 @@ public class Outlook : BaseHandler
 
                 Log.Trace($"RdoMail BCC {a.Trim()}");
             }
-        
-                
+
+
             rdoMail.Recipients.ResolveAll();
-            
+
             Log.Trace("Attempting to send Redemtion SafeMailItem...");
             rdoMail.Send();
 

@@ -1,15 +1,6 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.IO;
-using System.Threading;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using Newtonsoft.Json.Linq;
-using OpenQA.Selenium;
 
 
 namespace Ghosts.Client.Handlers
@@ -156,11 +147,11 @@ namespace Ghosts.Client.Handlers
             options.AddArguments("--disable-logging");
             options.AddArgument("--log-level=3");
             options.AddArgument("--silent");
-            
+
 
             options.AddLocalStatePreference("download.default_directory", @"%homedrive%%homepath%\\Downloads");
             options.AddLocalStatePreference("disable-popup-blocking", "true");
-            
+
 
             options.BinaryLocation = GetInstallLocation();
 
@@ -173,7 +164,7 @@ namespace Ghosts.Client.Handlers
                         options.AddArgument(option.Value<string>());
                     }
                 }
-                
+
                 if (handler.HandlerArgs.ContainsKey("socks-proxy"))
                 {
                     Proxy proxy = new Proxy();
@@ -285,7 +276,7 @@ namespace Ghosts.Client.Handlers
             {
                 options.AddArguments($"--load-extension={Program.Configuration.ChromeExtensions}");
             }
-            
+
             var driver = new ChromeDriver(options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             return driver;

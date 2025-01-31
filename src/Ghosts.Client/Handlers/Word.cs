@@ -1,19 +1,8 @@
 // Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using NetOffice.WordApi.Enums;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using Newtonsoft.Json;
-using Word = NetOffice.WordApi;
 using VB = Microsoft.VisualBasic;
+using Word = NetOffice.WordApi;
 
 namespace Ghosts.Client.Handlers;
 
@@ -82,7 +71,7 @@ public class WordHandler : BaseHandler
             {
                 jitterFactor = Jitter.JitterFactorParse(handler.HandlerArgs["delay-jitter"].ToString());
             }
-            
+
             foreach (var timelineEvent in handler.TimeLineEvents)
             {
                 try
@@ -115,10 +104,10 @@ public class WordHandler : BaseHandler
 
                     // start word and turn off msg boxes
                     using (var wordApplication = new Word.Application
-                           {
-                               DisplayAlerts = WdAlertLevel.wdAlertsNone,
-                               Visible = true
-                           })
+                    {
+                        DisplayAlerts = WdAlertLevel.wdAlertsNone,
+                        Visible = true
+                    })
                     {
                         Word.Document document = null;
                         if (OfficeHelpers.ShouldOpenExisting(handler))
@@ -288,7 +277,7 @@ public class WordHandler : BaseHandler
                         {
                             // ignore
                         }
-                            
+
                         try
                         {
                             Marshal.ReleaseComObject(wordApplication);
@@ -315,7 +304,7 @@ public class WordHandler : BaseHandler
                     Log.Error(e);
                     Log.Trace("Word closing abnormally...");
                     KillApp();
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -351,7 +340,7 @@ public class WordHandler : BaseHandler
             KillApp();
         }
     }
-    
+
     private WdColor GetWdColor(Color color)
     {
         var rgbColor = VB.Information.RGB(color.R, color.G, color.B);

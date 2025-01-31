@@ -1,13 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Ghosts.Domain.Code;
-using NLog;
-using Newtonsoft.Json;
-
 namespace Ghosts.Client.Infrastructure;
 
 /// <summary>
@@ -16,7 +8,7 @@ namespace Ghosts.Client.Infrastructure;
 public static class Trackables
 {
     private static readonly Logger _log = LogManager.GetCurrentClassLogger();
- 
+
     public class Trackable
     {
         public Guid Key { get; set; }
@@ -49,14 +41,14 @@ public static class Trackables
 
         public TrackablesManager()
         {
-            Items = File.Exists(ApplicationDetails.InstanceFiles.Trackables) 
-                ? JsonConvert.DeserializeObject<List<Trackable>>(File.ReadAllText(ApplicationDetails.InstanceFiles.Trackables)) 
+            Items = File.Exists(ApplicationDetails.InstanceFiles.Trackables)
+                ? JsonConvert.DeserializeObject<List<Trackable>>(File.ReadAllText(ApplicationDetails.InstanceFiles.Trackables))
                 : new List<Trackable>();
         }
 
         public void Add(Trackable item)
         {
-            if(this.Items.Any(_=> _.Key == item.Key))
+            if (this.Items.Any(_ => _.Key == item.Key))
                 this.Items.First(_ => _.Key == item.Key).Value = item.Value;
             else
                 Items.Add(item);

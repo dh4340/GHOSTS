@@ -1,13 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using CommandLine;
-using CommandLine.Text;
-using Ghosts.Domain.Code;
-using System;
-using System.Reflection;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-
 namespace Ghosts.Client.Infrastructure;
 
 internal static class CommandLineFlagManager

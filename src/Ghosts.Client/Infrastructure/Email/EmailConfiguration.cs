@@ -1,15 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.DirectoryServices.AccountManagement;
-using System.IO;
-using System.Linq;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using Newtonsoft.Json;
-using NLog;
-
 namespace Ghosts.Client.Infrastructure.Email;
 
 /// <summary>

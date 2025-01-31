@@ -1,14 +1,5 @@
 // Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using Ghosts.Domain;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Management;
-using Ghosts.Domain.Code.Helpers;
-
 namespace Ghosts.Client.Infrastructure;
 
 public static class ProcessManager

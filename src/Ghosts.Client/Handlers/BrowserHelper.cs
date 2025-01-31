@@ -1,25 +1,11 @@
-﻿
-using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Newtonsoft.Json;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
-using Actions = OpenQA.Selenium.Interactions.Actions;
+﻿using Actions = OpenQA.Selenium.Interactions.Actions;
 using Exception = System.Exception;
-using NLog;
-using System.Web;
-using System.Collections.Generic;
 
 
 namespace Ghosts.Client.Handlers
 {
 
-    
+
     public abstract class BrowserHelper
     {
         public static readonly Logger Log = LogManager.GetCurrentClassLogger();
@@ -61,7 +47,7 @@ namespace Ghosts.Client.Handlers
                             {
                                 filteredFiles.Add(file);
                             }
-                    
+
                         }
                         catch (ThreadAbortException)
                         {
@@ -72,8 +58,8 @@ namespace Ghosts.Client.Handlers
                             Log.Error($"File access error: {e}");
                         }
                     }
-                    if (filteredFiles.Count == 0) return null;         
-                    
+                    if (filteredFiles.Count == 0) return null;
+
                     if (count == 1)
                     {
                         return new List<string>() { filteredFiles[_random.Next(0, filteredFiles.Count)] };
@@ -93,13 +79,14 @@ namespace Ghosts.Client.Handlers
             {
                 throw;  //pass up
             }
-            catch {
+            catch
+            {
                 //ignore others
             }
             return null;
         }
-    
-    
+
+
 
     }
 
@@ -158,8 +145,9 @@ namespace Ghosts.Client.Handlers
             {
                 return; //return if not present
             }
-            try { 
-                targetElement = Driver.FindElement(By.Id("exceptionDialogButton"));  
+            try
+            {
+                targetElement = Driver.FindElement(By.Id("exceptionDialogButton"));
                 MoveToElementAndClick(Driver, targetElement);   //accept risk and continue
                 Thread.Sleep(1000);
                 return;
@@ -171,7 +159,7 @@ namespace Ghosts.Client.Handlers
                 targetElement = Driver.FindElement(By.Id("advancedPanelReturnButton"));
                 MoveToElementAndClick(Driver, targetElement);   //return, cannot continue
                 Thread.Sleep(1000);
-                
+
             }
             catch { }
 
@@ -179,4 +167,4 @@ namespace Ghosts.Client.Handlers
 
     }
 
-    }
+}

@@ -1,12 +1,4 @@
-﻿using FileHelpers;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ghosts.Client.Infrastructure.Browser
+﻿namespace Ghosts.Client.Infrastructure.Browser
 {
     /// <summary>
     /// The classes in this file assist with auto-generation of POST content
@@ -56,7 +48,8 @@ namespace Ghosts.Client.Infrastructure.Browser
                     //handle conjoined last name, capitalize first letter of each name
                     var words = s.Split('-');
                     retval = words[0][0].ToString().ToUpper() + words[0].Substring(1) + "-" + words[1][0].ToString().ToUpper() + words[1].Substring(1);
-                } else
+                }
+                else
                 {
                     retval = s[0].ToString().ToUpper() + s.Substring(1);
                 }
@@ -97,10 +90,10 @@ namespace Ghosts.Client.Infrastructure.Browser
             var lastName2 = getRandomLastName();
             var emailTarget = getRandomEmailTarget();
             var seperator = seperators[_random.Next(0, seperators.Count())].ToString();
-            if (_random.Next(0,10) == 0) lastName = lastName + "-" + lastName2;  //10% of names are conjoined
-            var useInitials = _random.Next(0, 2)>0;
-            var useFirstNameFirst = _random.Next(0, 2)>0;
-            var useMiddleInitial = _random.Next(0, 2)>0;
+            if (_random.Next(0, 10) == 0) lastName = lastName + "-" + lastName2;  //10% of names are conjoined
+            var useInitials = _random.Next(0, 2) > 0;
+            var useFirstNameFirst = _random.Next(0, 2) > 0;
+            var useMiddleInitial = _random.Next(0, 2) > 0;
             var firstInitial = firstName[0].ToString();
             var middleInitial = getRandomInitial(false);
             var useUpperCase = _random.Next(0, 2) > 0;
@@ -113,11 +106,13 @@ namespace Ghosts.Client.Infrastructure.Browser
             {
                 if (useMiddleInitial) name = $"{getCapitializeFirst(useUpperCase, firstInitial)}{seperator}{getCapitializeFirst(useUpperCase, middleInitial)}{seperator}{getCapitializeFirst(useUpperCase, lastName)}";
                 else name = $"{getCapitializeFirst(useUpperCase, firstInitial)}{seperator}{getCapitializeFirst(useUpperCase, lastName)}";
-            } else if (useFirstNameFirst)
+            }
+            else if (useFirstNameFirst)
             {
                 if (useMiddleInitial) name = $"{getCapitializeFirst(useUpperCase, firstName)}{seperator}{getCapitializeFirst(useUpperCase, middleInitial)}{seperator}{getCapitializeFirst(useUpperCase, lastName)}";
                 else name = $"{getCapitializeFirst(useUpperCase, firstName)}{seperator}{getCapitializeFirst(useUpperCase, lastName)}";
-            } else
+            }
+            else
             {
                 if (useMiddleInitial) name = $"{getCapitializeFirst(useUpperCase, lastName)}{seperator}{getCapitializeFirst(useUpperCase, firstName)}{seperator}{getCapitializeFirst(useUpperCase, middleInitial)}";
                 else name = $"{getCapitializeFirst(useUpperCase, lastName)}{seperator}{getCapitializeFirst(useUpperCase, firstName)}";
@@ -127,7 +122,7 @@ namespace Ghosts.Client.Infrastructure.Browser
 
         }
 
-        
+
 
         public void GenericContentNext()
         {
@@ -149,7 +144,7 @@ namespace Ghosts.Client.Infrastructure.Browser
             this.Body = o.Body.Replace("\\n", "\n");
         }
 
-        
+
         public void LoadAllContent()
         {
             try

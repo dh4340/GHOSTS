@@ -1,10 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
-
 namespace Ghosts.Client.Infrastructure.Email;
 
 public static class EmailListManager
@@ -24,7 +19,7 @@ public static class EmailListManager
             //save to local disk
             using (var file = File.CreateText(fileName))
             {
-                var serializer = new JsonSerializer {Formatting = Formatting.Indented};
+                var serializer = new JsonSerializer { Formatting = Formatting.Indented };
                 serializer.Serialize(file, emails);
                 return emails;
             }
@@ -33,7 +28,7 @@ public static class EmailListManager
         var list = JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(fileName));
         return list;
     }
-        
+
     public static List<string> GetOutsideList()
     {
         var fileName = ClientConfigurationResolver.EmailOutside;

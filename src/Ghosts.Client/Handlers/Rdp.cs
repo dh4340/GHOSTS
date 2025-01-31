@@ -1,17 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
-using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using AutoItX3Lib;
-using System.Text;
-using Newtonsoft.Json;
-using System.IO;
-using NPOI.SS.Formula.Functions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using System.ComponentModel.Composition;
-using System.Runtime.InteropServices;
+﻿using Ghosts.Client.Infrastructure;
 
 namespace Ghosts.Client.Handlers
 {
@@ -150,7 +137,7 @@ namespace Ghosts.Client.Handlers
                                 this.RdpEx(handler, timelineEvent, choice.ToString(), au);
                             }
                             Thread.Sleep(Jitter.JitterFactorDelay(timelineEvent.DelayAfterActual, JitterFactor));
-                            
+
                             break;
 
                     }
@@ -158,7 +145,7 @@ namespace Ghosts.Client.Handlers
             }
         }
 
-        public void Cleanup(AutoItX3 au, string caption,Process process)
+        public void Cleanup(AutoItX3 au, string caption, Process process)
         {
             //close window if still open
             var winHandle = Winuser.FindWindow("TscShellContainerClass", caption);
@@ -184,7 +171,8 @@ namespace Ghosts.Client.Handlers
                         process.Kill();
                         Thread.Sleep(1000);
                     }
-                } else
+                }
+                else
                 {
                     Log.Trace($"RDP:: Remote Desktop process has exited.");
                 }
@@ -216,7 +204,8 @@ namespace Ghosts.Client.Handlers
                 {
                     username = $"{domain}\\{username}";
                 }
-                if (!localUser.ToLower().Contains(username.ToLower())) {
+                if (!localUser.ToLower().Contains(username.ToLower()))
+                {
                     usePasswordOnly = false;
                 }
             }
@@ -228,7 +217,7 @@ namespace Ghosts.Client.Handlers
                 UseShellExecute = false
             };
 
-            
+
             var caption = $"{target} - Remote Desktop Connection";
 
             using (var process = Process.Start(processStartInfo))
@@ -259,7 +248,7 @@ namespace Ghosts.Client.Handlers
                             Log.Trace($"RDP:: Unable to connect to remote desktop for {target}");
                         }
                         Thread.Sleep(2000);
-                        Cleanup(au, caption,process);
+                        Cleanup(au, caption, process);
                     }
                     else
                     {
@@ -279,7 +268,7 @@ namespace Ghosts.Client.Handlers
             }
         }
 
-        public bool findRdpWindow(string target,int timeout)
+        public bool findRdpWindow(string target, int timeout)
         {
             var caption = $"{target} - Remote Desktop Connection";
             var winHandle = Winuser.FindWindow("TscShellContainerClass", caption);
@@ -298,7 +287,7 @@ namespace Ghosts.Client.Handlers
 
         public void doMouseLoop(string caption, string target, AutoItX3 au, TimelineEvent timelineEvent)
         {
-            
+
             var winHandle = Winuser.FindWindow("TscShellContainerClass", caption);
             if (winHandle != IntPtr.Zero)
             {
@@ -391,7 +380,7 @@ namespace Ghosts.Client.Handlers
         public void checkPasswordPrompt(AutoItX3 au, string password, string username, bool usePasswordOnly)
         {
             Log.Trace($"RDP:: Checking for password prompt, usePasswordOnly is  {usePasswordOnly}.");
-            bool foundWinSecurity = false; 
+            bool foundWinSecurity = false;
             var winHandle = Winuser.FindWindow("Credential Dialog Xaml Host", "Windows Security");
             if (winHandle == IntPtr.Zero)
             {
@@ -400,9 +389,10 @@ namespace Ghosts.Client.Handlers
                 winHandle = findDialogWindow("Windows Security");
                 if (winHandle != IntPtr.Zero)
                 {
-                   Log.Trace($"RDP:: Found window prompt, caption: 'Windows Security' for {CurrentTarget}.");
+                    Log.Trace($"RDP:: Found window prompt, caption: 'Windows Security' for {CurrentTarget}.");
                 }
-            } else
+            }
+            else
             {
                 Log.Trace($"RDP:: Found window prompt, caption: 'Credential Dialog Xaml Host' for {CurrentTarget}.");
             }
@@ -412,7 +402,7 @@ namespace Ghosts.Client.Handlers
                 {
                     Log.Trace($"RDP:: Executing custom login to {CurrentTarget}.");
                     string[] cmds = CustomLogin.Split('\n');
-                    foreach ( string cmd in cmds )
+                    foreach (string cmd in cmds)
                     {
                         if (cmd.Contains("#USERNAME"))
                         {
@@ -420,7 +410,7 @@ namespace Ghosts.Client.Handlers
                         }
                         else if (cmd.Contains("#PASSWORD"))
                         {
-                           
+
                             var s = escapePassword(password);
                             System.Windows.Forms.SendKeys.SendWait(s);  //fill in password field
                         }
@@ -430,15 +420,15 @@ namespace Ghosts.Client.Handlers
                             int delay;
                             if (int.TryParse(s, out delay))
                             {
-                               Thread.Sleep(delay);
+                                Thread.Sleep(delay);
                             }
-                            
+
                         }
                         else
                         {
                             au.Send(cmd);
                         }
-                        
+
                     }
                     Log.Trace($"RDP:: Finished custom login to {CurrentTarget}.");
 
@@ -449,7 +439,8 @@ namespace Ghosts.Client.Handlers
                     if (foundWinSecurity)
                     {
                         responseString = "{TAB}{TAB}{ENTER}";  //this form has a different response string
-                    } else
+                    }
+                    else
                     {
                         responseString = "{TAB}{TAB}{TAB}{ENTER}";
                     }
@@ -460,7 +451,8 @@ namespace Ghosts.Client.Handlers
                     au.Send(responseString);
                     Thread.Sleep(1000);
                     Log.Trace($"RDP:: Found password prompt for {CurrentTarget}.");
-                }  else
+                }
+                else
                 {
                     //try entering full username
                     Winuser.SetForegroundWindow(winHandle);

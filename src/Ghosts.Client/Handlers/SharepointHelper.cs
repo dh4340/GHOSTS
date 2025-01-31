@@ -1,20 +1,6 @@
 ﻿using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Newtonsoft.Json;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using Actions = OpenQA.Selenium.Interactions.Actions;
 using Exception = System.Exception;
-using NLog;
-using System.Web;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 
 namespace Ghosts.Client.Handlers
@@ -720,7 +706,7 @@ namespace Ghosts.Client.Handlers
                             return;
                         }
                     }
-                    
+
                     this.baseHandler.Report(new ReportItem { Handler = $"Sharepoint{version}: {handler.HandlerType.ToString()}", Command = sharepointAction, Arg = "", Trackable = timelineEvent.TrackableId });
                     break;
 

@@ -1,4 +1,5 @@
-// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,7 @@ using System.Threading.Tasks;
 using FileHelpers;
 using ghosts.api.Infrastructure.Models;
 using ghosts.api.Infrastructure.Services;
-using Ghosts.Animator;
-using Ghosts.Animator.Extensions;
-using Ghosts.Animator.Models;
 using Ghosts.Api.Infrastructure.Data;
-using Ghosts.Api.Infrastructure.Extensions;
 using Ghosts.Domain.Code;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

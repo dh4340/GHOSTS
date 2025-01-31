@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using Renci.SshNet;
-using Ghosts.Client.Infrastructure;
-using NLog;
-using System.IO;
-
-namespace Ghosts.Client.Infrastructure
+﻿namespace Ghosts.Client.Infrastructure
 {
     /// <summary>
     /// This class provides SSH/SFTP support using Renci.SshNet
@@ -18,7 +8,7 @@ namespace Ghosts.Client.Infrastructure
     {
 
         public string[] ValidExts { get; set; } = { "txt", "py", "log", "c", "o", "jpg", "cs", "dll", "so", "zip", "gz", "jar" };
-       
+
         public string uploadDirectory { get; set; } = null;
 
 

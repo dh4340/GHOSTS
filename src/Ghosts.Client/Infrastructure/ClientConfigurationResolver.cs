@@ -1,7 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using Ghosts.Domain.Code;
-
 namespace Ghosts.Client.Infrastructure;
 
 public static class ClientConfigurationResolver

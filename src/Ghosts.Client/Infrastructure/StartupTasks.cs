@@ -1,16 +1,6 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows.Forms;
 using Ghosts.Client.Infrastructure.Email;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using NLog;
-using Microsoft.Win32;
 
 namespace Ghosts.Client.Infrastructure;
 
@@ -77,7 +67,7 @@ public static class StartupTasks
                         break;
                 }
             }
-            
+
             //need to kill any other instance of ghosts already running
             var ghosts = Process.GetCurrentProcess();
             cleanupList.Add(ghosts.ProcessName);
@@ -111,7 +101,7 @@ public static class StartupTasks
                 }
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             _log.Debug($"Cleanup process exception: {e}");
         }
@@ -122,14 +112,14 @@ public static class StartupTasks
         if (isStartupDisabled)
         {
             RemoveStartup();
-            
+
         }
         else
         {
             SetStartup();
         }
     }
-    
+
     private static void SetStartup()
     {
         try

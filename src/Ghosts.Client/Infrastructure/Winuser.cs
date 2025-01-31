@@ -1,12 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ghosts.Client.Infrastructure
+﻿namespace Ghosts.Client.Infrastructure
 {
     /// <summary>
     /// Make various functions from winuser API here to make them accessible

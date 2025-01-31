@@ -1,20 +1,9 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
+using Ghosts.Client.Infrastructure;
 using Ghosts.Client.Infrastructure.Email;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Microsoft.Office.Interop.Outlook;
-using Redemption;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using Ghosts.Domain.Code.Helpers;
 using Exception = System.Exception;
 using MAPIFolder = Microsoft.Office.Interop.Outlook.MAPIFolder;
-using Ghosts.Client.Infrastructure;
 using ReportItem = Ghosts.Domain.Code.ReportItem;
 
 namespace Ghosts.Client.Handlers;
@@ -57,15 +46,15 @@ public class Outlookv2 : BaseHandler
 
     private string[] _actionList = { "read", "reply", "create", "delete" };
     private int[] _probabilityList = { 0, 0, 0, 0 };
-    
+
     private int _actionCount = 0;
     private int _replyErrorCount = 0;
     private int _replyErrorThreshold = 10;  //after this many reply errors, abandon replies in favor of create
     private bool _firstDisplay = false;
     private int _totalErrorCount = 0;
     private int _restartThreadhold = 20;
-    
-    
+
+
 
     public Outlookv2(TimelineHandler handler)
     {
@@ -74,7 +63,7 @@ public class Outlookv2 : BaseHandler
             base.Init(handler);
             MakeRdoSession();
         }
-        
+
         catch (Exception e)
         {
             Log.Error($"Outlookv2:: Init error {e}");
@@ -89,7 +78,7 @@ public class Outlookv2 : BaseHandler
                 while (true)
                 {
                     ExecuteEvents(handler);
-                    if (_totalErrorCount > _restartThreadhold )
+                    if (_totalErrorCount > _restartThreadhold)
                     {
                         _totalErrorCount = 0;
                         Log.Trace("Outlookv2:: Total successive error count exceeded threshold, Outlookv2 restarting.");
@@ -177,14 +166,14 @@ public class Outlookv2 : BaseHandler
         }
     }
 
-    
+
     public void ExecuteEvents(TimelineHandler handler)
     {
         try
         {
             ParseHandlerArgs(handler);
         }
-        
+
         catch (Exception e)
         {
             Log.Trace("Outlookv2:: Error parsing handler args");
@@ -223,7 +212,7 @@ public class Outlookv2 : BaseHandler
                 }
                 else
                 {
-                    
+
                     WorkingHours.Is(handler);
 
 
@@ -241,7 +230,7 @@ public class Outlookv2 : BaseHandler
                     switch (action)
                     {
                         case "create":
-                            
+
                             emailConfig = new EmailConfiguration(timelineEvent.CommandArgs);
                             if (SendEmailViaOutlook(emailConfig))
                             {
@@ -252,14 +241,14 @@ public class Outlookv2 : BaseHandler
                             {
                                 _totalErrorCount++;
                             }
-                           
+
                             break;
                         case "reply":
-                            
+
                             emailConfig = new EmailConfiguration(timelineEvent.CommandArgs);
                             if (ReplyViaOutlook(emailConfig))
                             {
-                                
+
                                 Log.Trace("Outlookv2:: Replied email");
                                 _totalErrorCount = 0;  //zero on success
                             }
@@ -267,10 +256,10 @@ public class Outlookv2 : BaseHandler
                             {
                                 _totalErrorCount++;
                             }
-                            
+
                             break;
                         case "read":
-                            
+
                             if (ReadViaOutlook())
                             {
                                 Log.Trace("Outlookv2:: Read email");
@@ -280,10 +269,10 @@ public class Outlookv2 : BaseHandler
                             {
                                 _totalErrorCount++;
                             }
-                            
+
                             break;
                         case "delete":
-                            
+
                             if (DeleteViaOutlook())
                             {
                                 Log.Trace("Outlookv2:: Deleted email");
@@ -293,7 +282,7 @@ public class Outlookv2 : BaseHandler
                             {
                                 _totalErrorCount++;
                             }
-                            
+
                             break;
 
                     }
@@ -302,7 +291,7 @@ public class Outlookv2 : BaseHandler
                     {
                         Log.Trace($"DelayAfter sleeping for {timelineEvent.DelayAfterActual} ms");
                         Thread.Sleep(Jitter.JitterFactorDelay(timelineEvent.DelayAfterActual, _jitterfactor));
-                        
+
                     }
                 }
             }
@@ -324,7 +313,7 @@ public class Outlookv2 : BaseHandler
         if (handler.HandlerArgs.ContainsKey("initial-outlook-delay"))
         {
             int.TryParse(handler.HandlerArgs["initial-outlook-delay"].ToString(), out _initialOutlookDelay);
-            if (_initialOutlookDelay < 0 || _initialOutlookDelay > 5*60*1000)
+            if (_initialOutlookDelay < 0 || _initialOutlookDelay > 5 * 60 * 1000)
             {
                 _initialOutlookDelay = 0;
             }
@@ -361,7 +350,7 @@ public class Outlookv2 : BaseHandler
                 _createProbability = 0;
             }
         }
-       
+
         if ((_readProbability + _deleteProbability + _createProbability + _replyProbability) > 100)
         {
             Log.Trace($"Outlookv2:: The sum of the read/delete/create/reply probabilities is > 100 , using defaults.");
@@ -452,13 +441,13 @@ public class Outlookv2 : BaseHandler
                     Directory.CreateDirectory(targetDir);
                     _outputDirectory = targetDir;
                 }
-                
+
                 catch (Exception ex)
                 {
                     Log.Trace(ex);
                     Log.Trace($"Outlookv2:: output directory {targetDir} does not exist and cannot be created, using browser downloads directory.");
                 }
-                
+
             }
             else
             {
@@ -515,8 +504,8 @@ public class Outlookv2 : BaseHandler
         _replyProbability = 25;
     }
 
-    
-    private bool DeleteMailItem (MailItem item)
+
+    private bool DeleteMailItem(MailItem item)
     {
         try
         {
@@ -544,7 +533,7 @@ public class Outlookv2 : BaseHandler
         var count = folderItems.Count;
         if (count == 0) return;
 
-       
+
         MailItem folderItem;
         for (int i = count; i > 0; i--)
         {
@@ -555,14 +544,14 @@ public class Outlookv2 : BaseHandler
                 if (folderItem != null)
                 {
                     //break if unsuccessful as may have reached the maximum number
-                    if (!DeleteMailItem(folderItem)) break; 
+                    if (!DeleteMailItem(folderItem)) break;
                 }
             }
             catch (ThreadAbortException)
             {
                 throw;  //pass up
             }
-            catch 
+            catch
             {
                 //ignore others
             }
@@ -633,10 +622,10 @@ public class Outlookv2 : BaseHandler
             {
                 throw;  //pass up
             }
-            catch 
+            catch
             {
                 //ignore others
-               
+
             }
         }
         return;
@@ -647,7 +636,7 @@ public class Outlookv2 : BaseHandler
     {
         try
         {
-            
+
             var settings = Program.Configuration.Email;
 
             if (settings.EmailsMax <= 0)
@@ -685,7 +674,7 @@ public class Outlookv2 : BaseHandler
         {
             if (folderItem.Attachments.Count > 0)
             {
-                
+
                 for (int i = 1; i <= folderItem.Attachments.Count; i++)
                 {
                     if (_random.Next(0, 100) <= _saveattachmentProbability)
@@ -741,7 +730,8 @@ public class Outlookv2 : BaseHandler
                 {
                     throw;  //pass up
                 }
-                catch { 
+                catch
+                {
                     //ignore others
                 }
             }
@@ -1025,7 +1015,7 @@ public class Outlookv2 : BaseHandler
                     {
                         //we found an email, and tried to reply, but an error occurred.
                         _replyErrorCount += 1;
-                        return false;  
+                        return false;
                     }
                 }
             }
@@ -1063,7 +1053,7 @@ public class Outlookv2 : BaseHandler
                         {
                             filteredFiles.Add(file);
                         }
-                  
+
                     }
                     catch (ThreadAbortException)
                     {
@@ -1074,8 +1064,8 @@ public class Outlookv2 : BaseHandler
                         Log.Error($"Outlook file access error during attachments: {e}");
                     }
                 }
-                if (filteredFiles.Count == 0) return null;         
-                
+                if (filteredFiles.Count == 0) return null;
+
                 if (count == 1)
                 {
                     return new List<string>() { filteredFiles[_random.Next(0, filteredFiles.Count - 1)] };
@@ -1095,7 +1085,8 @@ public class Outlookv2 : BaseHandler
         {
             throw;  //pass up
         }
-        catch {
+        catch
+        {
             //ignore others
         }
         return null;
@@ -1120,7 +1111,7 @@ public class Outlookv2 : BaseHandler
 
             Log.Trace($"Setting message subject to: {mailItem.Subject}");
 
-     
+
             //Set message body according to type of message
             switch (emailConfig.BodyType)
             {
@@ -1144,7 +1135,7 @@ public class Outlookv2 : BaseHandler
 
             if (attachments.Count == 0)
             {
-                if (_attachmentProbability != 0 && _random.Next(0,100) <= _attachmentProbability)
+                if (_attachmentProbability != 0 && _random.Next(0, 100) <= _attachmentProbability)
                 {
                     int numAttachments = _random.Next(_attachmentsMin, _attachmentsMax);
                     if (numAttachments > 0)

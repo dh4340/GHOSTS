@@ -1,29 +1,12 @@
-﻿using Ghosts.Client.Handlers;
-using Ghosts.Client.Infrastructure;
-using Microsoft.Management.Infrastructure.Options;
-using Microsoft.Management.Infrastructure;
-using NLog;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.IO;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
-using Renci.SshNet;
-using Ghosts.Domain;
-
- 
+﻿
 namespace Ghosts.Client.Infrastructure
 {
     public class WmiSupport
     {
         // declare the CimSession as a field of the WmiSupportSupport class
-        #pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         private CimSession? session = null;
-        #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         private string _computerName;
         private string _domain;
         private string _username;
@@ -33,7 +16,7 @@ namespace Ghosts.Client.Infrastructure
 
 
         public static readonly Logger Log = LogManager.GetCurrentClassLogger();
- 
+
         public int TimeBetweenCommandsMax { get; set; } = 0;
         public int TimeBetweenCommandsMin { get; set; } = 0;
 

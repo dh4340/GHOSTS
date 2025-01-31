@@ -1,10 +1,7 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
 using Ghosts.Client.Infrastructure;
 using Ghosts.Client.TimelineManager;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
 
 namespace Ghosts.Client.Handlers;
 

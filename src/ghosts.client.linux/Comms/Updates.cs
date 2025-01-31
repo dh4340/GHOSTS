@@ -1,4 +1,5 @@
-﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,6 @@ using Ghosts.Domain.Code;
 using Ghosts.Domain.Messages;
 using Ghosts.Domain.Messages.MesssagesForClient;
 using Ghosts.Domain.Messages.MesssagesForServer;
-using Newtonsoft.Json;
-using NLog;
 
 namespace ghosts.client.linux.Comms
 {

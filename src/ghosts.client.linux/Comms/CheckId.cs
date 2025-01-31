@@ -1,12 +1,11 @@
-﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
 using System.IO;
 using System.Net;
 using ghosts.client.linux.Infrastructure;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
-using NLog;
 
 namespace ghosts.client.linux.Comms
 {

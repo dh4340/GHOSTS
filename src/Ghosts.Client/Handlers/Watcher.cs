@@ -1,14 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using Ghosts.Domain;
-using System;
-using System.IO;
-using System.Threading;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Ghosts.Domain.Code;
-
 namespace Ghosts.Client.Handlers;
 
 /// <summary>
@@ -70,7 +61,7 @@ internal class Watcher : BaseHandler
 /// <summary>
 /// Helper class to sort file list by size or creation time.
 /// </summary>
-internal class Afile 
+internal class Afile
 {
     public string name { get; set; }
     public long size { get; set; }
@@ -80,7 +71,7 @@ internal class Afile
     public static int CompareBySize(Afile x, Afile y)
     {
         // A null value means that this object is greater.
-        if ( y.size > x.size)
+        if (y.size > x.size)
             return 1;
         else if (x.size == y.size) return 0;
         else return -1;
@@ -116,7 +107,7 @@ internal class FolderWatcher : BaseHandler
     /// </summary>
     /// <param name="folder"></param>
     /// <param name="allfiles"></param>
-    static void GetAllFiles(string folder, List<Afile> allfiles )
+    static void GetAllFiles(string folder, List<Afile> allfiles)
     {
         // Get array of all file names.
         string[] filelist = Directory.GetFiles(folder, "*");
@@ -129,7 +120,7 @@ internal class FolderWatcher : BaseHandler
         string[] dirlist = Directory.GetDirectories(folder, "*");
         foreach (string dname in dirlist)
         {
-            GetAllFiles(dname,allfiles);
+            GetAllFiles(dname, allfiles);
         }
     }
 
@@ -155,7 +146,7 @@ internal class FolderWatcher : BaseHandler
             catch { }  //ignore any errors when accessing the file
         }
         //recurse, sum sub directory sizes
-        string [] dirlist = Directory.GetDirectories(folder, "*");
+        string[] dirlist = Directory.GetDirectories(folder, "*");
         foreach (string dname in dirlist)
         {
             size += GetDirectorySize(dname);
@@ -178,7 +169,8 @@ internal class FolderWatcher : BaseHandler
         {
             //each argument string is key:value, parse this
             var argString = cmd.ToString();
-            if (!string.IsNullOrEmpty(argString)) {
+            if (!string.IsNullOrEmpty(argString))
+            {
                 var words = argString.Split(charSeparators, 2, StringSplitOptions.None);
                 if (words.Length == 2)
                 {
@@ -190,7 +182,8 @@ internal class FolderWatcher : BaseHandler
         }
 
         //validate the arguments
-        if (folderPath == null) {
+        if (folderPath == null)
+        {
             Log.Trace("In Watcher handler, no 'path' argument specified for a folder path, Watcher exiting.");
             return;
         }
@@ -356,7 +349,7 @@ internal class FileWatcher : BaseHandler
             var webhookPayload = timelineEvent.CommandArgs[2].ToString();
             this.WebhookCreate(webhookPayload);
         }
-            
+
         if (string.IsNullOrEmpty(_filePath))
         {
             Log.Trace("file path null or empty");
@@ -380,7 +373,7 @@ internal class FileWatcher : BaseHandler
             file = f.Name;
             Log.Trace($"File passed - Directory : {path} File: {file}");
         }
-            
+
         var watcher = new FileSystemWatcher(path)
         {
             NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.FileName | NotifyFilters.Size | NotifyFilters.CreationTime | NotifyFilters.LastWrite
@@ -410,7 +403,7 @@ internal class FileWatcher : BaseHandler
         {
             _lastRead = lastWriteTime;
             Log.Trace("File: " + e.FullPath + " " + e.ChangeType);
-                
+
             try
             {
                 string fileContents;
@@ -421,8 +414,8 @@ internal class FileWatcher : BaseHandler
                         fileContents = logFileReader.ReadToEnd();
                     }
                 }
-                    
-                Report(new ReportItem { Handler = _handler.HandlerType.ToString(), Command = _command, Arg = _filePath, Trackable = _timelineEvent.TrackableId, Result = fileContents});
+
+                Report(new ReportItem { Handler = _handler.HandlerType.ToString(), Command = _command, Arg = _filePath, Trackable = _timelineEvent.TrackableId, Result = fileContents });
 
                 if (Program.IsDebug)
                     Console.WriteLine($"File: {e.FullPath} : {e.ChangeType} : {fileContents}");

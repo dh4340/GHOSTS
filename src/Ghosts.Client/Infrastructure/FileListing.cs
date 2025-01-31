@@ -1,15 +1,6 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Ghosts.Domain.Code;
-using NLog;
 using Exception = System.Exception;
-using System.Threading;
-using Ghosts.Domain;
-using Ghosts.Domain.Code.Helpers;
 
 namespace Ghosts.Client.Infrastructure;
 

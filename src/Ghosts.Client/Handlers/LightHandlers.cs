@@ -1,11 +1,6 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
 using Ghosts.Client.Infrastructure;
-using Ghosts.Domain;
-using System;
-using System.IO;
-using System.Threading;
-using Ghosts.Domain.Code;
 
 namespace Ghosts.Client.Handlers;
 
@@ -109,7 +104,7 @@ public class LightHandlers : BaseHandler
                         var paragraph = rt.Content;
                         Domain.Code.Office.Word.Write(path, title, paragraph);
                     }
-                        
+
                     FileListing.Add(path, handler.HandlerType);
                     Report(new ReportItem { Handler = handler.HandlerType.ToString(), Command = timelineEvent.Command, Arg = timelineEvent.CommandArgs[0].ToString(), Trackable = timelineEvent.TrackableId });
                 }

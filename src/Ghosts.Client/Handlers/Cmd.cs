@@ -1,11 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Diagnostics;
-using System.Threading;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-
 namespace Ghosts.Client.Handlers
 {
     public class Cmd : BaseHandler
@@ -107,16 +101,16 @@ namespace Ghosts.Client.Handlers
             processStartInfo.RedirectStandardOutput = true;
             processStartInfo.UseShellExecute = false;
             processStartInfo.CreateNoWindow = false;
-            
+
             var process = new Process();
             process.StartInfo = processStartInfo;
             process.Start();
-            
+
             var output = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
             // Console.Write(output);
             Thread.Sleep(1000);
-            
+
             return output;
         }
     }

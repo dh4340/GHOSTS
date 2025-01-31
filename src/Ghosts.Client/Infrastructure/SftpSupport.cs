@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using Renci.SshNet;
-using Renci.SshNet.Sftp;
-
-namespace Ghosts.Client.Infrastructure
+﻿namespace Ghosts.Client.Infrastructure
 {
     public class SftpSupport : SshSftpSupport
     {
-       
+
         public string uploadDirectory { get; set; } = null;
         public string downloadDirectory { get; set; } = null;
 
@@ -78,7 +70,7 @@ namespace Ghosts.Client.Infrastructure
 
         }
 
-        public SftpFile FindDir(SftpClient client,string targetdir)
+        public SftpFile FindDir(SftpClient client, string targetdir)
         {
 
             try
@@ -118,7 +110,8 @@ namespace Ghosts.Client.Infrastructure
                 return;
             }
             var fileName = cmdArgs[1];
-            if (fileName.Contains("[localfile]") ){
+            if (fileName.Contains("[localfile]"))
+            {
                 fileName = GetUploadFilename();
                 if (fileName == null)
                 {
@@ -163,7 +156,7 @@ namespace Ghosts.Client.Infrastructure
                 return;
             }
             var fileName = cmdArgs[1];
-            
+
             if (fileName.Contains("[remotefile]"))
             {
                 SftpFile file = GetRemoteFile(client);
@@ -174,7 +167,7 @@ namespace Ghosts.Client.Infrastructure
                 }
                 fileName = file.FullName;
             }
-            
+
             //now delete the remote file
             try
             {
@@ -226,17 +219,19 @@ namespace Ghosts.Client.Infrastructure
                 {
                     //assume this the full path to a windows box
                     remoteFilePath = fileName;
-                } else if (fileName.Contains("/"))
+                }
+                else if (fileName.Contains("/"))
                 {
                     remoteFilePath = fileName;
                     seperator = '/';
                 }
-                if  (remoteFilePath == null)
+                if (remoteFilePath == null)
                 {
                     //a local name
                     remoteFilePath = fileName;
                     localFilePath = Path.Combine(downloadDirectory, fileName);
-                } else
+                }
+                else
                 {
                     remoteFilePath = fileName;
                     //parse fullpath to get local name
@@ -300,7 +295,7 @@ namespace Ghosts.Client.Infrastructure
                 }
                 dirName = file.FullName;
             }
-            
+
             try
             {
                 client.ChangeDirectory(dirName);
@@ -338,7 +333,8 @@ namespace Ghosts.Client.Infrastructure
                 {
                     client.CreateDirectory(dirName);
                     Log.Trace($"Sftp:: Success, Created directory {dirName} on remote host {this.HostIp}.");
-                } else
+                }
+                else
                 {
                     Log.Trace($"Sftp:: mkdir directory command skipped, as {dirName} already exists remote host {this.HostIp}.");
                 }
@@ -358,7 +354,7 @@ namespace Ghosts.Client.Infrastructure
         {
             char[] charSeparators = new char[] { ' ' };
             var cmdArgs = cmd.Split(charSeparators, 2, StringSplitOptions.None);
-            
+
             var dirName = ".";
             if (cmdArgs.Length == 2) dirName = cmdArgs[1];
             if (dirName.Contains("[remotedir]"))
@@ -402,7 +398,7 @@ namespace Ghosts.Client.Infrastructure
 
         public void RunSftpCommand(SftpClient client, string cmd)
         {
-           
+
             if (cmd.StartsWith("put"))
             {
                 DoPut(client, cmd);
@@ -443,7 +439,7 @@ namespace Ghosts.Client.Infrastructure
             return;
         }
 
-      
+
 
     }
 }

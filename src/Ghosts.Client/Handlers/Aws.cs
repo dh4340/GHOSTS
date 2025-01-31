@@ -1,19 +1,12 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Diagnostics;
-using System.Threading;
-using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-
 namespace Ghosts.Client.Handlers
 {
     public class Aws : BaseHandler
     {
         private string Result { get; set; }
         private readonly TimelineHandler _handler;
-        
+
         public Aws(TimelineHandler handler)
         {
             _handler = handler;
@@ -27,7 +20,7 @@ namespace Ghosts.Client.Handlers
                         Ex();
                     }
                 }
-                
+
                 Ex();
             }
             catch (Exception e)
@@ -35,7 +28,7 @@ namespace Ghosts.Client.Handlers
                 Log.Error(e);
             }
         }
-        
+
         private void Ex()
         {
             var handlerArgs = BuildHandlerArgVariables.BuildHandlerArgs(_handler);
@@ -71,7 +64,7 @@ namespace Ghosts.Client.Handlers
             this.Result = string.Empty;
 
             command = $"{command} --no-verify";
-            
+
             try
             {
                 var p = new Process
@@ -96,7 +89,7 @@ namespace Ghosts.Client.Handlers
 
                 var err = string.Empty;
                 while (!p.StandardError.EndOfStream)
-                { 
+                {
                     err += p.StandardError.ReadToEnd();
                 }
                 err = err.RemoveTextBetweenMarkers("urllib3/connectionpool", "#ssl-warnings");
@@ -104,8 +97,8 @@ namespace Ghosts.Client.Handlers
                 {
                     Log.Error($"{err} on {command}");
                 }
-                
-                Report(new ReportItem {Handler = HandlerType.Aws.ToString(), Command = command, Result = this.Result});
+
+                Report(new ReportItem { Handler = HandlerType.Aws.ToString(), Command = command, Result = this.Result });
             }
             catch (Exception exc)
             {

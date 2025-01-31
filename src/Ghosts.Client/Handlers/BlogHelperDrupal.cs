@@ -1,9 +1,4 @@
-﻿using Ghosts.Domain;
-using Ghosts.Domain.Code;
-using OpenQA.Selenium;
-using System;
-using System.Threading;
-using Actions = OpenQA.Selenium.Interactions.Actions;
+﻿using Actions = OpenQA.Selenium.Interactions.Actions;
 
 namespace Ghosts.Client.Handlers
 {
@@ -101,13 +96,13 @@ namespace Ghosts.Client.Handlers
         }
         public override bool DoReply(TimelineHandler handler, string reply)
         {
-            
+
             //first, browse to an existing entry
             if (DoBrowse(handler))
             {
                 try
                 {
-                    
+
                     var targetElement = Driver.FindElement(By.CssSelector("textarea#edit-comment-body-und-0-value.text-full.form-textarea.required"));
                     targetElement.SendKeys(reply);
                     Thread.Sleep(1000);
@@ -139,7 +134,7 @@ namespace Ghosts.Client.Handlers
         {
 
             RequestConfiguration config;
-            
+
             string target = header + site + "/node/add/blog";
             //navigate to the add content page
             try
@@ -301,14 +296,14 @@ namespace Ghosts.Client.Handlers
                         Thread.Sleep(1000);
                     }
                 }
-                    
+
 
             }
             catch (ThreadAbortException)
             {
                 throw;  //pass up
             }
-            catch {  }
+            catch { }
 
             if (!onTargetPage)
             {
@@ -336,9 +331,9 @@ namespace Ghosts.Client.Handlers
                     throw;  //pass up
                 }
                 catch
-                {  }
+                { }
             }
-            
+
             //on some page, click a random readmore link
             try
             {

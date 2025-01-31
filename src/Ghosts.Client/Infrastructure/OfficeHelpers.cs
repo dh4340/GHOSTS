@@ -1,10 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using Ghosts.Domain;
-using Newtonsoft.Json;
-using NLog;
-
 namespace Ghosts.Client.Infrastructure;
 
 internal static class OfficeHelpers

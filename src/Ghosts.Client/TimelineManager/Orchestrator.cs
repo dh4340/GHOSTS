@@ -1,19 +1,7 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using Ghosts.Client.Infrastructure;
 using Ghosts.Client.Handlers;
-using Ghosts.Domain;
-using Microsoft.Win32;
-using NLog;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Security.Permissions;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Models;
+using Ghosts.Client.Infrastructure;
 // ReSharper disable RedundantAssignment
 
 namespace Ghosts.Client.TimelineManager
@@ -31,7 +19,7 @@ namespace Ghosts.Client.TimelineManager
         private FileSystemWatcher _stopfileWatcher;  //watches for changes to config/stop.txt indicating a stop request
         private bool _isSafetyNetRunning;
         private bool _isTempCleanerRunning;
-        
+
         private bool IsWordInstalled { get; set; }
         private bool IsExcelInstalled { get; set; }
         private bool IsPowerPointInstalled { get; set; }
@@ -140,7 +128,7 @@ namespace Ghosts.Client.TimelineManager
                     _log.Debug(e);
                 }
 
-                
+
                 try
                 {
                     threadJob.Thread.Join();
@@ -309,7 +297,7 @@ namespace Ghosts.Client.TimelineManager
                 Program.Scheduler.ScheduleJob(s.GetJob(handler), s.GetTrigger(handler));
                 return;
             }
-            
+
             ThreadLaunchEx(timeline, handler);
         }
 
@@ -524,7 +512,7 @@ namespace Ghosts.Client.TimelineManager
                         Thread = t
                     });
                 }
-                
+
             }
             catch (Exception e)
             {
@@ -577,7 +565,7 @@ namespace Ghosts.Client.TimelineManager
             }
         }
 
-    private void OnChanged(object source, FileSystemEventArgs e)
+        private void OnChanged(object source, FileSystemEventArgs e)
         {
             try
             {

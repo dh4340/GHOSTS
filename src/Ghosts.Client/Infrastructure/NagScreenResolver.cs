@@ -1,8 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-
-namespace Ghosts.Client.Infrastructure
+﻿namespace Ghosts.Client.Infrastructure
 {
     internal static class NagScreenResolver
     {
@@ -45,7 +41,7 @@ namespace Ghosts.Client.Infrastructure
                         SendMessage(okButtonHandle, BM_CLICK, IntPtr.Zero, IntPtr.Zero);
                     }
                 }
-                
+
                 Console.WriteLine("Window not found, retrying in 1 second...");
                 Thread.Sleep((int)(1000 * 1.5));
             }

@@ -1,15 +1,5 @@
 ﻿// Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using FileHelpers;
-using Ghosts.Domain.Code;
-using Ghosts.Domain.Code.Helpers;
-using NLog;
-
 namespace Ghosts.Client.Infrastructure.Email;
 
 public class EmailContentManager
@@ -151,7 +141,7 @@ public class EmailReplyManager
             var engine = new FileHelperEngine<EmailReply>();
 
             //does file exist
-            if(!File.Exists(ClientConfigurationResolver.EmailReply))
+            if (!File.Exists(ClientConfigurationResolver.EmailReply))
                 throw new FileNotFoundException($"Email reply file not found at {ClientConfigurationResolver.EmailReply}");
 
             // To Read Use:

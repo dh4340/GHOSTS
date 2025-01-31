@@ -38,6 +38,7 @@
     <PackageReference Include="FileHelpers" />
     <PackageReference Include="RestSharp" />
     <PackageReference Include="Betalgo.OpenAI" />
+    <PackageReference Include="System.Management.Automation" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ghosts.Animator\ghosts.animator.csproj" />

@@ -3,7 +3,6 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using Ghosts.Animator.Extensions;
 using Microsoft.AspNetCore.SignalR;
 using NLog;
 

@@ -11,7 +11,6 @@ using ghosts.api.Hubs;
 using ghosts.api.Infrastructure.ContentServices;
 using ghosts.api.Infrastructure.Models;
 using ghosts.api.Infrastructure.Services;
-using Ghosts.Animator.Extensions;
 using Ghosts.Api.Infrastructure;
 using Ghosts.Api.Infrastructure.Data;
 using Ghosts.Domain.Messages;

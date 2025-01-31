@@ -5,8 +5,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using AutoMapper;
-using ghosts.api.Areas.Animator.Infrastructure.Models;
-using Ghosts.Animator.Models;
 
 namespace ghosts.api.Infrastructure.Models;
 

@@ -9,7 +9,6 @@ using Ghosts.Api.Infrastructure.Data;
 using Ghosts.Api.ViewModels;
 using Ghosts.Domain.Messages;
 using Ghosts.Domain.Messages.MesssagesForClient;
-using Newtonsoft.Json;
 
 namespace ghosts.api.Infrastructure.Services
 {

@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ghosts.api.Infrastructure.Models;
 using ghosts.api.Infrastructure.Services;
-using Ghosts.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;

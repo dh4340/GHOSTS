@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using Ghosts.Domain.Messages;
 using Newtonsoft.Json.Linq;
 

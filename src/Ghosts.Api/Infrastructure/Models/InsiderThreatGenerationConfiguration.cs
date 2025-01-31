@@ -2,8 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Ghosts.Animator.Enums;
-using Ghosts.Animator.Models;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace ghosts.api.Infrastructure.Models;

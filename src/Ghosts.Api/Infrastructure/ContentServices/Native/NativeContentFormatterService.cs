@@ -4,9 +4,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ghosts.api.Infrastructure.Models;
-using Ghosts.Animator;
-using Ghosts.Animator.Extensions;
-using Ghosts.Animator.Models;
 using NLog;
 
 namespace ghosts.api.Infrastructure.ContentServices.Native;

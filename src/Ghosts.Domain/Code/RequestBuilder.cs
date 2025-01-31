@@ -1,13 +1,10 @@
 // Copyright 2017 Carnegie Mellon University. All Rights Reserved. See LICENSE.md file for terms.
 
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Ghosts.Domain.Code.Helpers;
 using Ghosts.Domain.Messages;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NPOI.SS.Formula.Functions;
 
 namespace Ghosts.Domain.Code
 {

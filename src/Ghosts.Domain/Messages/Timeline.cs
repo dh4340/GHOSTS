@@ -7,7 +7,7 @@ using Ghosts.Domain.Code.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Ghosts.Domain
+namespace Ghosts.Domain.Messages
 {
     /// <summary>
     /// an array of events that a client should perform in order to best mimic some persona x

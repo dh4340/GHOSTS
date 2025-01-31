@@ -7,7 +7,7 @@ using ghosts.api.Infrastructure;
 using ghosts.api.Infrastructure.Models;
 using ghosts.api.Infrastructure.Services;
 using Ghosts.Api.ViewModels;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages.MesssagesForClient;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Swashbuckle.AspNetCore.Annotations;

@@ -4,8 +4,8 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages;
 using HtmlAgilityPack;
 
 namespace ghosts.client.linux.handlers

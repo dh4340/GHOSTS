@@ -2,8 +2,8 @@
 using System.IO;
 using System.Threading;
 using ghosts.client.linux.Infrastructure;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages;
 using Newtonsoft.Json;
 using Renci.SshNet;
 

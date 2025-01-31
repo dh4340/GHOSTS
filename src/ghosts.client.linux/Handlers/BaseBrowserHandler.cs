@@ -7,9 +7,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ghosts.client.linux.Infrastructure.Browser;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
 using Ghosts.Domain.Code.Helpers;
+using Ghosts.Domain.Messages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 

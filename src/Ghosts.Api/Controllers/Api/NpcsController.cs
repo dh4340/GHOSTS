@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FileHelpers;
-using ghosts.api.Areas.Animator.Infrastructure.Models;
 using ghosts.api.Infrastructure.Models;
 using ghosts.api.Infrastructure.Services;
 using Ghosts.Animator;

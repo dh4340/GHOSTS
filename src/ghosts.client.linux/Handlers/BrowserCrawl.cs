@@ -3,9 +3,9 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
 using Ghosts.Domain.Code.Helpers;
+using Ghosts.Domain.Messages;
 using OpenQA.Selenium;
 
 namespace ghosts.client.linux.handlers

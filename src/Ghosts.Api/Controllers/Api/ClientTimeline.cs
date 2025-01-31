@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ghosts.api.Infrastructure.Services;
 using Ghosts.Api.Infrastructure;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NLog;

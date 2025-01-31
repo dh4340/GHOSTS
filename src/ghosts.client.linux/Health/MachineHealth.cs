@@ -4,8 +4,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages.MesssagesForServer;
 using NLog;
 
 namespace ghosts.client.linux.Health

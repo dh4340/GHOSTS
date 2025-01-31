@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ghosts.api.Infrastructure.Models;
 using ghosts.api.Infrastructure.Services;
 using Ghosts.Api.Infrastructure;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages.MesssagesForClient;
 using Ghosts.Domain.Messages.MesssagesForServer;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json.Linq;

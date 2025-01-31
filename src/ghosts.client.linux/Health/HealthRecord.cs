@@ -2,7 +2,8 @@
 
 using System;
 using System.Net;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages;
+using Ghosts.Domain.Messages.MesssagesForServer;
 
 namespace ghosts.client.linux.Health
 {

@@ -4,8 +4,8 @@ using System;
 using System.Linq;
 using ghosts.client.linux.Infrastructure;
 using ghosts.client.linux.timelineManager;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages;
 
 namespace ghosts.client.linux.handlers
 {

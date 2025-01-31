@@ -4,7 +4,7 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Ghosts.Domain
+namespace Ghosts.Domain.Messages.MesssagesForClient
 {
     /// <summary>
     ///     Server passes this object to client as new timeline|health configuration -

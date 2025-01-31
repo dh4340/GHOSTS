@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ghosts.Domain.Code.Helpers;
+using Ghosts.Domain.Messages;
 using NLog;
 
 namespace Ghosts.Domain.Code

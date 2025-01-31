@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Ghosts.Domain
+namespace Ghosts.Domain.Messages
 {
     /// <summary>
     /// a client's specific health configuration

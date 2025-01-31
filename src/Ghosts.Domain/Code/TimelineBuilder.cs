@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Net;
+using Ghosts.Domain.Messages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;

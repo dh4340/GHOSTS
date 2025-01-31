@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ghosts.client.linux.Infrastructure;
 using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages.MesssagesForClient;
 using Microsoft.AspNetCore.SignalR.Client;
 using Exception = System.Exception;
 

@@ -26,7 +26,7 @@ public static class WebClientBuilder
     {
         var dict = new Dictionary<string, string>();
 
-        dict.Add(HttpRequestHeader.UserAgent.ToString(), "Ghosts Client");
+        dict.Add(HttpRequestHeader.Headers["User-Agent"].ToString().ToString(), "Ghosts Client");
         if (Program.CheckId != null && !string.IsNullOrEmpty(Program.CheckId.Id) && useId)
         {
             dict.Add("ghosts-id", Program.CheckId.Id);

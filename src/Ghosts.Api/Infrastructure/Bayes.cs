@@ -2,7 +2,7 @@
 
 using System;
 
-namespace ghosts.api.Areas.Animator.Infrastructure;
+namespace ghosts.api.Infrastructure;
 
 public class Bayes
 {
@@ -40,20 +40,20 @@ public class Bayes
     /// </summary>
     private void CalculatePosterior()
     {
-        if (((LikelihoodH1 * PriorH1) + (LikelihoodH2 * PriorH2)) > 0)
+        if (LikelihoodH1 * PriorH1 + LikelihoodH2 * PriorH2 > 0)
         {
-            PosteriorH1 = (LikelihoodH1 * PriorH1) /
-                               ((LikelihoodH1 * PriorH1) + (LikelihoodH2 * PriorH2));
+            PosteriorH1 = LikelihoodH1 * PriorH1 /
+                               (LikelihoodH1 * PriorH1 + LikelihoodH2 * PriorH2);
         }
         else
         {
             PosteriorH1 = 0;
         }
 
-        if (((LikelihoodH2 * PriorH2) + (LikelihoodH1 * PriorH1)) > 0)
+        if (LikelihoodH2 * PriorH2 + LikelihoodH1 * PriorH1 > 0)
         {
-            PosteriorH2 = (LikelihoodH2 * PriorH2) /
-                               ((LikelihoodH2 * PriorH2) + (LikelihoodH1 * PriorH1));
+            PosteriorH2 = LikelihoodH2 * PriorH2 /
+                               (LikelihoodH2 * PriorH2 + LikelihoodH1 * PriorH1);
         }
         else
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ghosts.api.Infrastructure.Models;
 using Ghosts.Api.Infrastructure.Data;
 using Ghosts.Api.ViewModels;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages.MesssagesForClient;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 

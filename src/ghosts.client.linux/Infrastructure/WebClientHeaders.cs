@@ -2,8 +2,8 @@
 
 using System.Collections.Generic;
 using System.Net;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages.MesssagesForServer;
 using Newtonsoft.Json;
 using NLog;
 using NLog.Fluent;

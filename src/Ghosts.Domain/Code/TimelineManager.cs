@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Ghosts.Domain.Messages;
+using Ghosts.Domain.Messages.MesssagesForClient;
 using Newtonsoft.Json.Linq;
 
 namespace Ghosts.Domain.Code

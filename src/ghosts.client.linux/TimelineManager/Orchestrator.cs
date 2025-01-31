@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using ghosts.client.linux.handlers;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages;
 using Ghosts.Domain.Models;
 using NLog;
 

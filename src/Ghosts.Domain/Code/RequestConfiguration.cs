@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Ghosts.Domain.Messages;
 using Newtonsoft.Json;
 
 namespace Ghosts.Domain.Code

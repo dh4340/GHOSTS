@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
+using Ghosts.Domain.Messages;
 using OpenQA.Selenium;
 using Actions = OpenQA.Selenium.Interactions.Actions;
 

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Ghosts.Domain
+namespace Ghosts.Domain.Messages.MesssagesForServer
 {
     /// <summary>
     ///     the client results of running a health check

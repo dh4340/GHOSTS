@@ -2,7 +2,8 @@
 
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages;
+using Ghosts.Domain.Messages.MesssagesForClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;

@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="DotNetCore.NPOI" />
     <PackageReference Include="HtmlAgilityPack" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NLog" />
     <PackageReference Include="System.Management.Automation" />

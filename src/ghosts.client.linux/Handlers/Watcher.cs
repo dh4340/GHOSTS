@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages;
 
 namespace ghosts.client.linux.handlers;
 

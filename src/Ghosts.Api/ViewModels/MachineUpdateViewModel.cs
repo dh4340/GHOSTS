@@ -3,7 +3,8 @@
 using System;
 using System.Collections.Generic;
 using ghosts.api.Infrastructure.Models;
-using Ghosts.Domain;
+using Ghosts.Domain.Messages;
+using Ghosts.Domain.Messages.MesssagesForClient;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Filters;
 

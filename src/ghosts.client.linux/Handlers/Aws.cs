@@ -3,9 +3,9 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Ghosts.Domain;
 using Ghosts.Domain.Code;
 using Ghosts.Domain.Code.Helpers;
+using Ghosts.Domain.Messages;
 
 namespace ghosts.client.linux.handlers
 {
